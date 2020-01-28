@@ -4,10 +4,11 @@ export class UI
   draw: =>
     love.graphics.setColor 0, 0, 0
     love.graphics.rectangle "fill", 0, 0, @width, @height
-    @drawPlayerWeapon!
-    @drawPlayerSpell!
+    @drawWeapon!
+    @drawSpell!
+    @drawHealth!
   
-  drawPlayerWeapon: =>
+  drawWeapon: =>
     weapon = player.weapon
 
     love.graphics.setColor @fgColor
@@ -19,7 +20,7 @@ export class UI
     love.graphics.setColor weapon.color
     dx, dy = frameWidth / 2, frameHeight / 2
     love.graphics.draw weapon.sprite, fx +dx - weapon.offset.x, fy + dy - weapon.offset.y + 4
-  drawPlayerSpell: =>
+  drawSpell: =>
     weapon = player.weapon
 
     love.graphics.setColor @fgColor
@@ -31,4 +32,16 @@ export class UI
     love.graphics.setColor weapon.color
     dx, dy = frameWidth / 2, frameHeight / 2
     love.graphics.draw weapon.sprite, fx +dx - weapon.offset.x, fy + dy - weapon.offset.y + 4
+  drawHealth: =>
+    love.graphics.setColor colors["normal"]["red"]
+    sx = 212
+    healthTextWidth = sprites.healthText\getWidth!
+    love.graphics.draw sprites.healthText, sx + 3 , 5
+    heartHeight = sprites.heart\getHeight!
+    
+    for heart = 0, player.health - 1
+      q = if heart > 2 then 0.4 else 0.65
+      fx, fy = sx + heart % 3 * 10, @height * q
+      love.graphics.draw sprites.heart, fx, fy
+
   

@@ -4,10 +4,11 @@ do
     draw = function(self)
       love.graphics.setColor(0, 0, 0)
       love.graphics.rectangle("fill", 0, 0, self.width, self.height)
-      self:drawPlayerWeapon()
-      return self:drawPlayerSpell()
+      self:drawWeapon()
+      self:drawSpell()
+      return self:drawHealth()
     end,
-    drawPlayerWeapon = function(self)
+    drawWeapon = function(self)
       local weapon = player.weapon
       love.graphics.setColor(self.fgColor)
       local frameWidth = sprites.weaponFrame:getWidth()
@@ -18,7 +19,7 @@ do
       local dx, dy = frameWidth / 2, frameHeight / 2
       return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
     end,
-    drawPlayerSpell = function(self)
+    drawSpell = function(self)
       local weapon = player.weapon
       love.graphics.setColor(self.fgColor)
       local frameWidth = sprites.spellFrame:getWidth()
@@ -28,6 +29,23 @@ do
       love.graphics.setColor(weapon.color)
       local dx, dy = frameWidth / 2, frameHeight / 2
       return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
+    end,
+    drawHealth = function(self)
+      love.graphics.setColor(colors["normal"]["red"])
+      local sx = 212
+      local healthTextWidth = sprites.healthText:getWidth()
+      love.graphics.draw(sprites.healthText, sx + 3, 5)
+      local heartHeight = sprites.heart:getHeight()
+      for heart = 0, player.health - 1 do
+        local q
+        if heart > 2 then
+          q = 0.4
+        else
+          q = 0.65
+        end
+        local fx, fy = sx + heart % 3 * 10, self.height * q
+        love.graphics.draw(sprites.heart, fx, fy)
+      end
     end
   }
   _base_0.__index = _base_0

@@ -14,4 +14,6 @@ sprites.load = function(self)
   self.bow = newSprite("bow")
   self.weaponFrame = newSprite("weaponFrame")
   self.spellFrame = newSprite("spellFrame")
+  self.heart = newSprite("heart")
+  self.healthText = newSprite("healthText")
 end

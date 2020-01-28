@@ -2,6 +2,7 @@ export class Player extends Entity
   new: (x, y) =>
     super x, y, sprites.player, "normal", "blue"
     @speed = 96
+    @health = 6
     @filter = (item, other) ->
       switch other.__class
         when Wall return "slide"
