@@ -1,10 +1,10 @@
 baton = require "../libraries/baton"
 export input = baton.new {
   controls: {
-    left: {"key:a", "axis:leftx-", "button:dpleft"}
+    left : {"key:a", "axis:leftx-", "button:dpleft"}
     right: {"key:d", "axis:leftx+", "button:dpright"}
-    up: {"key:w", "axis:lefty-", "button:dpup"}
-    down: {"key:s", "axis:lefty+", "button:dpdown"}
+    up   : {"key:w", "axis:lefty-", "button:dpup"}
+    down : {"key:s", "axis:lefty+", "button:dpdown"}
   }
   pairs: {
     move: {"left", "right", "up", "down"}

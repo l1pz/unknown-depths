@@ -4,13 +4,13 @@ export class Entity
     @pos = Vector x, y
     @\changeSprite sprite, false
     @\refreshColors!
-    @body = world\add @, @pos.x, @pos.y, @dim.x, @dim.y
+    @body   = world\add @, @pos.x, @pos.y, @dim.x, @dim.y
     @filter = (item, other) ->
       return "cross"
   changeSprite: (@sprite, update = true) =>
-    @dim = Vector @sprite\getWidth!, @sprite\getHeight!
+    @dim    = Vector @sprite\getWidth!, @sprite\getHeight!
     halfDim = @dim / 2
-    @offset = Vector floor(halfDim.x), floor(halfDim.y)
+    @offset = Vector floor(halfDim.x),  floor(halfDim.y)
     if update
       world\update @, @pos.x, @pos.y, @dim.x, @dim.y
   draw: =>
