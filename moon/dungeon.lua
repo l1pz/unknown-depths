@@ -1,10 +1,12 @@
 local insert
 insert = table.insert
-local random, min, max
+local min, max
 do
   local _obj_0 = math
-  random, min, max = _obj_0.random, _obj_0.min, _obj_0.max
+  min, max = _obj_0.min, _obj_0.max
 end
+local random
+random = love.math.random
 local randomChoice
 randomChoice = function(t)
   local keys

@@ -7,6 +7,7 @@ push = require "libs/push"
 
 require "moon/helpers"
 require "moon/input"
+require "moon/ui"
 require "moon/sprites"
 require "moon/entity"
 require "moon/dungeon"
@@ -17,6 +18,8 @@ require "moon/door"
 
 export gameWidth = 256
 export gameHeight = 224
+export uiWidth = gameWidth
+export uiHeight = 32
 export tileSize = 16
 
 export world = bump.newWorld!
@@ -24,16 +27,18 @@ export player
 
 windowScale = 4
 windowWidth = gameWidth * windowScale
-windowHeight = gameHeight * windowScale
+windowHeight = (gameHeight + uiHeight) * windowScale
 
 roomsCount = 3
 
 export colors
 colorSchemes = {}
-colorScheme = 1
+colorScheme = 5
 
 local dungeon
 local camera
+
+local ui
 
 export debugDrawSprites = true
 export debugDrawCollisionBoxes = false
@@ -43,7 +48,7 @@ love.load = ->
   love.graphics.setDefaultFilter "nearest", "nearest"
   love.graphics.setLineStyle "rough"
   
-  push\setupScreen gameWidth, gameHeight, windowWidth, windowHeight, {
+  push\setupScreen gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
     fullscreen: false
     resizeable: false
     pixelperfect: true
@@ -58,6 +63,8 @@ love.load = ->
     scheme = require "assets/colors/" .. fileName\sub(1, #fileName - 4)
     insert(colorSchemes, scheme)
   colors = colorSchemes[colorScheme]
+
+  ui = UI uiWidth, uiHeight, colors["primary"]["foreground"]
 
   sprites\load!
 
@@ -81,10 +88,13 @@ love.update = (dt) ->
   player\update dt
 love.draw = ->
   push\start!
+  love.graphics.translate 0, uiHeight
   camera\attach!
   dungeon\draw!
   player\draw!
   camera\detach!
   camera\draw!
+  love.graphics.translate 0, -uiHeight
+  ui\draw!
   push\finish!
   

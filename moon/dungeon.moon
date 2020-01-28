@@ -1,5 +1,6 @@
 import insert from table
-import random, min, max from math
+import min, max from math
+import random from love.math
 
 randomChoice = (t) ->
   keys = [key for key, _ in pairs t]

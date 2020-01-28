@@ -7,6 +7,7 @@ local Camera = require("libs/camera")
 local push = require("libs/push")
 require("moon/helpers")
 require("moon/input")
+require("moon/ui")
 require("moon/sprites")
 require("moon/entity")
 require("moon/dungeon")
@@ -16,23 +17,26 @@ require("moon/room")
 require("moon/door")
 gameWidth = 256
 gameHeight = 224
+uiWidth = gameWidth
+uiHeight = 32
 tileSize = 16
 world = bump.newWorld()
 local windowScale = 4
 local windowWidth = gameWidth * windowScale
-local windowHeight = gameHeight * windowScale
+local windowHeight = (gameHeight + uiHeight) * windowScale
 local roomsCount = 3
 local colorSchemes = { }
-local colorScheme = 1
+local colorScheme = 5
 local dungeon
 local camera
+local ui
 debugDrawSprites = true
 debugDrawCollisionBoxes = false
 love.load = function()
   love.joystick.loadGamepadMappings("assets/misc/gamecontrollerdb.txt")
   love.graphics.setDefaultFilter("nearest", "nearest")
   love.graphics.setLineStyle("rough")
-  push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
+  push:setupScreen(gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
     fullscreen = false,
     resizeable = false,
     pixelperfect = true
@@ -51,6 +55,7 @@ love.load = function()
     insert(colorSchemes, scheme)
   end
   colors = colorSchemes[colorScheme]
+  ui = UI(uiWidth, uiHeight, colors["primary"]["foreground"])
   sprites:load()
   dungeon = Dungeon(roomsCount)
   center = dungeon.currentRoom.center
@@ -73,10 +78,13 @@ love.update = function(dt)
 end
 love.draw = function()
   push:start()
+  love.graphics.translate(0, uiHeight)
   camera:attach()
   dungeon:draw()
   player:draw()
   camera:detach()
   camera:draw()
+  love.graphics.translate(0, -uiHeight)
+  ui:draw()
   return push:finish()
 end
