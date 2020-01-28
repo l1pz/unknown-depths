@@ -27,8 +27,8 @@ do
   _base_0.__index = _base_0
   _class_0 = setmetatable({
     __init = function(self, x, y)
-      self.x, self.y = x, y
       self.adjacents = { }
+      self.pos = Vector(x, y)
     end,
     __base = _base_0,
     __name = "RoomRaw"
@@ -63,7 +63,7 @@ do
       self.rooms = { }
       local roomsRaw = generateRaw(self)
       for k, roomRaw in pairs(roomsRaw) do
-        self.rooms[k] = Room(roomRaw.x, roomRaw.y, roomRaw.adjacents)
+        self.rooms[k] = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
       end
       self.currentRoom = randomChoice(self.rooms)
     end,
@@ -127,9 +127,9 @@ do
     for i = 1, self.roomsCount do
       local possibilites = { }
       for _, room in pairs(rooms) do
-        local adjacents = getFreeAdjacents(room.x, room.y)
+        local adjacents = getFreeAdjacents(room.pos.x, room.pos.y)
         for _, adjacent in pairs(adjacents) do
-          local count = getFreeAdjacentsCount(adjacent.x, adjacent.y)
+          local count = getFreeAdjacentsCount(adjacent.pos.x, adjacent.pos.y)
           if count > 2 then
             table.insert(possibilites, adjacent)
           end
@@ -139,38 +139,22 @@ do
         break
       end
       local room = randomChoice(possibilites)
-      grid[room.y][room.x] = 1
+      grid[room.pos.y][room.pos.x] = 1
       insert(rooms, room)
     end
     for _, room in pairs(rooms) do
-      local adjacents = getFreeAdjacents(room.x, room.y, 1)
+      local adjacents = getFreeAdjacents(room.pos.x, room.pos.y, 1)
       for _, adjacent in pairs(adjacents) do
-        local dx = adjacent.x - room.x
-        local dy = adjacent.y - room.y
-        local _exp_0 = {
-          dx,
-          dy
-        }
-        if {
-          -1,
-          0
-        } == _exp_0 then
-          insert(room.adjacents("left"))
-        elseif {
-          1,
-          0
-        } == _exp_0 then
-          insert(room.adjacents("right"))
-        elseif {
-          0,
-          -1
-        } == _exp_0 then
-          insert(room.adjacents("top"))
-        elseif {
-          0,
-          1
-        } == _exp_0 then
-          insert(room.adjacents("bottom"))
+        local diff = adjacent.pos - room.pos
+        local _exp_0 = diff
+        if Vector.left == _exp_0 then
+          insert(room.adjacents, "left")
+        elseif Vector.right == _exp_0 then
+          insert(room.adjacents, "right")
+        elseif Vector.up == _exp_0 then
+          insert(room.adjacents, "top")
+        elseif Vector.down == _exp_0 then
+          insert(room.adjacents, "bottom")
         end
       end
     end

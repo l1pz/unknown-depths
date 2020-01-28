@@ -27,7 +27,7 @@ do
       if not (adjacents) then
         return 
       end
-      for dir, room in pairs(adjacents) do
+      for _, dir in pairs(adjacents) do
         local pos
         local _exp_0 = dir
         if "top" == _exp_0 then
@@ -59,10 +59,10 @@ do
       self.pos = Vector(x * gameWidth, y * gameHeight)
       self.dim = Vector(gameWidth, gameHeight)
       self.center = self:getPosition(gameWidth / 2, gameHeight / 2)
-      self.wall = { }
+      self.walls = { }
       self:placeWalls()
-      self.door = { }
-      return self:placeDoors()
+      self.doors = { }
+      return self:placeDoors(adjacents)
     end,
     __base = _base_0,
     __name = "Room"

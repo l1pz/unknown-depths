@@ -1,4 +1,4 @@
-local baton = require("../libraries/baton")
+local baton = require("libs/baton")
 input = baton.new({
   controls = {
     left = {

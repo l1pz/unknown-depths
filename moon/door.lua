@@ -8,7 +8,7 @@ do
     __init = function(self, x, y, orientation, room)
       self.orientation, self.room = orientation, room
       _class_0.__parent.__init(self, x, y, sprites.door[self.orientation], "normal", "red")
-      local items, len = world:quearyRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
+      local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
       for _, item in pairs(items) do
         if item.__class == Wall then
           room.walls[item] = nil

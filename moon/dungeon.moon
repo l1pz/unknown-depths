@@ -7,15 +7,16 @@ randomChoice = (t) ->
   return t[index]
 
 class RoomRaw
-  new: (@x, @y) =>
+  new: (x, y) =>
     @adjacents = {}
+    @pos = Vector x, y
 
 export class Dungeon
   new: (@roomsCount) =>
     @rooms = {}
     roomsRaw = generateRaw @
     for k, roomRaw in pairs roomsRaw
-      @rooms[k] = Room roomRaw.x, roomRaw.y, roomRaw.adjacents
+      @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
   draw: =>
     for _, room in pairs @rooms
@@ -50,23 +51,26 @@ export class Dungeon
     for i = 1, @roomsCount
       possibilites = {}
       for _, room in pairs rooms
-        adjacents = getFreeAdjacents room.x, room.y
+        adjacents = getFreeAdjacents room.pos.x, room.pos.y
         for _, adjacent in pairs adjacents
-          count = getFreeAdjacentsCount adjacent.x, adjacent.y
+          count = getFreeAdjacentsCount adjacent.pos.x, adjacent.pos.y
           if count > 2
             table.insert possibilites, adjacent
       break if #possibilites == 0
       room = randomChoice possibilites
-      grid[room.y][room.x] = 1
+      grid[room.pos.y][room.pos.x] = 1
       insert rooms, room
     for _, room in pairs rooms 
-      adjacents = getFreeAdjacents room.x, room.y, 1
+      adjacents = getFreeAdjacents room.pos.x, room.pos.y, 1
       for _, adjacent in pairs adjacents
-        dx = adjacent.x - room.x
-        dy = adjacent.y - room.y
-        switch {dx, dy}
-          when {-1, 0} insert room.adjacents "left"
-          when {1, 0} insert room.adjacents "right"
-          when {0, -1} insert room.adjacents "top"
-          when {0, 1} insert room.adjacents "bottom"
+        diff = adjacent.pos - room.pos
+        switch diff
+          when Vector.left
+            insert room.adjacents, "left"
+          when Vector.right
+            insert room.adjacents, "right"
+          when Vector.up
+            insert room.adjacents, "top"
+          when Vector.down
+            insert room.adjacents, "bottom"
     return rooms

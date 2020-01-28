@@ -5,6 +5,7 @@ bump = require "libs/bump"
 Camera = require "libs/camera"
 push = require "libs/push"
 
+require "moon/helpers"
 require "moon/input"
 require "moon/sprites"
 require "moon/entity"
@@ -18,7 +19,7 @@ export gameWidth = 256
 export gameHeight = 224
 export tileSize = 16
 
-export world = bump\newWorld!
+export world = bump.newWorld!
 export player
 
 windowScale = 4
@@ -33,6 +34,9 @@ colorScheme = 1
 
 local dungeon
 local camera
+
+export debugDrawSprites = true
+export debugDrawCollisionBoxes = false
 
 love.load = ->
   love.joystick.loadGamepadMappings "assets/misc/gamecontrollerdb.txt"
@@ -59,7 +63,7 @@ love.load = ->
 
   dungeon = Dungeon roomsCount
   
-  center = dungeon.currentRoom.center
+  export center = dungeon.currentRoom.center
   camera = Camera center.x, center.y, gameWidth, gameHeight
   with camera
     \setFollowStyle "SCREEN_BY_SCREEN"
@@ -83,5 +87,4 @@ love.draw = ->
   camera\detach!
   camera\draw!
   push\finish!
-
-
+  

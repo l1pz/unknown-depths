@@ -5,6 +5,7 @@ Vector = require("libs/vector")
 local bump = require("libs/bump")
 local Camera = require("libs/camera")
 local push = require("libs/push")
+require("moon/helpers")
 require("moon/input")
 require("moon/sprites")
 require("moon/entity")
@@ -16,7 +17,7 @@ require("moon/door")
 gameWidth = 256
 gameHeight = 224
 tileSize = 16
-world = bump:newWorld()
+world = bump.newWorld()
 local windowScale = 4
 local windowWidth = gameWidth * windowScale
 local windowHeight = gameHeight * windowScale
@@ -25,6 +26,8 @@ local colorSchemes = { }
 local colorScheme = 1
 local dungeon
 local camera
+debugDrawSprites = true
+debugDrawCollisionBoxes = false
 love.load = function()
   love.joystick.loadGamepadMappings("assets/misc/gamecontrollerdb.txt")
   love.graphics.setDefaultFilter("nearest", "nearest")
@@ -50,7 +53,7 @@ love.load = function()
   colors = colorSchemes[colorScheme]
   sprites:load()
   dungeon = Dungeon(roomsCount)
-  local center = dungeon.currentRoom.center
+  center = dungeon.currentRoom.center
   camera = Camera(center.x, center.y, gameWidth, gameHeight)
   do
     camera:setFollowStyle("SCREEN_BY_SCREEN")
