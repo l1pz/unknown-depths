@@ -40,7 +40,7 @@ export class UI
     heartHeight = sprites.heart\getHeight!
     
     for heart = 0, player.health - 1
-      q = if heart > 2 then 0.4 else 0.65
+      q = if heart < 2 then 0.4 else 0.65
       fx, fy = sx + heart % 3 * 10, @height * q
       love.graphics.draw sprites.heart, fx, fy
 

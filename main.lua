@@ -89,3 +89,23 @@ love.draw = function()
   ui:draw()
   return push:finish()
 end
+love.keypressed = function(key)
+  local _exp_0 = key
+  if "f1" == _exp_0 then
+    debugDrawSprites = not debugDrawSprites
+  elseif "f2" == _exp_0 then
+    debugDrawCollisionBoxes = not debugDrawCollisionBoxes
+  elseif "right" == _exp_0 then
+    colorScheme = colorScheme + 1
+    if colorScheme > #colorSchemes then
+      colorScheme = 1
+    end
+    colors = colorSchemes[colorScheme]
+  elseif "left" == _exp_0 then
+    colorScheme = colorScheme - 1
+    if colorScheme < 1 then
+      colorScheme = #colorSchemes
+    end
+    colors = colorSchemes[colorScheme]
+  end
+end

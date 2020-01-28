@@ -1,1 +1,1 @@
-return adjacents
+return fgColor

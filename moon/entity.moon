@@ -14,6 +14,7 @@ export class Entity
     if update
       world\update @, @pos.x, @pos.y, @dim.x, @dim.y
   draw: =>
+    @color = colors[@colorType][@colorName]
     love.graphics.setColor @color
     if debugDrawSprites
       love.graphics.draw @sprite, floor(@pos.x), floor(@pos.y)

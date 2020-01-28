@@ -38,7 +38,7 @@ do
       local heartHeight = sprites.heart:getHeight()
       for heart = 0, player.health - 1 do
         local q
-        if heart > 2 then
+        if heart < 2 then
           q = 0.4
         else
           q = 0.65

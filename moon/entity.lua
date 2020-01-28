@@ -16,6 +16,7 @@ do
       end
     end,
     draw = function(self)
+      self.color = colors[self.colorType][self.colorName]
       love.graphics.setColor(self.color)
       if debugDrawSprites then
         love.graphics.draw(self.sprite, floor(self.pos.x), floor(self.pos.y))

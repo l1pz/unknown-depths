@@ -98,4 +98,17 @@ love.draw = ->
   love.graphics.translate 0, -uiHeight
   ui\draw!
   push\finish!
+
+love.keypressed = (key) ->
+  switch key
+    when "f1" then debugDrawSprites = not debugDrawSprites
+    when "f2" then debugDrawCollisionBoxes = not debugDrawCollisionBoxes
+    when "right"
+      colorScheme+=1
+      if colorScheme > #colorSchemes then colorScheme = 1
+      colors = colorSchemes[colorScheme]
+    when "left"
+      colorScheme-=1
+      if colorScheme < 1 then colorScheme = #colorSchemes
+      colors = colorSchemes[colorScheme]
   
