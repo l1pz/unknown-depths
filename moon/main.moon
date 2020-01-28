@@ -10,6 +10,7 @@ require "moon/input"
 require "moon/ui"
 require "moon/sprites"
 require "moon/entity"
+require "moon/weapon"
 require "moon/dungeon"
 require "moon/player"
 require "moon/wall"
@@ -19,13 +20,13 @@ require "moon/door"
 export gameWidth = 256
 export gameHeight = 224
 export uiWidth = gameWidth
-export uiHeight = 32
+export uiHeight = 40
 export tileSize = 16
 
 export world = bump.newWorld!
 export player
 
-windowScale = 4
+windowScale = 3
 windowWidth = gameWidth * windowScale
 windowHeight = (gameHeight + uiHeight) * windowScale
 

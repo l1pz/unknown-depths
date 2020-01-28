@@ -6,6 +6,7 @@ export class Player extends Entity
       switch other.__class
         when Wall return "slide"
         when Door return "cross"
+    @weapon = Weapon!
   update: (dt) => 
     ix, iy = input\get "move"
     dir = Vector ix, iy

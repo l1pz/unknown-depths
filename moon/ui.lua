@@ -3,7 +3,31 @@ do
   local _base_0 = {
     draw = function(self)
       love.graphics.setColor(0, 0, 0)
-      return love.graphics.rectangle("fill", 0, 0, self.width, self.height)
+      love.graphics.rectangle("fill", 0, 0, self.width, self.height)
+      self:drawPlayerWeapon()
+      return self:drawPlayerSpell()
+    end,
+    drawPlayerWeapon = function(self)
+      local weapon = player.weapon
+      love.graphics.setColor(self.fgColor)
+      local frameWidth = sprites.weaponFrame:getWidth()
+      local frameHeight = sprites.weaponFrame:getHeight()
+      local fx, fy = 144, (self.height - frameHeight) / 2
+      love.graphics.draw(sprites.weaponFrame, fx, fy)
+      love.graphics.setColor(weapon.color)
+      local dx, dy = frameWidth / 2, frameHeight / 2
+      return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
+    end,
+    drawPlayerSpell = function(self)
+      local weapon = player.weapon
+      love.graphics.setColor(self.fgColor)
+      local frameWidth = sprites.spellFrame:getWidth()
+      local frameHeight = sprites.spellFrame:getHeight()
+      local fx, fy = 176, (self.height - frameHeight) / 2
+      love.graphics.draw(sprites.spellFrame, fx, fy)
+      love.graphics.setColor(weapon.color)
+      local dx, dy = frameWidth / 2, frameHeight / 2
+      return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
     end
   }
   _base_0.__index = _base_0

@@ -1,10 +1,17 @@
 sprites = { }
+local newSprite
+newSprite = function(name)
+  return love.graphics.newImage("assets/sprites/" .. tostring(name) .. ".png")
+end
 sprites.load = function(self)
-  self.player = love.graphics.newImage("assets/sprites/player.png")
-  self.wall = love.graphics.newImage("assets/sprites/wall.png")
+  self.player = newSprite("player")
+  self.wall = newSprite("wall")
   self.door = { }
-  self.door.top = love.graphics.newImage("assets/sprites/doorTop.png")
-  self.door.bottom = love.graphics.newImage("assets/sprites/doorBottom.png")
-  self.door.right = love.graphics.newImage("assets/sprites/doorRight.png")
-  self.door.left = love.graphics.newImage("assets/sprites/doorLeft.png")
+  self.door.top = newSprite("doorTop")
+  self.door.bottom = newSprite("doorBottom")
+  self.door.right = newSprite("doorRight")
+  self.door.left = newSprite("doorLeft")
+  self.bow = newSprite("bow")
+  self.weaponFrame = newSprite("weaponFrame")
+  self.spellFrame = newSprite("spellFrame")
 end

@@ -34,6 +34,7 @@ do
           return "cross"
         end
       end
+      self.weapon = Weapon()
     end,
     __base = _base_0,
     __name = "Player",

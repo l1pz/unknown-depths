@@ -10,6 +10,7 @@ require("moon/input")
 require("moon/ui")
 require("moon/sprites")
 require("moon/entity")
+require("moon/weapon")
 require("moon/dungeon")
 require("moon/player")
 require("moon/wall")
@@ -18,10 +19,10 @@ require("moon/door")
 gameWidth = 256
 gameHeight = 224
 uiWidth = gameWidth
-uiHeight = 32
+uiHeight = 40
 tileSize = 16
 world = bump.newWorld()
-local windowScale = 4
+local windowScale = 3
 local windowWidth = gameWidth * windowScale
 local windowHeight = (gameHeight + uiHeight) * windowScale
 local roomsCount = 3

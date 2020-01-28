@@ -2,8 +2,8 @@ import floor from math
 export class Entity
   new: (x, y, sprite, @colorType = "normal", @colorName = "foreground") =>
     @pos = Vector x, y
-    @\changeSprite sprite, false
-    @\refreshColors!
+    @changeSprite sprite, false
+    @refreshColors!
     @body   = world\add @, @pos.x, @pos.y, @dim.x, @dim.y
     @filter = (item, other) ->
       return "cross"
