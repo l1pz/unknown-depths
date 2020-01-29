@@ -56,6 +56,8 @@ love.load = function()
     insert(colorSchemes, scheme)
   end
   colors = colorSchemes[colorScheme]
+  font = love.graphics.newImageFont('assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1)
+  love.graphics.setFont(font)
   ui = UI(uiWidth, uiHeight, colors["primary"]["foreground"])
   sprites:load()
   dungeon = Dungeon(roomsCount)

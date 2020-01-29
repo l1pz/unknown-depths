@@ -23,6 +23,8 @@ export uiWidth = gameWidth
 export uiHeight = 40
 export tileSize = 16
 
+export font
+
 export world = bump.newWorld!
 export player
 
@@ -65,6 +67,8 @@ love.load = ->
     insert(colorSchemes, scheme)
   colors = colorSchemes[colorScheme]
 
+  font = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
+  love.graphics.setFont font 
   ui = UI uiWidth, uiHeight, colors["primary"]["foreground"]
 
   sprites\load!

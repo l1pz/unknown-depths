@@ -12,7 +12,5 @@ sprites.load = =>
   @door.right = newSprite "doorRight"
   @door.left = newSprite "doorLeft"
   @bow = newSprite "bow"
-  @weaponFrame = newSprite "weaponFrame"
-  @spellFrame = newSprite "spellFrame"
+  @frame = newSprite "frame"
   @heart = newSprite "heart"
-  @healthText = newSprite "healthText"

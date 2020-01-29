@@ -4,47 +4,48 @@ do
     draw = function(self)
       love.graphics.setColor(0, 0, 0)
       love.graphics.rectangle("fill", 0, 0, self.width, self.height)
-      self:drawWeapon()
-      self:drawSpell()
+      self:drawFrame("weapon", player.weapon, 144)
+      self:drawFrame("spell", player.weapon, 176)
       return self:drawHealth()
     end,
-    drawWeapon = function(self)
-      local weapon = player.weapon
-      love.graphics.setColor(self.fgColor)
-      local frameWidth = sprites.weaponFrame:getWidth()
-      local frameHeight = sprites.weaponFrame:getHeight()
-      local fx, fy = 144, (self.height - frameHeight) / 2
-      love.graphics.draw(sprites.weaponFrame, fx, fy)
-      love.graphics.setColor(weapon.color)
-      local dx, dy = frameWidth / 2, frameHeight / 2
-      return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
+    text = function(self, s, x, y, center)
+      if center == nil then
+        center = false
+      end
+      s = s:upper()
+      local offset
+      if center then
+        offset = font:getWidth(s) / 2
+      else
+        offset = 0
+      end
+      return love.graphics.print(s, x - offset, y)
     end,
-    drawSpell = function(self)
-      local weapon = player.weapon
+    drawFrame = function(self, title, item, x)
       love.graphics.setColor(self.fgColor)
-      local frameWidth = sprites.spellFrame:getWidth()
-      local frameHeight = sprites.spellFrame:getHeight()
-      local fx, fy = 176, (self.height - frameHeight) / 2
-      love.graphics.draw(sprites.spellFrame, fx, fy)
-      love.graphics.setColor(weapon.color)
+      local frameWidth = sprites.frame:getWidth()
+      local frameHeight = sprites.frame:getHeight()
+      local fx, fy = x, self.imageHeight
+      self:text(title, fx + frameWidth / 2, self.textHeight, true)
+      love.graphics.draw(sprites.frame, fx, fy)
+      love.graphics.setColor(item.color)
       local dx, dy = frameWidth / 2, frameHeight / 2
-      return love.graphics.draw(weapon.sprite, fx + dx - weapon.offset.x, fy + dy - weapon.offset.y + 4)
+      return love.graphics.draw(item.sprite, fx + dx - item.offset.x, fy + dy - item.offset.y)
     end,
     drawHealth = function(self)
       love.graphics.setColor(colors["normal"]["red"])
-      local sx = 212
-      local healthTextWidth = sprites.healthText:getWidth()
-      love.graphics.draw(sprites.healthText, sx + 3, 5)
-      local heartHeight = sprites.heart:getHeight()
+      local hx = 212
+      local hy = self.imageHeight
+      self:text("health", hx + 13, 4, true)
       for heart = 0, player.health - 1 do
-        local q
-        if heart < 2 then
-          q = 0.4
+        local hhx = hx + heart % 3 * 10
+        local hhy
+        if heart < 3 then
+          hhy = hy
         else
-          q = 0.65
+          hhy = hy + sprites.heart:getHeight() + 2
         end
-        local fx, fy = sx + heart % 3 * 10, self.height * q
-        love.graphics.draw(sprites.heart, fx, fy)
+        love.graphics.draw(sprites.heart, hhx, hhy)
       end
     end
   }
@@ -52,6 +53,8 @@ do
   _class_0 = setmetatable({
     __init = function(self, width, height, fgColor)
       self.width, self.height, self.fgColor = width, height, fgColor
+      self.textHeight = 4
+      self.imageHeight = 12
     end,
     __base = _base_0,
     __name = "UI"
