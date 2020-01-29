@@ -11,6 +11,7 @@ require "moon/ui"
 require "moon/sprites"
 require "moon/entity"
 require "moon/weapon"
+require "moon/bow"
 require "moon/dungeon"
 require "moon/player"
 require "moon/wall"
@@ -69,7 +70,7 @@ love.load = ->
 
   font = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
   love.graphics.setFont font 
-  ui = UI uiWidth, uiHeight, colors["primary"]["foreground"]
+  ui = UI uiWidth, uiHeight
 
   sprites\load!
 

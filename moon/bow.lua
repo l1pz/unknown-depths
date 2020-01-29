@@ -1,23 +1,15 @@
 do
   local _class_0
-  local _parent_0 = Entity
+  local _parent_0 = Weapon
   local _base_0 = { }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self, x, y, orientation, room)
-      self.orientation, self.room = orientation, room
-      _class_0.__parent.__init(self, x, y, sprites.door[self.orientation])
-      local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
-      for _, item in pairs(items) do
-        if item.__class == Wall then
-          room.walls[item] = nil
-          world:remove(item)
-        end
-      end
+    __init = function(self)
+      return _class_0.__parent.__init(self, sprites.bow)
     end,
     __base = _base_0,
-    __name = "Door",
+    __name = "Bow",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -41,5 +33,5 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Door = _class_0
+  Bow = _class_0
 end

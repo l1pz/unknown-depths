@@ -1,16 +1,24 @@
 export sprites = {}
 
-newSprite = (name) ->
-  return love.graphics.newImage "assets/sprites/#{name}.png"
+newSprite = (name, colorType, colorName) ->
+  img = love.graphics.newImage "assets/sprites/#{name}.png"
+  return {
+    img: img
+    width: img\getWidth!
+    height: img\getHeight!
+    color: colors[colorType][colorName]
+    colorType: colorType
+    colorName:colorName
+  }
 
 sprites.load = =>
-  @player = newSprite "player"
-  @wall = newSprite "wall"
+  @player = newSprite "player", "normal", "blue"
+  @wall = newSprite "wall", "normal", "white"
   @door = {}
-  @door.top = newSprite "doorTop"
-  @door.bottom = newSprite "doorBottom"
-  @door.right = newSprite "doorRight"
-  @door.left = newSprite "doorLeft"
-  @bow = newSprite "bow"
-  @frame = newSprite "frame"
-  @heart = newSprite "heart"
+  @door.top = newSprite "doorTop", "normal", "red"
+  @door.bottom = newSprite "doorBottom", "normal", "red"
+  @door.right = newSprite "doorRight", "normal", "red"
+  @door.left = newSprite "doorLeft", "normal", "red"
+  @bow = newSprite "bow", "normal", "green"
+  @frame = newSprite "frame", "normal", "white"
+  @heart = newSprite "heart", "normal", "red"

@@ -1,12 +1,32 @@
+local floor
+floor = math.floor
 do
   local _class_0
   local _parent_0 = Entity
-  local _base_0 = { }
+  local _base_0 = {
+    changeSprite = function(self, sprite)
+      self.sprite = sprite
+      self.dim = Vector(self.sprite.width, self.sprite.height)
+      local halfDim = self.dim / 2
+      self.offset = Vector(floor(halfDim.x), floor(halfDim.y))
+    end,
+    draw = function(self)
+      self.color = self.sprite.color
+      return love.graphics.draw(self.sprite.img, floor(self.pos.x), floor(self.pos.y))
+    end
+  }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self)
-      return _class_0.__parent.__init(self, 0, 0, sprites.bow, "normal", "green")
+    __init = function(self, sprite, cooldown, knockback)
+      if cooldown == nil then
+        cooldown = 0.5
+      end
+      if knockback == nil then
+        knockback = 1
+      end
+      self.cooldown, self.knockback = cooldown, knockback
+      return self:changeSprite(sprite)
     end,
     __base = _base_0,
     __name = "Weapon",

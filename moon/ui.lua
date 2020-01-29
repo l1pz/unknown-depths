@@ -22,20 +22,20 @@ do
       return love.graphics.print(s, x - offset, y)
     end,
     drawFrame = function(self, title, item, x)
-      love.graphics.setColor(self.fgColor)
-      local frameWidth = sprites.frame:getWidth()
-      local frameHeight = sprites.frame:getHeight()
+      love.graphics.setColor(sprites.frame.color)
+      local frameWidth = sprites.frame.width
+      local frameHeight = sprites.frame.height
       local fx, fy = x, self.imageHeight
       self:text(title, fx + frameWidth / 2, self.textHeight, true)
-      love.graphics.draw(sprites.frame, fx, fy)
-      love.graphics.setColor(item.color)
+      love.graphics.draw(sprites.frame.img, fx, fy)
+      love.graphics.setColor(item.sprite.color)
       local dx, dy = frameWidth / 2, frameHeight / 2
-      return love.graphics.draw(item.sprite, fx + dx - item.offset.x, fy + dy - item.offset.y)
+      return love.graphics.draw(item.sprite.img, fx + dx - item.offset.x, fy + dy - item.offset.y)
     end,
     drawHealth = function(self)
-      love.graphics.setColor(colors["normal"]["red"])
       local hx = 212
       local hy = self.imageHeight
+      love.graphics.setColor(sprites.heart.color)
       self:text("health", hx + 13, 4, true)
       for heart = 0, player.health - 1 do
         local hhx = hx + heart % 3 * 10
@@ -43,16 +43,16 @@ do
         if heart < 3 then
           hhy = hy
         else
-          hhy = hy + sprites.heart:getHeight() + 2
+          hhy = hy + sprites.heart.height + 2
         end
-        love.graphics.draw(sprites.heart, hhx, hhy)
+        love.graphics.draw(sprites.heart.img, hhx, hhy)
       end
     end
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
-    __init = function(self, width, height, fgColor)
-      self.width, self.height, self.fgColor = width, height, fgColor
+    __init = function(self, width, height)
+      self.width, self.height = width, height
       self.textHeight = 4
       self.imageHeight = 12
     end,

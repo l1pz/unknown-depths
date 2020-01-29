@@ -1,1 +1,1 @@
-return fgColor
+return width

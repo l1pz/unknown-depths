@@ -24,7 +24,7 @@ do
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self, x, y)
-      _class_0.__parent.__init(self, x, y, sprites.player, "normal", "blue")
+      _class_0.__parent.__init(self, x, y, sprites.player)
       self.speed = 96
       self.health = 6
       self.filter = function(item, other)
@@ -35,7 +35,7 @@ do
           return "cross"
         end
       end
-      self.weapon = Weapon()
+      self.weapon = Bow()
     end,
     __base = _base_0,
     __name = "Player",

@@ -8,7 +8,7 @@ do
         update = true
       end
       self.sprite = sprite
-      self.dim = Vector(self.sprite:getWidth(), self.sprite:getHeight())
+      self.dim = Vector(self.sprite.width, self.sprite.height)
       local halfDim = self.dim / 2
       self.offset = Vector(floor(halfDim.x), floor(halfDim.y))
       if update then
@@ -16,33 +16,21 @@ do
       end
     end,
     draw = function(self)
-      self.color = colors[self.colorType][self.colorName]
-      love.graphics.setColor(self.color)
+      love.graphics.setColor(self.sprite.color)
       if debugDrawSprites then
-        love.graphics.draw(self.sprite, floor(self.pos.x), floor(self.pos.y))
+        love.graphics.draw(self.sprite.img, floor(self.pos.x), floor(self.pos.y))
       end
       if debugDrawCollisionBoxes then
         local x, y, w, h = world:getRect(self)
         return love.graphics.rectangle("line", x, y, w, h)
       end
-    end,
-    refreshColors = function(self)
-      self.color = colors[self.colorType][self.colorName]
     end
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
-    __init = function(self, x, y, sprite, colorType, colorName)
-      if colorType == nil then
-        colorType = "normal"
-      end
-      if colorName == nil then
-        colorName = "foreground"
-      end
-      self.colorType, self.colorName = colorType, colorName
+    __init = function(self, x, y, sprite)
       self.pos = Vector(x, y)
       self:changeSprite(sprite, false)
-      self:refreshColors()
       self.body = world:add(self, self.pos.x, self.pos.y, self.dim.x, self.dim.y)
       self.filter = function(item, other)
         return "cross"

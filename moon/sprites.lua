@@ -1,17 +1,25 @@
 sprites = { }
 local newSprite
-newSprite = function(name)
-  return love.graphics.newImage("assets/sprites/" .. tostring(name) .. ".png")
+newSprite = function(name, colorType, colorName)
+  local img = love.graphics.newImage("assets/sprites/" .. tostring(name) .. ".png")
+  return {
+    img = img,
+    width = img:getWidth(),
+    height = img:getHeight(),
+    color = colors[colorType][colorName],
+    colorType = colorType,
+    colorName = colorName
+  }
 end
 sprites.load = function(self)
-  self.player = newSprite("player")
-  self.wall = newSprite("wall")
+  self.player = newSprite("player", "normal", "blue")
+  self.wall = newSprite("wall", "normal", "white")
   self.door = { }
-  self.door.top = newSprite("doorTop")
-  self.door.bottom = newSprite("doorBottom")
-  self.door.right = newSprite("doorRight")
-  self.door.left = newSprite("doorLeft")
-  self.bow = newSprite("bow")
-  self.frame = newSprite("frame")
-  self.heart = newSprite("heart")
+  self.door.top = newSprite("doorTop", "normal", "red")
+  self.door.bottom = newSprite("doorBottom", "normal", "red")
+  self.door.right = newSprite("doorRight", "normal", "red")
+  self.door.left = newSprite("doorLeft", "normal", "red")
+  self.bow = newSprite("bow", "normal", "green")
+  self.frame = newSprite("frame", "normal", "white")
+  self.heart = newSprite("heart", "normal", "red")
 end
