@@ -1,8 +1,11 @@
+local insert
+insert = table.insert
 sprites = { }
+local spritesAll = { }
 local newSprite
 newSprite = function(name, colorType, colorName)
   local img = love.graphics.newImage("assets/sprites/" .. tostring(name) .. ".png")
-  return {
+  local sprite = {
     img = img,
     width = img:getWidth(),
     height = img:getHeight(),
@@ -10,6 +13,8 @@ newSprite = function(name, colorType, colorName)
     colorType = colorType,
     colorName = colorName
   }
+  insert(spritesAll, sprite)
+  return sprite
 end
 sprites.load = function(self)
   self.player = newSprite("player", "normal", "blue")
@@ -22,4 +27,11 @@ sprites.load = function(self)
   self.bow = newSprite("bow", "normal", "green")
   self.frame = newSprite("frame", "normal", "white")
   self.heart = newSprite("heart", "normal", "red")
+end
+sprites.refreshColors = function(self)
+  for _, sprite in pairs(spritesAll) do
+    do
+      sprite.color = colors[sprite.colorType][sprite.colorName]
+    end
+  end
 end

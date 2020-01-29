@@ -1,8 +1,12 @@
+import insert from table
+
 export sprites = {}
+
+spritesAll = {}
 
 newSprite = (name, colorType, colorName) ->
   img = love.graphics.newImage "assets/sprites/#{name}.png"
-  return {
+  sprite =  {
     img: img
     width: img\getWidth!
     height: img\getHeight!
@@ -10,6 +14,8 @@ newSprite = (name, colorType, colorName) ->
     colorType: colorType
     colorName:colorName
   }
+  insert spritesAll, sprite
+  return sprite
 
 sprites.load = =>
   @player = newSprite "player", "normal", "blue"
@@ -22,3 +28,8 @@ sprites.load = =>
   @bow = newSprite "bow", "normal", "green"
   @frame = newSprite "frame", "normal", "white"
   @heart = newSprite "heart", "normal", "red"
+
+sprites.refreshColors = =>
+  for _, sprite in pairs spritesAll
+      with sprite
+        .color = colors[.colorType][.colorName]

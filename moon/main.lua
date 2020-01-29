@@ -104,11 +104,13 @@ love.keypressed = function(key)
       colorScheme = 1
     end
     colors = colorSchemes[colorScheme]
+    return sprites:refreshColors()
   elseif "left" == _exp_0 then
     colorScheme = colorScheme - 1
     if colorScheme < 1 then
       colorScheme = #colorSchemes
     end
     colors = colorSchemes[colorScheme]
+    return sprites:refreshColors()
   end
 end

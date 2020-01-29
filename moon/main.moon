@@ -112,8 +112,10 @@ love.keypressed = (key) ->
       colorScheme+=1
       if colorScheme > #colorSchemes then colorScheme = 1
       colors = colorSchemes[colorScheme]
+      sprites\refreshColors!
     when "left"
       colorScheme-=1
       if colorScheme < 1 then colorScheme = #colorSchemes
       colors = colorSchemes[colorScheme]
+      sprites\refreshColors!
   
