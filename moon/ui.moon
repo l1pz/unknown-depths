@@ -2,38 +2,53 @@ export class UI
   new: (@width, @height) =>
     @textHeight = 4
     @imageHeight = 12
+    @counterX = width - 64 -- 116
+    @weaponX = width / 2 - 16  -- 152
+    @spellX = width / 2 + 16   -- 184
+    @healthX = 32  -- 216
     
   draw: =>
     love.graphics.setColor 0, 0, 0
     love.graphics.rectangle "fill", 0, 0, @width, @height
-    @drawFrame "weapon", player.weapon, 144
-    @drawFrame "spell", player.weapon, 176
+    @drawFrame "weapon", player.weapon, @weaponX
+    @drawFrame "spell", player.spell, @spellX
     @drawHealth!
+    @text "items", @counterX + 2, @textHeight
+    @drawCounter 0, sprites.gold, player.gold
+    @drawCounter 8, sprites.bomb, player.bombs
+    @drawCounter 16, sprites.key, player.keys
 
-  text: (s, x, y, center = false) =>
+  text: (s, x, y, color = colors["normal"]["white"], center = false) =>
     s= s\upper!
     offset = if center then font\getWidth(s) / 2 else 0
+    love.graphics.setColor color
     love.graphics.print( s, x - offset, y)
   
   drawFrame: (title, item, x) =>
     love.graphics.setColor sprites.frame.color
     frameWidth = sprites.frame.width
     frameHeight = sprites.frame.height
-    fx, fy = x, @imageHeight
-    @text title, fx + frameWidth / 2, @textHeight, true
-    love.graphics.draw sprites.frame.img, fx, fy
-
-    love.graphics.setColor item.sprite.color
+    x = x - frameWidth / 2
+    y = @imageHeight
+    @text title, x + frameWidth / 2, @textHeight, item.sprite.color, true
+    love.graphics.setColor colors["normal"]["white"]
+    love.graphics.draw sprites.frame.img, x, y
     dx, dy = frameWidth / 2, frameHeight / 2
-    love.graphics.draw item.sprite.img, fx + dx - item.offset.x, fy + dy - item.offset.y
+    item\draw x + dx - item.offset.x, y + dy - item.offset.y
   drawHealth: =>
-    hx = 212
-    hy = @imageHeight
-    love.graphics.setColor sprites.heart.color
-    @text "health", hx + 13, 4, true
+    x = @healthX
+    y = @imageHeight
+    @text "health", x + 13, 4, sprites.heart.color, true
     for heart = 0, player.health - 1
-      hhx = hx + heart % 3 * 10
-      hhy = if heart < 3 then hy else hy + sprites.heart.height + 2
-      love.graphics.draw sprites.heart.img, hhx, hhy
+      hx = x + heart % 3 * 10
+      hy = if heart < 3 then y else y + sprites.heart.height + 2
+      love.graphics.setColor sprites.heart.color
+      love.graphics.draw sprites.heart.img, hx, hy
+  drawCounter: (yOffset, sprite, number) =>
+    x = @counterX
+    y = @imageHeight + yOffset
+    love.graphics.setColor sprite.color
+    love.graphics.draw sprite.img, x, y
+    @text " x #{number}", x + sprite.width, y, sprite.color
 
   

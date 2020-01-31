@@ -9,9 +9,16 @@ require "moon/helpers"
 require "moon/input"
 require "moon/ui"
 require "moon/sprites"
+require "moon/item"
 require "moon/entity"
+
+-- Weapons
 require "moon/weapon"
 require "moon/bow"
+
+-- Spells
+require "moon/ignite"
+
 require "moon/dungeon"
 require "moon/player"
 require "moon/wall"

@@ -4,11 +4,18 @@ do
     draw = function(self)
       love.graphics.setColor(0, 0, 0)
       love.graphics.rectangle("fill", 0, 0, self.width, self.height)
-      self:drawFrame("weapon", player.weapon, 144)
-      self:drawFrame("spell", player.weapon, 176)
-      return self:drawHealth()
+      self:drawFrame("weapon", player.weapon, self.weaponX)
+      self:drawFrame("spell", player.spell, self.spellX)
+      self:drawHealth()
+      self:text("items", self.counterX + 2, self.textHeight)
+      self:drawCounter(0, sprites.gold, player.gold)
+      self:drawCounter(8, sprites.bomb, player.bombs)
+      return self:drawCounter(16, sprites.key, player.keys)
     end,
-    text = function(self, s, x, y, center)
+    text = function(self, s, x, y, color, center)
+      if color == nil then
+        color = colors["normal"]["white"]
+      end
       if center == nil then
         center = false
       end
@@ -19,34 +26,43 @@ do
       else
         offset = 0
       end
+      love.graphics.setColor(color)
       return love.graphics.print(s, x - offset, y)
     end,
     drawFrame = function(self, title, item, x)
       love.graphics.setColor(sprites.frame.color)
       local frameWidth = sprites.frame.width
       local frameHeight = sprites.frame.height
-      local fx, fy = x, self.imageHeight
-      self:text(title, fx + frameWidth / 2, self.textHeight, true)
-      love.graphics.draw(sprites.frame.img, fx, fy)
-      love.graphics.setColor(item.sprite.color)
+      x = x - frameWidth / 2
+      local y = self.imageHeight
+      self:text(title, x + frameWidth / 2, self.textHeight, item.sprite.color, true)
+      love.graphics.setColor(colors["normal"]["white"])
+      love.graphics.draw(sprites.frame.img, x, y)
       local dx, dy = frameWidth / 2, frameHeight / 2
-      return love.graphics.draw(item.sprite.img, fx + dx - item.offset.x, fy + dy - item.offset.y)
+      return item:draw(x + dx - item.offset.x, y + dy - item.offset.y)
     end,
     drawHealth = function(self)
-      local hx = 212
-      local hy = self.imageHeight
-      love.graphics.setColor(sprites.heart.color)
-      self:text("health", hx + 13, 4, true)
+      local x = self.healthX
+      local y = self.imageHeight
+      self:text("health", x + 13, 4, sprites.heart.color, true)
       for heart = 0, player.health - 1 do
-        local hhx = hx + heart % 3 * 10
-        local hhy
+        local hx = x + heart % 3 * 10
+        local hy
         if heart < 3 then
-          hhy = hy
+          hy = y
         else
-          hhy = hy + sprites.heart.height + 2
+          hy = y + sprites.heart.height + 2
         end
-        love.graphics.draw(sprites.heart.img, hhx, hhy)
+        love.graphics.setColor(sprites.heart.color)
+        love.graphics.draw(sprites.heart.img, hx, hy)
       end
+    end,
+    drawCounter = function(self, yOffset, sprite, number)
+      local x = self.counterX
+      local y = self.imageHeight + yOffset
+      love.graphics.setColor(sprite.color)
+      love.graphics.draw(sprite.img, x, y)
+      return self:text(" x " .. tostring(number), x + sprite.width, y, sprite.color)
     end
   }
   _base_0.__index = _base_0
@@ -55,6 +71,10 @@ do
       self.width, self.height = width, height
       self.textHeight = 4
       self.imageHeight = 12
+      self.counterX = width - 64
+      self.weaponX = width / 2 - 16
+      self.spellX = width / 2 + 16
+      self.healthX = 32
     end,
     __base = _base_0,
     __name = "UI"

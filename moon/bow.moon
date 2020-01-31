@@ -1,3 +1,3 @@
-export class Bow extends Weapon
+export class Bow extends Item
   new: =>
     super sprites.bow

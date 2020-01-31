@@ -6,10 +6,10 @@ do
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self)
-      return _class_0.__parent.__init(self, sprites.bow)
+      return _class_0.__parent.__init(self, sprites.ignite)
     end,
     __base = _base_0,
-    __name = "Bow",
+    __name = "Ignite",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -33,5 +33,5 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Bow = _class_0
+  Ignite = _class_0
 end

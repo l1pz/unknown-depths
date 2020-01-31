@@ -3,14 +3,15 @@ export class Player extends Entity
     super x, y, sprites.player
     @speed = 96
     @health = 6
-    @gold = 1
-    @keys = 1
-    @bombs = 1
+    @gold = 99
+    @keys = 99
+    @bombs = 99
     @filter = (item, other) ->
       switch other.__class
         when Wall return "slide"
         when Door return "cross"
     @weapon = Bow!
+    @spell = Ignite!
   update: (dt) => 
     ix, iy = input\get "move"
     dir = Vector ix, iy

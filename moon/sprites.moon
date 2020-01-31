@@ -28,6 +28,10 @@ sprites.load = =>
   @bow = newSprite "bow", "normal", "green"
   @frame = newSprite "frame", "normal", "white"
   @heart = newSprite "heart", "normal", "red"
+  @key = newSprite "key", "normal", "magenta"
+  @bomb = newSprite "bomb", "normal", "cyan"
+  @gold = newSprite "gold", "normal", "yellow"
+  @ignite = newSprite "ignite", "normal", "red"
 
 sprites.refreshColors = =>
   for _, sprite in pairs spritesAll
