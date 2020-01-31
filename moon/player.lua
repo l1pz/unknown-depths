@@ -27,6 +27,9 @@ do
       _class_0.__parent.__init(self, x, y, sprites.player)
       self.speed = 96
       self.health = 6
+      self.gold = 1
+      self.keys = 1
+      self.bombs = 1
       self.filter = function(item, other)
         local _exp_0 = other.__class
         if Wall == _exp_0 then

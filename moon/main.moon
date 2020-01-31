@@ -29,10 +29,16 @@ export font
 export world = bump.newWorld!
 export player
 
+fullScreen = false
+local windowWidth, windowHeight
 windowScale = 3
-windowWidth = gameWidth * windowScale
-windowHeight = (gameHeight + uiHeight) * windowScale
 
+if fullScreen
+  windowWidth, windowHeight = love.window.getDesktopDimensions()
+else
+  windowWidth = gameWidth * windowScale
+  windowHeight = (gameHeight + uiHeight) * windowScale
+ 
 roomsCount = 3
 
 export colors
@@ -53,7 +59,7 @@ love.load = ->
   love.graphics.setLineStyle "rough"
   
   push\setupScreen gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
-    fullscreen: false
+    fullscreen: fullScreen
     resizeable: false
     pixelperfect: true
   }

@@ -23,9 +23,15 @@ uiWidth = gameWidth
 uiHeight = 40
 tileSize = 16
 world = bump.newWorld()
+local fullScreen = false
+local windowWidth, windowHeight
 local windowScale = 3
-local windowWidth = gameWidth * windowScale
-local windowHeight = (gameHeight + uiHeight) * windowScale
+if fullScreen then
+  windowWidth, windowHeight = love.window.getDesktopDimensions()
+else
+  windowWidth = gameWidth * windowScale
+  windowHeight = (gameHeight + uiHeight) * windowScale
+end
 local roomsCount = 3
 local colorSchemes = { }
 local colorScheme = 5
@@ -39,7 +45,7 @@ love.load = function()
   love.graphics.setDefaultFilter("nearest", "nearest")
   love.graphics.setLineStyle("rough")
   push:setupScreen(gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
-    fullscreen = false,
+    fullscreen = fullScreen,
     resizeable = false,
     pixelperfect = true
   })
