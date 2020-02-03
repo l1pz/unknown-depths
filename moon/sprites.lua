@@ -32,6 +32,8 @@ sprites.load = function(self)
   self.gold = newSprite("gold", "normal", "yellow")
   self.ignite = newSprite("ignite", "normal", "red")
   self.arrow = newSprite("arrow", "normal", "cyan")
+  self.chestClosed = newSprite("chestClosed", "normal", "magenta")
+  self.chestOpen = newSprite("chestOpen", "normal", "magenta")
 end
 sprites.refreshColors = function(self)
   for _, sprite in pairs(spritesAll) do

@@ -4,5 +4,7 @@ export class Door extends Entity
         items, len = world\queryRect @pos.x, @pos.y, @dim.x, @dim.y
         for _, item in pairs items
             if item.__class == Wall then
-                room.entities[item] = nil
-                world\remove item
+                @room\removeEntity item
+    checkCurrentRoom: () =>
+        if @room\isInside player.pos + player.offset
+            dungeon.currentRoom = @room

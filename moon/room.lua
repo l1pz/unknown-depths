@@ -21,7 +21,7 @@ do
     addWall = function(self, x, y)
       local pos = self:getPosition(x, y)
       local wall = Wall(pos.x, pos.y)
-      self.entities[wall] = wall
+      return self:addEntity(wall)
     end,
     placeDoors = function(self, adjacents)
       if not (adjacents) then
@@ -40,8 +40,21 @@ do
           pos = self:getPosition(0, gameHeight / 2 - tileSize)
         end
         local door = Door(pos.x, pos.y, dir, self)
-        self.entities[door] = door
+        self:addEntity(door)
       end
+    end,
+    addEntity = function(self, entity)
+      self.entities[entity] = entity
+    end,
+    removeEntity = function(self, entity)
+      world:remove(entity)
+      self.entities[entity] = nil
+    end,
+    isInside = function(self, pos)
+      if pos.x >= self.pos.x and pos.x <= self.pos.x + self.dim.x and pos.y >= self.pos.y and pos.y <= self.pos.y + self.dim.y then
+        return true
+      end
+      return false
     end,
     draw = function(self)
       for _, e in pairs(self.entities) do

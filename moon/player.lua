@@ -2,6 +2,16 @@ do
   local _class_0
   local _parent_0 = Entity
   local _base_0 = {
+    filter = function(item, other)
+      local _exp_0 = other.__class
+      if Wall == _exp_0 then
+        return "slide"
+      elseif Chest == _exp_0 then
+        return "slide"
+      elseif Door == _exp_0 then
+        return "cross"
+      end
+    end,
     update = function(self, dt)
       local ix, iy = input:get("move")
       local dir = Vector(ix, iy)
@@ -12,15 +22,11 @@ do
       for _index_0 = 1, #cols do
         local col = cols[_index_0]
         local other = col.other
-        if other.__class == Wall then
-          local _
-          do
-            local _base_1 = other
-            local _fn_0 = _base_1.checkCurrentRoom
-            _ = function(...)
-              return _fn_0(_base_1, ...)
-            end
-          end
+        if other.__class == Door then
+          other:checkCurrentRoom()
+        end
+        if other.__class == Chest then
+          other:open()
         end
       end
     end
@@ -35,14 +41,6 @@ do
       self.gold = 99
       self.keys = 99
       self.bombs = 99
-      self.filter = function(item, other)
-        local _exp_0 = other.__class
-        if Wall == _exp_0 then
-          return "slide"
-        elseif Door == _exp_0 then
-          return "cross"
-        end
-      end
       self.weapon = nil
       self.spell = nil
     end,

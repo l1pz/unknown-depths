@@ -19,6 +19,7 @@ require("moon/player")
 require("moon/wall")
 require("moon/room")
 require("moon/door")
+require("moon/chest")
 gameWidth = 256
 gameHeight = 224
 uiWidth = gameWidth
@@ -37,7 +38,6 @@ end
 local roomsCount = 16
 local colorSchemes = { }
 local colorScheme = 6
-local dungeon
 local camera
 local ui
 debugDrawSprites = true
@@ -82,7 +82,7 @@ end
 love.update = function(dt)
   do
     camera:update(dt)
-    camera:follow(player.pos.x, player.pos.y)
+    camera:follow(player.pos.x + player.offset.x, player.pos.y + player.offset.y)
   end
   input:update()
   dungeon:update(dt)

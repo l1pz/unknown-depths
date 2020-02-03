@@ -17,15 +17,14 @@ export class UI
     @drawCounter 0, sprites.gold, player.gold
     @drawCounter 8, sprites.bomb, player.bombs
     @drawCounter 16, sprites.key, player.keys
-
+    
   text: (s, x, y, color = colors["normal"]["white"], center = false) =>
-    s= s\upper!
+    s = s\upper!
     offset = if center then font\getWidth(s) / 2 else 0
     love.graphics.setColor color
     love.graphics.print( s, x - offset, y)
   
   drawFrame: (title, item, x) =>
-    
     love.graphics.setColor sprites.frame.color
     frameWidth = sprites.frame.width
     frameHeight = sprites.frame.height

@@ -24,6 +24,7 @@ require "moon/player"
 require "moon/wall"
 require "moon/room"
 require "moon/door"
+require "moon/chest"
 
 export gameWidth = 256
 export gameHeight = 224
@@ -52,7 +53,7 @@ export colors
 colorSchemes = {}
 colorScheme = 6
 
-local dungeon
+export dungeon
 local camera
 
 local ui
@@ -101,7 +102,7 @@ love.load = ->
 love.update = (dt) ->
   with camera
     \update dt
-    \follow player.pos.x, player.pos.y
+    \follow player.pos.x + player.offset.x, player.pos.y + player.offset.y
   input\update!
   dungeon\update dt
   player\update dt

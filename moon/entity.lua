@@ -3,6 +3,9 @@ floor = math.floor
 do
   local _class_0
   local _base_0 = {
+    filter = function(item, other)
+      return "cross"
+    end,
     changeSprite = function(self, sprite, update)
       if update == nil then
         update = true
@@ -33,7 +36,6 @@ do
       return world:update(self, pos.x, pos.y)
     end,
     move = function(self, velocity)
-      print(inspect(velocity))
       local goal = self.pos + velocity
       local actual = Vector()
       local cols, len
@@ -50,9 +52,6 @@ do
       self.pos = Vector(x, y)
       self:changeSprite(sprite, false)
       self.body = world:add(self, self.pos.x, self.pos.y, self.dim.x, self.dim.y)
-      self.filter = function(item, other)
-        return "cross"
-      end
     end,
     __base = _base_0,
     __name = "Entity"

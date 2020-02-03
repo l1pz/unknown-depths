@@ -6,12 +6,14 @@ export class Player extends Entity
     @gold = 99
     @keys = 99
     @bombs = 99
-    @filter = (item, other) ->
-      switch other.__class
-        when Wall return "slide"
-        when Door return "cross"
     @weapon = nil
     @spell = nil
+
+  filter: (item, other) ->
+    switch other.__class
+      when Wall return "slide"
+      when Chest return "slide"
+      when Door return "cross"
 
   update: (dt) => 
     ix, iy = input\get "move"
@@ -19,13 +21,14 @@ export class Player extends Entity
     velocity = dir * @speed * dt
     @move velocity
 
-  
-
   onCollision: (cols) =>
     for col in *cols
       other = col.other
-      if other.__class == Wall
-        other\checkCurrentRoom
+      if other.__class == Door
+        other\checkCurrentRoom!
+      if other.__class == Chest
+        other\open!
+        
 
 
   
