@@ -3,7 +3,9 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     open = function(self)
-      if closed then
+      print(player.pos.y, self.pos.y + self.dim.y)
+      if self.closed and player.pos.y >= self.pos.y + self.dim.y then
+        print("margin faty")
         self:changeSprite(sprites.chestOpen)
         local closed = false
       end
