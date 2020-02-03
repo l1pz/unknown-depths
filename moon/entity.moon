@@ -6,16 +6,31 @@ export class Entity
     @body   = world\add @, @pos.x, @pos.y, @dim.x, @dim.y
     @filter = (item, other) ->
       return "cross"
+
   changeSprite: (@sprite, update = true) =>
     @dim    = Vector @sprite.width, @sprite.height
-    halfDim = @dim / 2
-    @offset = Vector floor(halfDim.x),  floor(halfDim.y)
+    @offset = @dim / 2
     if update
       world\update @, @pos.x, @pos.y, @dim.x, @dim.y
-  draw: =>
+
+  draw: (offset = false) =>
     love.graphics.setColor @sprite.color
     if debugDrawSprites
       love.graphics.draw @sprite.img, floor(@pos.x), floor(@pos.y)
     if debugDrawCollisionBoxes
       x, y, w, h = world\getRect @
       love.graphics.rectangle "line", x, y, w, h
+    
+  update: =>
+
+  setPosition: (@pos) =>
+    world\update @, pos.x, pos.y
+
+  move: (velocity) =>
+    print inspect velocity
+    goal = @pos + velocity
+    actual = Vector!
+    local cols, len
+    actual.x, actual.y, cols, len = world\move @, goal.x, goal.y, @filter
+    @pos = actual
+    if @onCollision then @onCollision cols

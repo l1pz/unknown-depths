@@ -35,11 +35,19 @@ do
       local frameHeight = sprites.frame.height
       x = x - frameWidth / 2
       local y = self.imageHeight
-      self:text(title, x + frameWidth / 2, self.textHeight, item.sprite.color, true)
+      local textColor
+      if item then
+        textColor = item.sprite.color
+      else
+        textColor = colors["normal"]["white"]
+      end
+      self:text(title, x + frameWidth / 2, self.textHeight, textColor, true)
       love.graphics.setColor(colors["normal"]["white"])
       love.graphics.draw(sprites.frame.img, x, y)
       local dx, dy = frameWidth / 2, frameHeight / 2
-      return item:draw(x + dx - item.offset.x, y + dy - item.offset.y)
+      if item then
+        return item:draw(x + dx - item.offset.x, y + dy - item.offset.y)
+      end
     end,
     drawHealth = function(self)
       local x = self.healthX

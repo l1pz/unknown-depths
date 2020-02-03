@@ -25,16 +25,20 @@ export class UI
     love.graphics.print( s, x - offset, y)
   
   drawFrame: (title, item, x) =>
+    
     love.graphics.setColor sprites.frame.color
     frameWidth = sprites.frame.width
     frameHeight = sprites.frame.height
     x = x - frameWidth / 2
     y = @imageHeight
-    @text title, x + frameWidth / 2, @textHeight, item.sprite.color, true
+    textColor = if item then item.sprite.color else colors["normal"]["white"]
+    @text title, x + frameWidth / 2, @textHeight, textColor, true
     love.graphics.setColor colors["normal"]["white"]
     love.graphics.draw sprites.frame.img, x, y
     dx, dy = frameWidth / 2, frameHeight / 2
-    item\draw x + dx - item.offset.x, y + dy - item.offset.y
+    if item
+      item\draw x + dx - item.offset.x, y + dy - item.offset.y
+
   drawHealth: =>
     x = @healthX
     y = @imageHeight
@@ -44,6 +48,7 @@ export class UI
       hy = if heart < 3 then y else y + sprites.heart.height + 2
       love.graphics.setColor sprites.heart.color
       love.graphics.draw sprites.heart.img, hx, hy
+      
   drawCounter: (yOffset, sprite, number) =>
     x = @counterX
     y = @imageHeight + yOffset

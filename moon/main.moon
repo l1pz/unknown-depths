@@ -36,7 +36,7 @@ export font
 export world = bump.newWorld!
 export player
 
-fullScreen = false
+fullScreen = true
 local windowWidth, windowHeight
 windowScale = 3
 
@@ -46,11 +46,11 @@ else
   windowWidth = gameWidth * windowScale
   windowHeight = (gameHeight + uiHeight) * windowScale
  
-roomsCount = 3
+roomsCount = 16
 
 export colors
 colorSchemes = {}
-colorScheme = 5
+colorScheme = 6
 
 local dungeon
 local camera
@@ -96,7 +96,7 @@ love.load = ->
     \setFollowLerp 0.2
     .scale = 1
   
-  player = Player center.x, center.y
+  player = Player center.x - 7, center.y - 8
 
 love.update = (dt) ->
   with camera

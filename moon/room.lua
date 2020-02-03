@@ -21,7 +21,7 @@ do
     addWall = function(self, x, y)
       local pos = self:getPosition(x, y)
       local wall = Wall(pos.x, pos.y)
-      self.walls[wall] = wall
+      self.entities[wall] = wall
     end,
     placeDoors = function(self, adjacents)
       if not (adjacents) then
@@ -40,18 +40,19 @@ do
           pos = self:getPosition(0, gameHeight / 2 - tileSize)
         end
         local door = Door(pos.x, pos.y, dir, self)
-        self.doors[door] = door
+        self.entities[door] = door
       end
     end,
     draw = function(self)
-      for _, wall in pairs(self.walls) do
-        wall:draw()
-      end
-      for _, door in pairs(self.doors) do
-        door:draw()
+      for _, e in pairs(self.entities) do
+        e:draw()
       end
     end,
-    update = function(self, dt) end
+    update = function(self, dt)
+      for _, e in pairs(self.entities) do
+        e:update()
+      end
+    end
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
@@ -59,9 +60,8 @@ do
       self.pos = Vector(x * gameWidth, y * gameHeight)
       self.dim = Vector(gameWidth, gameHeight)
       self.center = self:getPosition(gameWidth / 2, gameHeight / 2)
-      self.walls = { }
+      self.entities = { }
       self:placeWalls()
-      self.doors = { }
       return self:placeDoors(adjacents)
     end,
     __base = _base_0,

@@ -25,7 +25,7 @@ uiWidth = gameWidth
 uiHeight = 40
 tileSize = 16
 world = bump.newWorld()
-local fullScreen = false
+local fullScreen = true
 local windowWidth, windowHeight
 local windowScale = 3
 if fullScreen then
@@ -34,9 +34,9 @@ else
   windowWidth = gameWidth * windowScale
   windowHeight = (gameHeight + uiHeight) * windowScale
 end
-local roomsCount = 3
+local roomsCount = 16
 local colorSchemes = { }
-local colorScheme = 5
+local colorScheme = 6
 local dungeon
 local camera
 local ui
@@ -77,7 +77,7 @@ love.load = function()
     camera:setFollowLerp(0.2)
     camera.scale = 1
   end
-  player = Player(center.x, center.y)
+  player = Player(center.x - 7, center.y - 8)
 end
 love.update = function(dt)
   do

@@ -10,21 +10,25 @@ export class Player extends Entity
       switch other.__class
         when Wall return "slide"
         when Door return "cross"
-    @weapon = Bow!
-    @spell = Ignite!
+    @weapon = nil
+    @spell = nil
+
   update: (dt) => 
     ix, iy = input\get "move"
     dir = Vector ix, iy
     velocity = dir * @speed * dt
-    @\move velocity
-  setPosition: (@pos) =>
-    world\update @, pos.x, pos.y
-  move: (velocity) =>
-    goal = @pos + velocity
-    actual = Vector!
-    local cols, len
-    actual.x, actual.y, cols, len = world\move @, goal.x, goal.y, @filter
-    @pos = actual
+    @move velocity
+
+  
+
+  onCollision: (cols) =>
+    for col in *cols
+      other = col.other
+      if other.__class == Wall
+        other\checkCurrentRoom
+
+
+  
   
   
   

@@ -11,7 +11,7 @@ do
       local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
       for _, item in pairs(items) do
         if item.__class == Wall then
-          room.walls[item] = nil
+          room.entities[item] = nil
           world:remove(item)
         end
       end

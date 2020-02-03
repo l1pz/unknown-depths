@@ -9,13 +9,15 @@ do
       end
       self.sprite = sprite
       self.dim = Vector(self.sprite.width, self.sprite.height)
-      local halfDim = self.dim / 2
-      self.offset = Vector(floor(halfDim.x), floor(halfDim.y))
+      self.offset = self.dim / 2
       if update then
         return world:update(self, self.pos.x, self.pos.y, self.dim.x, self.dim.y)
       end
     end,
-    draw = function(self)
+    draw = function(self, offset)
+      if offset == nil then
+        offset = false
+      end
       love.graphics.setColor(self.sprite.color)
       if debugDrawSprites then
         love.graphics.draw(self.sprite.img, floor(self.pos.x), floor(self.pos.y))
@@ -23,6 +25,22 @@ do
       if debugDrawCollisionBoxes then
         local x, y, w, h = world:getRect(self)
         return love.graphics.rectangle("line", x, y, w, h)
+      end
+    end,
+    update = function(self) end,
+    setPosition = function(self, pos)
+      self.pos = pos
+      return world:update(self, pos.x, pos.y)
+    end,
+    move = function(self, velocity)
+      print(inspect(velocity))
+      local goal = self.pos + velocity
+      local actual = Vector()
+      local cols, len
+      actual.x, actual.y, cols, len = world:move(self, goal.x, goal.y, self.filter)
+      self.pos = actual
+      if self.onCollision then
+        return self:onCollision(cols)
       end
     end
   }

@@ -5,6 +5,7 @@ export input = baton.new{
     right: {"key:d", "axis:leftx+", "button:dpright"}
     up: {"key:w", "axis:lefty-", "button:dpup"}
     down: {"key:s", "axis:lefty+", "button:dpdown"}
+    action: {"key:x", "button:a"}
   }
   pairs: {
     move: {"left", "right", "up", "down"}

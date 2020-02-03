@@ -20,6 +20,10 @@ input = baton.new({
       "key:s",
       "axis:lefty+",
       "button:dpdown"
+    },
+    action = {
+      "key:x",
+      "button:a"
     }
   },
   pairs = {

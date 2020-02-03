@@ -4,5 +4,5 @@ export class Door extends Entity
         items, len = world\queryRect @pos.x, @pos.y, @dim.x, @dim.y
         for _, item in pairs items
             if item.__class == Wall then
-                room.walls[item] = nil
+                room.entities[item] = nil
                 world\remove item

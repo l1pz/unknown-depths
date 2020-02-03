@@ -8,16 +8,21 @@ do
       local velocity = dir * self.speed * dt
       return self:move(velocity)
     end,
-    setPosition = function(self, pos)
-      self.pos = pos
-      return world:update(self, pos.x, pos.y)
-    end,
-    move = function(self, velocity)
-      local goal = self.pos + velocity
-      local actual = Vector()
-      local cols, len
-      actual.x, actual.y, cols, len = world:move(self, goal.x, goal.y, self.filter)
-      self.pos = actual
+    onCollision = function(self, cols)
+      for _index_0 = 1, #cols do
+        local col = cols[_index_0]
+        local other = col.other
+        if other.__class == Wall then
+          local _
+          do
+            local _base_1 = other
+            local _fn_0 = _base_1.checkCurrentRoom
+            _ = function(...)
+              return _fn_0(_base_1, ...)
+            end
+          end
+        end
+      end
     end
   }
   _base_0.__index = _base_0
@@ -38,8 +43,8 @@ do
           return "cross"
         end
       end
-      self.weapon = Bow()
-      self.spell = Ignite()
+      self.weapon = nil
+      self.spell = nil
     end,
     __base = _base_0,
     __name = "Player",

@@ -4,9 +4,8 @@ export class Room
     @pos = Vector x * gameWidth, y * gameHeight
     @dim = Vector gameWidth, gameHeight
     @center = @getPosition gameWidth / 2, gameHeight / 2
-    @walls = {}
+    @entities = {}
     @placeWalls!
-    @doors = {}
     @placeDoors adjacents
   getPosition: (x, y) =>
     return Vector(x, y) + @pos
@@ -22,7 +21,7 @@ export class Room
   addWall: (x, y)=>
     pos = @getPosition x, y
     wall = Wall pos.x, pos.y
-    @walls[wall] = wall
+    @entities[wall] = wall
   placeDoors: (adjacents) =>
     unless adjacents return
     for _, dir in pairs adjacents
@@ -32,13 +31,13 @@ export class Room
         when "right" @getPosition gameWidth - tileSize, gameHeight / 2 - tileSize
         when "left" @getPosition 0, gameHeight / 2 - tileSize
       door = Door pos.x, pos.y, dir, @
-      @doors[door] = door
+      @entities[door] = door
   draw: =>
-    for _, wall in pairs(@walls)
-      wall\draw!
-    for _, door in pairs(@doors)
-      door\draw!
+    for _, e in pairs(@entities)
+      e\draw!
   update: (dt) =>
+    for _, e in pairs(@entities)
+      e\update!
 
     
 
