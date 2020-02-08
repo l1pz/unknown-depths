@@ -25,7 +25,7 @@ export class Entity
   update: =>
 
   setPosition: (@pos) =>
-    world\update @, pos.x, pos.y
+    world\update @, @pos.x, @pos.y
 
   move: (velocity) =>
     goal = @pos + velocity

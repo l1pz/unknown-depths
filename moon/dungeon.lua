@@ -68,7 +68,8 @@ do
         self.rooms[k] = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
       end
       self.currentRoom = randomChoice(self.rooms)
-      return self.currentRoom:addEntity(Chest(self.currentRoom.center.x - 8, self.currentRoom.center.y - 28))
+      self.currentRoom:addEntity(Chest(self.currentRoom.center.x - 8, self.currentRoom.center.y - 28))
+      return player:setPosition(self.currentRoom.center)
     end,
     __base = _base_0,
     __name = "Dungeon"

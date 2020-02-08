@@ -33,7 +33,7 @@ do
     update = function(self) end,
     setPosition = function(self, pos)
       self.pos = pos
-      return world:update(self, pos.x, pos.y)
+      return world:update(self, self.pos.x, self.pos.y)
     end,
     move = function(self, velocity)
       local goal = self.pos + velocity

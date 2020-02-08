@@ -20,6 +20,7 @@ export class Dungeon
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
     @currentRoom\addEntity Chest(@currentRoom.center.x - 8, @currentRoom.center.y - 28)
+    player\setPosition @currentRoom.center
   draw: =>
     for _, room in pairs @rooms
       room\draw!

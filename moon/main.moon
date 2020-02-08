@@ -87,7 +87,8 @@ love.load = ->
   ui = UI uiWidth, uiHeight
 
   sprites\load!
-
+  
+  player = Player 0, 0
   dungeon = Dungeon roomsCount
   
   export center = dungeon.currentRoom.center
@@ -97,7 +98,7 @@ love.load = ->
     \setFollowLerp 0.2
     .scale = 1
   
-  player = Player center.x - 7, center.y - 8
+  
 
 love.update = (dt) ->
   with camera

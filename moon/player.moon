@@ -28,6 +28,9 @@ export class Player extends Entity
         other\checkCurrentRoom!
       if other.__class == Chest
         other\open!
+
+  setPosition: (pos) =>
+    super pos - @offset
         
 
 

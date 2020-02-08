@@ -69,6 +69,7 @@ love.load = function()
   love.graphics.setFont(font)
   ui = UI(uiWidth, uiHeight)
   sprites:load()
+  player = Player(0, 0)
   dungeon = Dungeon(roomsCount)
   center = dungeon.currentRoom.center
   camera = Camera(center.x, center.y, gameWidth, gameHeight)
@@ -76,8 +77,8 @@ love.load = function()
     camera:setFollowStyle("SCREEN_BY_SCREEN")
     camera:setFollowLerp(0.2)
     camera.scale = 1
+    return camera
   end
-  player = Player(center.x - 7, center.y - 8)
 end
 love.update = function(dt)
   do

@@ -29,6 +29,9 @@ do
           other:open()
         end
       end
+    end,
+    setPosition = function(self, pos)
+      return _class_0.__parent.__base.setPosition(self, pos - self.offset)
     end
   }
   _base_0.__index = _base_0
