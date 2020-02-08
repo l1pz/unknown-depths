@@ -5,8 +5,17 @@ export class Room
     @dim = Vector gameWidth, gameHeight
     @center = @getPosition gameWidth / 2, gameHeight / 2
     @entities = {}
+
+    @adjacentsCount = 0 
+    for _ in pairs adjacents
+      @adjacentsCount += 1
+
     @placeWalls!
     @placeDoors adjacents
+  
+  destruct: =>
+    for _, e in pairs @entities
+      @removeEntity e
 
   getPosition: (x, y) =>
     return Vector(x, y) + @pos

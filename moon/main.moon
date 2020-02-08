@@ -50,7 +50,7 @@ else
 roomsCount = 5
 
 export colors
-colorSchemes = {}
+export colorSchemes = {}
 colorScheme = 6
 
 export dungeon
@@ -134,6 +134,5 @@ love.keypressed = (key) ->
       colors = colorSchemes[colorScheme]
       sprites\refreshColors!
     when "f3"
-      print "f3 presesee"
       nextDungeon!
   

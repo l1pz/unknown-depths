@@ -7,21 +7,6 @@ do
 end
 local random
 random = love.math.random
-local randomChoice
-randomChoice = function(t)
-  local keys
-  do
-    local _accum_0 = { }
-    local _len_0 = 1
-    for key, _ in pairs(t) do
-      _accum_0[_len_0] = key
-      _len_0 = _len_0 + 1
-    end
-    keys = _accum_0
-  end
-  local index = keys[random(1, #keys)]
-  return t[index]
-end
 local RoomRaw
 do
   local _class_0
@@ -49,6 +34,20 @@ do
   local _class_0
   local generateRaw
   local _base_0 = {
+    getChestRooms = function(self)
+      local chestRooms = { }
+      for _, room in pairs(self.rooms) do
+        if room.adjacentsCount > 1 and room ~= self.currentRoom then
+          insert(chestRooms, room)
+        end
+      end
+      return chestRooms
+    end,
+    destruct = function(self)
+      for _, room in pairs(self.rooms) do
+        room:destruct()
+      end
+    end,
     draw = function(self)
       for _, room in pairs(self.rooms) do
         room:draw()
@@ -77,7 +76,7 @@ do
         chestCount = 1
       end
       for i = 1, chestCount do
-        local randomRoom = randomChoice(self.rooms)
+        local randomRoom = randomChoice(self:getChestRooms())
         randomRoom:addEntity(Chest(randomRoom.center.x, randomRoom.center.y))
       end
     end,

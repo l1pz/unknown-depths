@@ -2,17 +2,19 @@ import insert from table
 import min, max from math
 import random from love.math
 
-randomChoice = (t) ->
-  keys = [key for key, _ in pairs t]
-  index = keys[random(1, #keys)]
-  return t[index]
-
 class RoomRaw
   new: (x, y) =>
     @adjacents = {}
     @pos = Vector x, y
 
 export class Dungeon
+  getChestRooms: =>
+    chestRooms = {}
+    for _, room in pairs @rooms
+      if room.adjacentsCount > 1 and room != @currentRoom
+        insert chestRooms, room
+    return chestRooms
+
   new: (@roomsCount) =>
     @rooms = {}
     roomsRaw = generateRaw @
@@ -24,9 +26,12 @@ export class Dungeon
     chestChance = random!
     chestCount = if chestChance < 0.1 then 2 else 1
     for i = 1, chestCount
-      randomRoom = randomChoice @rooms
+      randomRoom = randomChoice @getChestRooms!
       randomRoom\addEntity Chest(randomRoom.center.x, randomRoom.center.y)
       
+  destruct: =>
+    for _, room in pairs @rooms
+      room\destruct!
   
   draw: =>
     for _, room in pairs @rooms

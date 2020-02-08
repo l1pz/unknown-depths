@@ -36,7 +36,7 @@ else
   windowHeight = (gameHeight + uiHeight) * windowScale
 end
 local roomsCount = 5
-local colorSchemes = { }
+colorSchemes = { }
 local colorScheme = 6
 local ui
 debugDrawSprites = true
@@ -121,7 +121,6 @@ love.keypressed = function(key)
     colors = colorSchemes[colorScheme]
     return sprites:refreshColors()
   elseif "f3" == _exp_0 then
-    print("f3 presesee")
     return nextDungeon()
   end
 end

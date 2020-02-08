@@ -3,6 +3,11 @@ insert = table.insert
 do
   local _class_0
   local _base_0 = {
+    destruct = function(self)
+      for _, e in pairs(self.entities) do
+        self:removeEntity(e)
+      end
+    end,
     getPosition = function(self, x, y)
       return Vector(x, y) + self.pos
     end,
@@ -74,6 +79,10 @@ do
       self.dim = Vector(gameWidth, gameHeight)
       self.center = self:getPosition(gameWidth / 2, gameHeight / 2)
       self.entities = { }
+      self.adjacentsCount = 0
+      for _ in pairs(adjacents) do
+        self.adjacentsCount = self.adjacentsCount + 1
+      end
       self:placeWalls()
       return self:placeDoors(adjacents)
     end,
