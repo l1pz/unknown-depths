@@ -19,13 +19,22 @@ export class Dungeon
     for k, roomRaw in pairs roomsRaw
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
-    @currentRoom\addEntity Chest(@currentRoom.center.x - 8, @currentRoom.center.y - 28)
     player\setPosition @currentRoom.center
+
+    chestChance = random!
+    chestCount = if chestChance < 0.1 then 2 else 1
+    for i = 1, chestCount
+      randomRoom = randomChoice @rooms
+      randomRoom\addEntity Chest(randomRoom.center.x, randomRoom.center.y)
+      
+  
   draw: =>
     for _, room in pairs @rooms
       room\draw!
+
   update: (dt) =>
     @currentRoom\update dt
+
   generateRaw = =>
     n = 10
     grid = {}
@@ -51,7 +60,7 @@ export class Dungeon
     y = random 2, n - 1
     rooms = { RoomRaw(x, y) }
     grid[y][x] = 1
-    for i = 1, @roomsCount
+    for i = 1, @roomsCount - 1
       possibilites = {}
       for _, room in pairs rooms
         adjacents = getFreeAdjacents room.pos.x, room.pos.y

@@ -68,8 +68,18 @@ do
         self.rooms[k] = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
       end
       self.currentRoom = randomChoice(self.rooms)
-      self.currentRoom:addEntity(Chest(self.currentRoom.center.x - 8, self.currentRoom.center.y - 28))
-      return player:setPosition(self.currentRoom.center)
+      player:setPosition(self.currentRoom.center)
+      local chestChance = random()
+      local chestCount
+      if chestChance < 0.1 then
+        chestCount = 2
+      else
+        chestCount = 1
+      end
+      for i = 1, chestCount do
+        local randomRoom = randomChoice(self.rooms)
+        randomRoom:addEntity(Chest(randomRoom.center.x, randomRoom.center.y))
+      end
     end,
     __base = _base_0,
     __name = "Dungeon"
@@ -128,7 +138,7 @@ do
       RoomRaw(x, y)
     }
     grid[y][x] = 1
-    for i = 1, self.roomsCount do
+    for i = 1, self.roomsCount - 1 do
       local possibilites = { }
       for _, room in pairs(rooms) do
         local adjacents = getFreeAdjacents(room.pos.x, room.pos.y)

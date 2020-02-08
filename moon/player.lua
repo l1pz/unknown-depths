@@ -16,7 +16,9 @@ do
       local ix, iy = input:get("move")
       local dir = Vector(ix, iy)
       local velocity = dir * self.speed * dt
-      return self:move(velocity)
+      if not (self.disableMovement) then
+        return self:move(velocity)
+      end
     end,
     onCollision = function(self, cols)
       for _index_0 = 1, #cols do
@@ -46,6 +48,7 @@ do
       self.bombs = 99
       self.weapon = nil
       self.spell = nil
+      self.disableMovement = false
     end,
     __base = _base_0,
     __name = "Player",

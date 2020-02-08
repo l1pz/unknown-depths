@@ -47,14 +47,14 @@ else
   windowWidth = gameWidth * windowScale
   windowHeight = (gameHeight + uiHeight) * windowScale
  
-roomsCount = 16
+roomsCount = 5
 
 export colors
 colorSchemes = {}
 colorScheme = 6
 
 export dungeon
-local camera
+export camera
 
 local ui
 
@@ -133,4 +133,7 @@ love.keypressed = (key) ->
       if colorScheme < 1 then colorScheme = #colorSchemes
       colors = colorSchemes[colorScheme]
       sprites\refreshColors!
+    when "f3"
+      print "f3 presesee"
+      nextDungeon!
   

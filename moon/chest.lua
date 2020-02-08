@@ -5,7 +5,8 @@ do
     open = function(self)
       if self.closed and player.pos.y >= self.pos.y + self.dim.y then
         self:changeSprite(sprites.chestOpen)
-        local closed = false
+        self:setPosition(Vector(self.pos.x, self.pos.y + self.heightDiff))
+        self.closed = false
       end
     end
   }
@@ -13,8 +14,11 @@ do
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self, x, y)
+      x = x - sprites.chestClosed.width / 2
+      y = y - sprites.chestClosed.height / 2
       _class_0.__parent.__init(self, x, y, sprites.chestClosed)
       self.closed = true
+      self.heightDiff = sprites.chestClosed.height - sprites.chestOpen.height
     end,
     __base = _base_0,
     __name = "Chest",

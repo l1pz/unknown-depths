@@ -8,6 +8,7 @@ export class Player extends Entity
     @bombs = 99
     @weapon = nil
     @spell = nil
+    @disableMovement = false
 
   filter: (item, other) ->
     switch other.__class
@@ -19,7 +20,8 @@ export class Player extends Entity
     ix, iy = input\get "move"
     dir = Vector ix, iy
     velocity = dir * @speed * dt
-    @move velocity
+    unless @disableMovement
+      @move velocity
 
   onCollision: (cols) =>
     for col in *cols
