@@ -62,18 +62,23 @@ gameplay.keypressed = function(self, key)
       colorScheme = 1
     end
     local colors = colorSchemes[colorScheme]
-    return sprites:refreshColors()
+    sprites:refreshColors()
   elseif "left" == _exp_0 then
     local colorScheme = colorScheme - 1
     if colorScheme < 1 then
       colorScheme = #colorSchemes
     end
     local colors = colorSchemes[colorScheme]
-    return sprites:refreshColors()
+    sprites:refreshColors()
   elseif "f3" == _exp_0 then
-    return nextDungeon()
+    nextDungeon()
   elseif "escape" == _exp_0 then
-    return love.event.quit()
+    love.event.quit()
+  elseif "kp+" == _exp_0 then
+    camera.scale = camera.scale + 0.1
+  elseif "kp-" == _exp_0 then
+    camera.scale = camera.scale - 0.1
   end
+  return print(key)
 end
 return gameplay

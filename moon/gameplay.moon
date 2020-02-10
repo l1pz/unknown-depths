@@ -75,5 +75,7 @@ gameplay.keypressed = (key) =>
     when "f3"
       nextDungeon!
     when "escape" love.event.quit!
+    when "kp+" camera.scale += 0.1
+    when "kp-" camera.scale -= 0.1
 
 return gameplay
