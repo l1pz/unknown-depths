@@ -28,13 +28,14 @@ gameHeight = 224
 uiWidth = gameWidth
 uiHeight = 40
 tileSize = 16
-local fullScreen = true
+screenHeight = gameHeight + uiHeight
+local fullScreen = false
 local windowWidth, windowHeight
 local windowScale = 3
 if fullScreen then
   windowWidth, windowHeight = love.window.getDesktopDimensions()
 else
-  windowWidth, windowHeight = gameWidth * windowScale, (gameHeight + uiHeight) * windowScale
+  windowWidth, windowHeight = gameWidth * windowScale, screenHeight * windowScale
 end
 colorSchemes = { }
 local colorScheme = 6
@@ -65,8 +66,9 @@ love.load = function()
     insert(colorSchemes, scheme)
   end
   colors = colorSchemes[colorScheme]
-  font = love.graphics.newImageFont('assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1)
-  love.graphics.setFont(font)
+  fontGameplay = love.graphics.newImageFont('assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1)
+  fontRetro = love.graphics.newFont("assets/misc/retro.ttf", 8, "mono")
+  fontFantasy = love.graphics.newFont("assets/misc/fantasy.ttf", 66, "mono")
   sprites:load()
   manager:hook()
   return manager:enter(states.title)

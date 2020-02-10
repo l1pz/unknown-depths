@@ -6,6 +6,8 @@ roomsCount = 5
 
 gameplay.enter = (previous) =>
   -- set up the level
+  love.graphics.setFont fontGameplay
+
   export world = bump.newWorld!
 
   ui = UI uiWidth, uiHeight

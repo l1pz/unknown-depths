@@ -22,7 +22,7 @@ do
       s = s:upper()
       local offset
       if center then
-        offset = font:getWidth(s) / 2
+        offset = fontGameplay:getWidth(s) / 2
       else
         offset = 0
       end

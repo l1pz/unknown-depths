@@ -20,7 +20,7 @@ export class UI
     
   text: (s, x, y, color = colors["normal"]["white"], center = false) =>
     s = s\upper!
-    offset = if center then font\getWidth(s) / 2 else 0
+    offset = if center then fontGameplay\getWidth(s) / 2 else 0
     love.graphics.setColor color
     love.graphics.print( s, x - offset, y)
   

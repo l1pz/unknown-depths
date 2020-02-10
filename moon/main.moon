@@ -35,17 +35,18 @@ export gameHeight = 224
 export uiWidth = gameWidth
 export uiHeight = 40
 export tileSize = 16
+export screenHeight = gameHeight + uiHeight
 
 export font
 
-fullScreen = true
+fullScreen = false
 local windowWidth, windowHeight
 windowScale = 3
 
 windowWidth, windowHeight = if fullScreen
   love.window.getDesktopDimensions()
 else
-  gameWidth * windowScale, (gameHeight + uiHeight) * windowScale
+  gameWidth * windowScale, screenHeight * windowScale
 
 export colors
 export colorSchemes = {}
@@ -77,8 +78,9 @@ love.load = ->
     insert(colorSchemes, scheme)
   colors = colorSchemes[colorScheme]
 
-  font = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
-  love.graphics.setFont font 
+  export fontGameplay = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
+  export fontRetro = love.graphics.newFont("assets/misc/retro.ttf", 8, "mono")
+  export fontFantasy = love.graphics.newFont("assets/misc/fantasy.ttf", 66, "mono")
 
   sprites\load!
 
