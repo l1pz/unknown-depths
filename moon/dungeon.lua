@@ -43,6 +43,15 @@ do
       end
       return chestRooms
     end,
+    getStairRooms = function(self)
+      local stairRooms = { }
+      for _, room in pairs(self.rooms) do
+        if room.adjacentsCount == 1 and room ~= self.currentRoom then
+          insert(stairRooms, room)
+        end
+      end
+      return stairRooms
+    end,
     destruct = function(self)
       for _, room in pairs(self.rooms) do
         room:destruct()
@@ -76,9 +85,11 @@ do
         chestCount = 1
       end
       for i = 1, chestCount do
-        local randomRoom = randomChoice(self:getChestRooms())
-        randomRoom:addEntity(Chest(randomRoom.center.x, randomRoom.center.y))
+        local chestRoom = randomChoice(self:getChestRooms())
+        chestRoom:addEntity(Chest(chestRoom.center.x, chestRoom.center.y))
       end
+      local stairRoom = randomChoice(self:getStairRooms())
+      return stairRoom:addEntity(Stairs(stairRoom.center.x, stairRoom.center.y))
     end,
     __base = _base_0,
     __name = "Dungeon"

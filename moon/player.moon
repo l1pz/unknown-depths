@@ -14,6 +14,7 @@ export class Player extends Entity
     switch other.__class
       when Wall return "slide"
       when Chest return "slide"
+      when Stairs return "cross"
       when Door return "cross"
 
   update: (dt) => 
@@ -30,6 +31,8 @@ export class Player extends Entity
         other\checkCurrentRoom!
       if other.__class == Chest
         other\open!
+      if other.__class == Stairs
+        nextDungeon!
 
   setPosition: (pos) =>
     super pos - @offset

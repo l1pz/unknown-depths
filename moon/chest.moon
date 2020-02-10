@@ -1,8 +1,9 @@
 export class Chest extends Entity
   new: (x, y) =>
-    x = x - sprites.chestClosed.width / 2
-    y = y - sprites.chestClosed.height / 2
-    super x, y, sprites.chestClosed
+    sprite = sprites.chestClosed
+    x = x - sprite.width / 2
+    y = y - sprite.height / 2
+    super x, y, sprite
     @closed = true
     @heightDiff = sprites.chestClosed.height - sprites.chestOpen.height
   open: =>

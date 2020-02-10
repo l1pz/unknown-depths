@@ -8,6 +8,8 @@ do
         return "slide"
       elseif Chest == _exp_0 then
         return "slide"
+      elseif Stairs == _exp_0 then
+        return "cross"
       elseif Door == _exp_0 then
         return "cross"
       end
@@ -29,6 +31,9 @@ do
         end
         if other.__class == Chest then
           other:open()
+        end
+        if other.__class == Stairs then
+          nextDungeon()
         end
       end
     end,

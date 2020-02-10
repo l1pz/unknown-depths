@@ -14,9 +14,10 @@ do
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self, x, y)
-      x = x - sprites.chestClosed.width / 2
-      y = y - sprites.chestClosed.height / 2
-      _class_0.__parent.__init(self, x, y, sprites.chestClosed)
+      local sprite = sprites.chestClosed
+      x = x - sprite.width / 2
+      y = y - sprite.height / 2
+      _class_0.__parent.__init(self, x, y, sprite)
       self.closed = true
       self.heightDiff = sprites.chestClosed.height - sprites.chestOpen.height
     end,

@@ -15,6 +15,13 @@ export class Dungeon
         insert chestRooms, room
     return chestRooms
 
+  getStairRooms: =>
+    stairRooms = {}
+    for _, room in pairs @rooms
+      if room.adjacentsCount == 1 and room != @currentRoom
+        insert stairRooms, room
+    return stairRooms
+
   new: (@roomsCount) =>
     @rooms = {}
     roomsRaw = generateRaw @
@@ -26,8 +33,12 @@ export class Dungeon
     chestChance = random!
     chestCount = if chestChance < 0.1 then 2 else 1
     for i = 1, chestCount
-      randomRoom = randomChoice @getChestRooms!
-      randomRoom\addEntity Chest(randomRoom.center.x, randomRoom.center.y)
+      chestRoom = randomChoice @getChestRooms!
+      chestRoom\addEntity Chest(chestRoom.center.x, chestRoom.center.y)
+    
+    stairRoom = randomChoice @getStairRooms!
+    stairRoom\addEntity Stairs(stairRoom.center.x, stairRoom.center.y)
+    --@currentRoom\addEntity Stairs(@currentRoom.center.x, @currentRoom.center.y)  
       
   destruct: =>
     for _, room in pairs @rooms

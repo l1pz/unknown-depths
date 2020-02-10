@@ -20,6 +20,7 @@ require("moon/wall")
 require("moon/room")
 require("moon/door")
 require("moon/chest")
+require("moon/stairs")
 gameWidth = 256
 gameHeight = 224
 uiWidth = gameWidth

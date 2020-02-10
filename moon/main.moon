@@ -25,6 +25,7 @@ require "moon/wall"
 require "moon/room"
 require "moon/door"
 require "moon/chest"
+require "moon/stairs"
 
 export gameWidth = 256
 export gameHeight = 224

@@ -5,12 +5,14 @@ do
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self, x, y, orientation, room)
-      self.orientation, self.room = orientation, room
-      return _class_0.__parent.__init(self, x, y, sprites.door[self.orientation])
+    __init = function(self, x, y)
+      local sprite = sprites.stairs
+      x = x - sprite.width / 2
+      y = y - sprite.height / 2
+      return _class_0.__parent.__init(self, x, y, sprite)
     end,
     __base = _base_0,
-    __name = "Door",
+    __name = "Stairs",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -34,5 +36,5 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Door = _class_0
+  Stairs = _class_0
 end
