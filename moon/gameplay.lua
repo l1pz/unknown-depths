@@ -50,7 +50,7 @@ gameplay.draw = function(self)
   ui:draw()
   return push:finish()
 end
-gameplay.keypressed = function(key)
+gameplay.keypressed = function(self, key)
   local _exp_0 = key
   if "f1" == _exp_0 then
     local debugDrawSprites = not debugDrawSprites

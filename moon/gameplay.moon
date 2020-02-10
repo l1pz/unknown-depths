@@ -58,7 +58,7 @@ gameplay.draw = () =>
   push\finish!
   
 
-gameplay.keypressed = (key) ->
+gameplay.keypressed = (key) =>
   switch key
     when "f1" then debugDrawSprites = not debugDrawSprites
     when "f2" then debugDrawCollisionBoxes = not debugDrawCollisionBoxes

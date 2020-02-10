@@ -6,11 +6,14 @@ bump = require("libs/bump")
 Camera = require("libs/camera")
 push = require("libs/push")
 local roomy = require("libs/roomy")
+ripple = require("libs/ripple")
+flux = require("libs/flux")
 manager = roomy.new()
 require("moon/helpers")
 require("moon/input")
 require("moon/ui")
 require("moon/sprites")
+require("moon/sounds")
 require("moon/item")
 require("moon/entity")
 require("moon/weapon")
@@ -29,7 +32,7 @@ uiWidth = gameWidth
 uiHeight = 40
 tileSize = 16
 screenHeight = gameHeight + uiHeight
-local fullScreen = false
+local fullScreen = true
 local windowWidth, windowHeight
 local windowScale = 3
 if fullScreen then
@@ -39,7 +42,7 @@ else
 end
 colorSchemes = { }
 local colorScheme = 6
-local states = {
+states = {
   gameplay = require("moon/gameplay"),
   title = require("moon/title")
 }
@@ -70,6 +73,7 @@ love.load = function()
   fontRetro = love.graphics.newFont("assets/misc/retro.ttf", 8, "mono")
   fontFantasy = love.graphics.newFont("assets/misc/fantasy.ttf", 66, "mono")
   sprites:load()
+  sounds:load()
   manager:hook()
   return manager:enter(states.title)
 end

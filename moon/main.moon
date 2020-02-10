@@ -5,6 +5,8 @@ export bump = require "libs/bump"
 export Camera = require "libs/camera"
 export push = require "libs/push"
 roomy = require "libs/roomy"
+export ripple = require "libs/ripple"
+export flux = require "libs/flux"
 
 export manager = roomy.new!
 
@@ -12,6 +14,7 @@ require "moon/helpers"
 require "moon/input"
 require "moon/ui"
 require "moon/sprites"
+require "moon/sounds"
 require "moon/item"
 require "moon/entity"
 
@@ -39,7 +42,7 @@ export screenHeight = gameHeight + uiHeight
 
 export font
 
-fullScreen = false
+fullScreen = true
 local windowWidth, windowHeight
 windowScale = 3
 
@@ -52,7 +55,7 @@ export colors
 export colorSchemes = {}
 colorScheme = 6
 
-states = {
+export states = {
   gameplay: require "moon/gameplay"
   title: require "moon/title"
 }
@@ -83,8 +86,9 @@ love.load = ->
   export fontFantasy = love.graphics.newFont("assets/misc/fantasy.ttf", 66, "mono")
 
   sprites\load!
+  sounds\load!
 
   manager\hook!
-  manager\enter(states.title)
+  manager\enter states.title
 
   
