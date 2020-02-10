@@ -1,9 +1,12 @@
 import insert from table
 export inspect = require "libs/inspect"
 export Vector = require "libs/vector"
-bump = require "libs/bump"
-Camera = require "libs/camera"
-push = require "libs/push"
+export bump = require "libs/bump"
+export Camera = require "libs/camera"
+export push = require "libs/push"
+roomy = require "libs/roomy"
+
+export manager = roomy.new!
 
 require "moon/helpers"
 require "moon/input"
@@ -35,32 +38,23 @@ export tileSize = 16
 
 export font
 
-export world = bump.newWorld!
-export player
-
 fullScreen = true
 local windowWidth, windowHeight
 windowScale = 3
 
-if fullScreen
-  windowWidth, windowHeight = love.window.getDesktopDimensions()
+windowWidth, windowHeight = if fullScreen
+  love.window.getDesktopDimensions()
 else
-  windowWidth = gameWidth * windowScale
-  windowHeight = (gameHeight + uiHeight) * windowScale
- 
-roomsCount = 5
+  gameWidth * windowScale, (gameHeight + uiHeight) * windowScale
 
 export colors
 export colorSchemes = {}
 colorScheme = 6
 
-export dungeon
-export camera
-
-local ui
-
-export debugDrawSprites = true
-export debugDrawCollisionBoxes = false
+states = {
+  gameplay: require "moon/gameplay"
+  title: require "moon/title"
+}
 
 love.load = ->
   love.joystick.loadGamepadMappings "assets/misc/gamecontrollerdb.txt"
@@ -85,55 +79,10 @@ love.load = ->
 
   font = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
   love.graphics.setFont font 
-  ui = UI uiWidth, uiHeight
 
   sprites\load!
-  
-  player = Player 0, 0
-  dungeon = Dungeon roomsCount
-  
-  export center = dungeon.currentRoom.center
-  camera = Camera center.x, center.y, gameWidth, gameHeight
-  with camera
-    \setFollowStyle "SCREEN_BY_SCREEN"
-    \setFollowLerp 0.2
-    .scale = 1
-  
-  
 
-love.update = (dt) ->
-  with camera
-    \update dt
-    \follow player.pos.x + player.offset.x, player.pos.y + player.offset.y
-  input\update!
-  dungeon\update dt
-  player\update dt
-love.draw = ->
-  push\start!
-  love.graphics.translate 0, uiHeight
-  camera\attach!
-  dungeon\draw!
-  player\draw!
-  camera\detach!
-  camera\draw!
-  love.graphics.translate 0, -uiHeight
-  ui\draw!
-  push\finish!
+  manager\hook!
+  manager\enter(states.title)
 
-love.keypressed = (key) ->
-  switch key
-    when "f1" then debugDrawSprites = not debugDrawSprites
-    when "f2" then debugDrawCollisionBoxes = not debugDrawCollisionBoxes
-    when "right"
-      colorScheme+=1
-      if colorScheme > #colorSchemes then colorScheme = 1
-      colors = colorSchemes[colorScheme]
-      sprites\refreshColors!
-    when "left"
-      colorScheme-=1
-      if colorScheme < 1 then colorScheme = #colorSchemes
-      colors = colorSchemes[colorScheme]
-      sprites\refreshColors!
-    when "f3"
-      nextDungeon!
   
