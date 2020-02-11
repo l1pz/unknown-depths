@@ -36,7 +36,7 @@ sprites.load = =>
   @bomb = newSprite "bomb", "normal", "cyan"
   @gold = newSprite "gold", "normal", "yellow"
   @ignite = newSprite "ignite", "normal", "red"
-  @arrow = newSprite "arrow", "normal", "cyan"
+  @arrow = newSprite "arrowSmall", "normal", "cyan"
   @chestClosed = newSprite "chestClosed", "normal", "magenta"
   @chestOpen = newSprite "chestOpen", "normal", "magenta"
   @stairs = newSprite "stairs", "normal", "yellow"

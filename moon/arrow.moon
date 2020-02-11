@@ -7,7 +7,7 @@ export class Arrow extends Entity
         @stuck = true
 
   new: (pos, @dir) =>
-    super pos.x, pos.y, sprites.arrow
+    super pos.x - 2, pos.y - 2, sprites.arrow
     @stuck = false
     @speed = 200
     @filter = (item, other) ->
@@ -15,6 +15,8 @@ export class Arrow extends Entity
         when Player
           return "cross"
         when Arrow
+          return "cross"
+        when Stairs
           return "cross"
       return "touch"
 

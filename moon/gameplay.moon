@@ -61,8 +61,8 @@ gameplay.draw = () =>
 gameplay.keypressed = (key) =>
   switch key
     when "k" then dungeon.currentRoom.cleared = true
-    when "f1" then debugDrawSprites = not debugDrawSprites
-    when "f2" then debugDrawCollisionBoxes = not debugDrawCollisionBoxes
+    when "f1" then export debugDrawSprites = not debugDrawSprites
+    when "f2" then export debugDrawCollisionBoxes = not debugDrawCollisionBoxes
     when "kp4"
       export colorScheme = colorScheme + 1
       if colorScheme > #colorSchemes then colorScheme = 1

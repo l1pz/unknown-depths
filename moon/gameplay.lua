@@ -55,9 +55,9 @@ gameplay.keypressed = function(self, key)
   if "k" == _exp_0 then
     dungeon.currentRoom.cleared = true
   elseif "f1" == _exp_0 then
-    local debugDrawSprites = not debugDrawSprites
+    debugDrawSprites = not debugDrawSprites
   elseif "f2" == _exp_0 then
-    local debugDrawCollisionBoxes = not debugDrawCollisionBoxes
+    debugDrawCollisionBoxes = not debugDrawCollisionBoxes
   elseif "kp4" == _exp_0 then
     colorScheme = colorScheme + 1
     if colorScheme > #colorSchemes then

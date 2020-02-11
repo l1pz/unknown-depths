@@ -14,7 +14,7 @@ do
   _class_0 = setmetatable({
     __init = function(self, pos, dir)
       self.dir = dir
-      _class_0.__parent.__init(self, pos.x, pos.y, sprites.arrow)
+      _class_0.__parent.__init(self, pos.x - 2, pos.y - 2, sprites.arrow)
       self.stuck = false
       self.speed = 200
       self.filter = function(item, other)
@@ -22,6 +22,8 @@ do
         if Player == _exp_0 then
           return "cross"
         elseif Arrow == _exp_0 then
+          return "cross"
+        elseif Stairs == _exp_0 then
           return "cross"
         end
         return "touch"
