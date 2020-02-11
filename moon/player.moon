@@ -6,7 +6,7 @@ export class Player extends Entity
     @gold = 99
     @keys = 99
     @bombs = 99
-    @weapon = nil
+    @weapon = Bow!
     @spell = nil
     @disableMovement = false
 
@@ -24,6 +24,7 @@ export class Player extends Entity
     velocity = dir * @speed * dt
     unless @disableMovement
       @move velocity
+    @weapon\update!
 
   onCollision: (cols) =>
     for col in *cols
@@ -37,6 +38,15 @@ export class Player extends Entity
 
   setPosition: (pos) =>
     super pos - @offset
+
+  draw: =>
+    super!
+    pos = player.pos + player.offset
+    ax, ay = input\get "attack"
+    attackDir = Vector(ax, ay) * 10
+    epos = pos + attackDir
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.line(pos.x, pos.y, epos.x, epos.y)
         
 
 

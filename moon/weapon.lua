@@ -2,7 +2,7 @@ local floor
 floor = math.floor
 do
   local _class_0
-  local _parent_0 = Entity
+  local _parent_0 = Item
   local _base_0 = {
     changeSprite = function(self, sprite)
       self.sprite = sprite

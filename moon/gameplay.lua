@@ -52,18 +52,20 @@ gameplay.draw = function(self)
 end
 gameplay.keypressed = function(self, key)
   local _exp_0 = key
-  if "f1" == _exp_0 then
+  if "k" == _exp_0 then
+    dungeon.currentRoom.cleared = true
+  elseif "f1" == _exp_0 then
     local debugDrawSprites = not debugDrawSprites
   elseif "f2" == _exp_0 then
     local debugDrawCollisionBoxes = not debugDrawCollisionBoxes
-  elseif "right" == _exp_0 then
+  elseif "kp4" == _exp_0 then
     colorScheme = colorScheme + 1
     if colorScheme > #colorSchemes then
       colorScheme = 1
     end
     colors = colorSchemes[colorScheme]
     return sprites:refreshColors()
-  elseif "left" == _exp_0 then
+  elseif "kp6" == _exp_0 then
     colorScheme = colorScheme - 1
     if colorScheme < 1 then
       colorScheme = #colorSchemes

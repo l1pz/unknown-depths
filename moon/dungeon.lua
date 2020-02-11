@@ -64,9 +64,12 @@ do
     end,
     update = function(self, dt)
       self.currentRoom:update(dt)
-      if self.currentRoom:isInside(player.pos) and not self.currentRoom.cleared then
+      if not (self.currentRoom.cleared) then
         self.currentRoom:closeDoors()
         return self.prevRoom:closeDoors()
+      else
+        self.currentRoom:openDoors()
+        return self.prevRoom:openDoors()
       end
     end
   }
@@ -95,6 +98,7 @@ do
         chestRoom:addEntity(Chest(chestRoom.center.x, chestRoom.center.y))
       end
       local stairRoom = randomChoice(self:getStairRooms())
+      stairRoom.cleared = true
       return stairRoom:addEntity(Stairs(stairRoom.center.x, stairRoom.center.y))
     end,
     __base = _base_0,

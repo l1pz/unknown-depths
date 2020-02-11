@@ -4,6 +4,7 @@ do
   local _base_0 = {
     checkCurrentRoom = function(self)
       if self.room:isInside(player.pos + player.offset) then
+        dungeon.prevRoom = dungeon.currentRoom
         dungeon.currentRoom = self.room
       end
     end,

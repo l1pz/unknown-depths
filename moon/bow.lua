@@ -1,7 +1,18 @@
 do
   local _class_0
   local _parent_0 = Item
-  local _base_0 = { }
+  local _base_0 = {
+    update = function(self)
+      if input:pressed("attack") then
+        local pos = player.pos + player.offset
+        local ax, ay = input:get("attack")
+        local attackDir = Vector(ax, ay)
+        local arrowPos = pos + attackDir * 10
+        local arrow = Arrow(arrowPos, attackDir)
+        dungeon.currentRoom.entities[arrow] = arrow
+      end
+    end
+  }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({

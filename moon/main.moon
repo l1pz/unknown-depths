@@ -20,6 +20,7 @@ require "moon/entity"
 
 -- Weapons
 require "moon/weapon"
+require "moon/arrow"
 require "moon/bow"
 
 -- Spells

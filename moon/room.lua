@@ -80,7 +80,7 @@ do
     end,
     update = function(self, dt)
       for e in pairs(self.entities) do
-        e:update()
+        e:update(dt)
       end
     end
   }

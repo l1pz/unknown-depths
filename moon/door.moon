@@ -9,6 +9,7 @@ export class Door extends Entity
 
     checkCurrentRoom: () =>
         if @room\isInside player.pos + player.offset
+            dungeon.prevRoom = dungeon.currentRoom
             dungeon.currentRoom = @room
 
     open: =>

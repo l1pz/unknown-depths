@@ -77,7 +77,7 @@ export class Room
 
   update: (dt) =>
     for e in pairs(@entities)
-      e\update!
+      e\update dt
 
     
 

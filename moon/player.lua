@@ -23,8 +23,9 @@ do
       local dir = Vector(ix, iy)
       local velocity = dir * self.speed * dt
       if not (self.disableMovement) then
-        return self:move(velocity)
+        self:move(velocity)
       end
+      return self.weapon:update()
     end,
     onCollision = function(self, cols)
       for _index_0 = 1, #cols do
@@ -43,6 +44,15 @@ do
     end,
     setPosition = function(self, pos)
       return _class_0.__parent.__base.setPosition(self, pos - self.offset)
+    end,
+    draw = function(self)
+      _class_0.__parent.__base.draw(self)
+      local pos = player.pos + player.offset
+      local ax, ay = input:get("attack")
+      local attackDir = Vector(ax, ay) * 10
+      local epos = pos + attackDir
+      love.graphics.setColor(1, 0, 0)
+      return love.graphics.line(pos.x, pos.y, epos.x, epos.y)
     end
   }
   _base_0.__index = _base_0
@@ -55,7 +65,7 @@ do
       self.gold = 99
       self.keys = 99
       self.bombs = 99
-      self.weapon = nil
+      self.weapon = Bow()
       self.spell = nil
       self.disableMovement = false
     end,

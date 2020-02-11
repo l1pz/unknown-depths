@@ -1,25 +1,37 @@
 local baton = require("libs/baton")
 input = baton.new({
   controls = {
-    left = {
+    moveLeft = {
       "key:a",
       "axis:leftx-",
       "button:dpleft"
     },
-    right = {
+    moveRight = {
       "key:d",
       "axis:leftx+",
       "button:dpright"
     },
-    up = {
+    moveUp = {
       "key:w",
       "axis:lefty-",
       "button:dpup"
     },
-    down = {
+    moveDown = {
       "key:s",
       "axis:lefty+",
       "button:dpdown"
+    },
+    attackLeft = {
+      "key:left"
+    },
+    attackRight = {
+      "key:right"
+    },
+    attackUp = {
+      "key:up"
+    },
+    attackDown = {
+      "key:down"
     },
     action = {
       "key:x",
@@ -28,10 +40,16 @@ input = baton.new({
   },
   pairs = {
     move = {
-      "left",
-      "right",
-      "up",
-      "down"
+      "moveLeft",
+      "moveRight",
+      "moveUp",
+      "moveDown"
+    },
+    attack = {
+      "attackLeft",
+      "attackRight",
+      "attackUp",
+      "attackDown"
     }
   },
   joystick = love.joystick.getJoysticks()[1]

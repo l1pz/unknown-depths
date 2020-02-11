@@ -3,10 +3,7 @@ floor = math.floor
 do
   local _class_0
   local _base_0 = {
-    changeSprite = function(self, sprite, update)
-      if update == nil then
-        update = true
-      end
+    changeSprite = function(self, sprite)
       self.sprite = sprite
       self.dim = Vector(self.sprite.width, self.sprite.height)
       self.offset = self.dim / 2
@@ -19,7 +16,7 @@ do
   _base_0.__index = _base_0
   _class_0 = setmetatable({
     __init = function(self, sprite)
-      return self:changeSprite(sprite, false)
+      return self:changeSprite(sprite)
     end,
     __base = _base_0,
     __name = "Item"

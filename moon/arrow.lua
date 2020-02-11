@@ -5,26 +5,23 @@ do
   local _base_0 = {
     update = function(self, dt)
       if not (stuck) then
-        self:move(dir * 10 * dt, onCollision)
-      end
-      if {
-        input = pressed('action')
-      } then
-        return {
-          playerShip = shoot()
-        }
+        return self:move(self.dir * self.speed * dt, onCollision)
       end
     end
   }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self, dir)
+    __init = function(self, pos, dir)
       self.dir = dir
+      _class_0.__parent.__init(self, pos.x, pos.y, sprites.arrow)
       self.stuck = false
+      self.speed = 200
       self.filter = function(item, other)
         local _exp_0 = other.__class
         if Player == _exp_0 then
+          return "cross"
+        elseif Arrow == _exp_0 then
           return "cross"
         end
         return "touch"
@@ -53,13 +50,13 @@ do
   })
   _base_0.__class = _class_0
   local self = _class_0
-  onCollision = function(cols) end
-  local _list_0 = cols
-  for _index_0 = 1, #_list_0 do
-    local col = _list_0[_index_0]
-    local other = col.other
-    if other.__class == Wall then
-      self.stuck = true
+  onCollision = function(cols)
+    for _index_0 = 1, #cols do
+      local col = cols[_index_0]
+      local other = col.other
+      if other.__class == Wall then
+        self.stuck = true
+      end
     end
   end
   if _parent_0.__inherited then

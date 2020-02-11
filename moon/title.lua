@@ -27,7 +27,6 @@ text = function(s, font, y)
   return love.graphics.print(s, x, y)
 end
 title.enter = function(self, previous)
-  sounds.titleMusic:play()
   return move()
 end
 title.update = function(self, dt)

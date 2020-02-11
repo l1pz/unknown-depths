@@ -39,6 +39,7 @@ export class Dungeon
       chestRoom\addEntity Chest(chestRoom.center.x, chestRoom.center.y)
     
     stairRoom = randomChoice @getStairRooms!
+    stairRoom.cleared = true
     stairRoom\addEntity Stairs(stairRoom.center.x, stairRoom.center.y)
     --@currentRoom\addEntity Stairs(@currentRoom.center.x, @currentRoom.center.y)  
       
@@ -52,10 +53,13 @@ export class Dungeon
 
   update: (dt) =>
     @currentRoom\update dt
-    if @currentRoom\isInside(player.pos) and not @currentRoom.cleared
+    unless @currentRoom.cleared
       @currentRoom\closeDoors!
       @prevRoom\closeDoors!
-
+    else 
+      @currentRoom\openDoors!
+      @prevRoom\openDoors!
+    
   generateRaw = =>
     n = 10
     grid = {}
