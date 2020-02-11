@@ -3,7 +3,7 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     open = function(self)
-      if self.closed and player.pos.y >= self.pos.y + self.dim.y then
+      if self.closed then
         self:changeSprite(sprites.chestOpen)
         self:setPosition(Vector(self.pos.x, self.pos.y + self.heightDiff))
         self.closed = false

@@ -6,10 +6,12 @@ end
 local title = { }
 title.y = 16
 title.text = "Unknown\n      Depths"
-local foo
-foo = function()
-  return print("bar")
-end
+local color = {
+  0,
+  0,
+  0,
+  0
+}
 local move
 move = function()
   return flux.to(title, 0.48, {
@@ -27,6 +29,7 @@ text = function(s, font, y)
   return love.graphics.print(s, x, y)
 end
 title.enter = function(self, previous)
+  sounds.titleMusic:play()
   return move()
 end
 title.update = function(self, dt)
@@ -39,12 +42,21 @@ title.draw = function(self)
   text("PRESS ENTER TO START", fontRetro, screenHeight - y)
   text("PRESS ESC TO EXIT", fontRetro, screenHeight - y + 10)
   text("© 2020", fontRetro, screenHeight - 16)
+  love.graphics.setColor(color)
+  love.graphics.rectangle("fill", 0, 0, gameWidth, screenHeight)
   return push:finish()
 end
 title.keypressed = function(self, key)
   local _exp_0 = key
   if "return" == _exp_0 then
-    return manager:enter(states.gameplay)
+    return flux.to(color, 0.5, {
+      0,
+      0,
+      0,
+      1
+    }):oncomplete(function()
+      return manager:enter(states.gameplay)
+    end)
   elseif "escape" == _exp_0 then
     return love.event.quit()
   end

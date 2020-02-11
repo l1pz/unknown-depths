@@ -53,12 +53,14 @@ export class Dungeon
 
   update: (dt) =>
     @currentRoom\update dt
-    unless @currentRoom.cleared
-      @currentRoom\closeDoors!
-      @prevRoom\closeDoors!
-    else 
+    if @currentRoom.cleared
+      print @currentRoom, @prevRoom
       @currentRoom\openDoors!
       @prevRoom\openDoors!
+    else 
+      @currentRoom\closeDoors!
+      @prevRoom\closeDoors!
+      
     
   generateRaw = =>
     n = 10

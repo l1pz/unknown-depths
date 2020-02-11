@@ -21,6 +21,8 @@ gameplay.enter = (previous) =>
     \setFollowStyle "SCREEN_BY_SCREEN"
     \setFollowLerp 0.2
     .scale = 1
+    .fade_color = {0,0,0,1}
+    \fade 0.5, {0,0,0,0}
 
   export debugDrawSprites = true
   export debugDrawCollisionBoxes = false

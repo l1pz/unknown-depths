@@ -13,6 +13,18 @@ gameplay.enter = function(self, previous)
     camera:setFollowStyle("SCREEN_BY_SCREEN")
     camera:setFollowLerp(0.2)
     camera.scale = 1
+    camera.fade_color = {
+      0,
+      0,
+      0,
+      1
+    }
+    camera:fade(0.5, {
+      0,
+      0,
+      0,
+      0
+    })
   end
   debugDrawSprites = true
   debugDrawCollisionBoxes = false

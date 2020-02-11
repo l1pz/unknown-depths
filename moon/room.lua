@@ -50,7 +50,6 @@ do
       end
     end,
     openDoors = function(self)
-      dungeon.prevRoom = dungeon.currentRoom
       for door in pairs(self.doors) do
         door:open()
       end

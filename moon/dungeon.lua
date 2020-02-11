@@ -64,12 +64,13 @@ do
     end,
     update = function(self, dt)
       self.currentRoom:update(dt)
-      if not (self.currentRoom.cleared) then
-        self.currentRoom:closeDoors()
-        return self.prevRoom:closeDoors()
-      else
+      if self.currentRoom.cleared then
+        print(self.currentRoom, self.prevRoom)
         self.currentRoom:openDoors()
         return self.prevRoom:openDoors()
+      else
+        self.currentRoom:closeDoors()
+        return self.prevRoom:closeDoors()
       end
     end
   }

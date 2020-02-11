@@ -50,7 +50,6 @@ export class Room
       @addEntity door
 
   openDoors: =>
-    dungeon.prevRoom = dungeon.currentRoom
     for door in pairs(@doors)
       door\open!
 

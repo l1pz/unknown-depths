@@ -3,9 +3,10 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     checkCurrentRoom = function(self)
-      if self.room:isInside(player.pos + player.offset) then
+      if self.room ~= dungeon.currentRoom and self.room:isInside(player.pos + player.offset) then
         dungeon.prevRoom = dungeon.currentRoom
         dungeon.currentRoom = self.room
+        return print(dungeon.currentRoom, dungeon.prevRoom)
       end
     end,
     open = function(self)

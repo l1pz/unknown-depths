@@ -7,7 +7,7 @@ export class Chest extends Entity
     @closed = true
     @heightDiff = sprites.chestClosed.height - sprites.chestOpen.height
   open: =>
-    if @closed and player.pos.y >= @pos.y + @dim.y
+    if @closed --and player.pos.y >= @pos.y + @dim.y
       @changeSprite sprites.chestOpen
       @setPosition Vector(@pos.x, @pos.y + @heightDiff)
       @closed = false
