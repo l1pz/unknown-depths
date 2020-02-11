@@ -63,7 +63,11 @@ do
       end
     end,
     update = function(self, dt)
-      return self.currentRoom:update(dt)
+      self.currentRoom:update(dt)
+      if self.currentRoom:isInside(player.pos) and not self.currentRoom.cleared then
+        self.currentRoom:closeDoors()
+        return self.prevRoom:closeDoors()
+      end
     end
   }
   _base_0.__index = _base_0
@@ -76,7 +80,9 @@ do
         self.rooms[k] = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
       end
       self.currentRoom = randomChoice(self.rooms)
+      self.currentRoom.cleared = true
       player:setPosition(self.currentRoom.center)
+      self.prevRoom = self.currentRoom
       local chestChance = random()
       local chestCount
       if chestChance < 0.1 then

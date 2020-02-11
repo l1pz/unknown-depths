@@ -59,18 +59,19 @@ gameplay.draw = () =>
   
 
 gameplay.keypressed = (key) =>
+  
   switch key
     when "f1" then debugDrawSprites = not debugDrawSprites
     when "f2" then debugDrawCollisionBoxes = not debugDrawCollisionBoxes
     when "right"
-      colorScheme+=1
+      export colorScheme = colorScheme + 1
       if colorScheme > #colorSchemes then colorScheme = 1
-      colors = colorSchemes[colorScheme]
+      export colors = colorSchemes[colorScheme]
       sprites\refreshColors!
     when "left"
-      colorScheme-=1
+      export colorScheme = colorScheme - 1
       if colorScheme < 1 then colorScheme = #colorSchemes
-      colors = colorSchemes[colorScheme]
+      export colors = colorSchemes[colorScheme]
       sprites\refreshColors!
     when "f3"
       nextDungeon!

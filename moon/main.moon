@@ -53,7 +53,7 @@ else
 
 export colors
 export colorSchemes = {}
-colorScheme = 6
+export colorScheme = 6
 
 export states = {
   gameplay: require "moon/gameplay"

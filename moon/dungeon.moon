@@ -28,7 +28,9 @@ export class Dungeon
     for k, roomRaw in pairs roomsRaw
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
+    @currentRoom.cleared = true
     player\setPosition @currentRoom.center
+    @prevRoom = @currentRoom
 
     chestChance = random!
     chestCount = if chestChance < 0.1 then 2 else 1
@@ -50,6 +52,9 @@ export class Dungeon
 
   update: (dt) =>
     @currentRoom\update dt
+    if @currentRoom\isInside(player.pos) and not @currentRoom.cleared
+      @currentRoom\closeDoors!
+      @prevRoom\closeDoors!
 
   generateRaw = =>
     n = 10

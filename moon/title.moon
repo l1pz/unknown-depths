@@ -37,7 +37,6 @@ title.draw = () =>
   push\finish!
 
 title.keypressed = (key) =>
-  print key
   switch key
     when "return"  manager\enter states.gameplay
     when "escape" love.event.quit!

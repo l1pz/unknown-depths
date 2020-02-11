@@ -5,6 +5,8 @@ export class Room
     @dim = Vector gameWidth, gameHeight
     @center = @getPosition gameWidth / 2, gameHeight / 2
     @entities = {}
+    @doors = {}
+    @cleared = false
 
     @adjacentsCount = 0 
     for _ in pairs adjacents
@@ -44,7 +46,17 @@ export class Room
         when "right" @getPosition gameWidth - tileSize, gameHeight / 2 - tileSize
         when "left" @getPosition 0, gameHeight / 2 - tileSize
       door = Door pos.x, pos.y, dir, @
+      @doors[door] = door
       @addEntity door
+
+  openDoors: =>
+    dungeon.prevRoom = dungeon.currentRoom
+    for door in pairs(@doors)
+      door\open!
+
+  closeDoors: =>
+    for door in pairs(@doors)
+      door\close!
 
   addEntity: (entity) =>
     @entities[entity] = entity
@@ -54,16 +66,17 @@ export class Room
     @entities[entity] = nil
 
   isInside: (pos) =>
-    if pos.x >= @pos.x and pos.x <= @pos.x + @dim.x and pos.y >= @pos.y and pos.y <= @pos.y + @dim.y
-      return true
-    return false
+    return pos.x >= @pos.x and pos.x <= @pos.x + @dim.x and pos.y >= @pos.y and pos.y <= @pos.y + @dim.y
+
+  isInsideCloseArea: (pos) =>
+    return pos.x >= @pos.x + tileSize and pos.x <= @pos.x + @dim.x - tileSize and pos.y >= @pos.y + tileSize and pos.y <= @pos.y + @dim.y - tileSize
 
   draw: =>
-    for _, e in pairs(@entities)
+    for e in pairs(@entities)
       e\draw!
 
   update: (dt) =>
-    for _, e in pairs(@entities)
+    for e in pairs(@entities)
       e\update!
 
     

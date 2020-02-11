@@ -43,7 +43,6 @@ title.draw = function(self)
   return push:finish()
 end
 title.keypressed = function(self, key)
-  print(key)
   local _exp_0 = key
   if "return" == _exp_0 then
     return manager:enter(states.gameplay)

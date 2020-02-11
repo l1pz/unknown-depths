@@ -6,6 +6,20 @@ do
       if self.room:isInside(player.pos + player.offset) then
         dungeon.currentRoom = self.room
       end
+    end,
+    open = function(self)
+      self.closed = false
+      return self:changeSprite(sprites.door[self.orientation .. "Open"])
+    end,
+    close = function(self)
+      local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
+      for _, item in pairs(items) do
+        if item.__class == Player then
+          return 
+        end
+      end
+      self.closed = true
+      return self:changeSprite(sprites.door[self.orientation])
     end
   }
   _base_0.__index = _base_0
@@ -13,7 +27,8 @@ do
   _class_0 = setmetatable({
     __init = function(self, x, y, orientation, room)
       self.orientation, self.room = orientation, room
-      _class_0.__parent.__init(self, x, y, sprites.door[self.orientation])
+      _class_0.__parent.__init(self, x, y, sprites.door[self.orientation .. "Open"])
+      self.closed = false
       local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
       for _, item in pairs(items) do
         if item.__class == Wall then

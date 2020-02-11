@@ -57,28 +57,27 @@ gameplay.keypressed = function(self, key)
   elseif "f2" == _exp_0 then
     local debugDrawCollisionBoxes = not debugDrawCollisionBoxes
   elseif "right" == _exp_0 then
-    local colorScheme = colorScheme + 1
+    colorScheme = colorScheme + 1
     if colorScheme > #colorSchemes then
       colorScheme = 1
     end
-    local colors = colorSchemes[colorScheme]
-    sprites:refreshColors()
+    colors = colorSchemes[colorScheme]
+    return sprites:refreshColors()
   elseif "left" == _exp_0 then
-    local colorScheme = colorScheme - 1
+    colorScheme = colorScheme - 1
     if colorScheme < 1 then
       colorScheme = #colorSchemes
     end
-    local colors = colorSchemes[colorScheme]
-    sprites:refreshColors()
+    colors = colorSchemes[colorScheme]
+    return sprites:refreshColors()
   elseif "f3" == _exp_0 then
-    nextDungeon()
+    return nextDungeon()
   elseif "escape" == _exp_0 then
-    love.event.quit()
+    return love.event.quit()
   elseif "kp+" == _exp_0 then
     camera.scale = camera.scale + 0.1
   elseif "kp-" == _exp_0 then
     camera.scale = camera.scale - 0.1
   end
-  return print(key)
 end
 return gameplay

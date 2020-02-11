@@ -11,7 +11,11 @@ do
       elseif Stairs == _exp_0 then
         return "cross"
       elseif Door == _exp_0 then
-        return "cross"
+        if other.closed then
+          return "slide"
+        else
+          return "cross"
+        end
       end
     end,
     update = function(self, dt)

@@ -15,7 +15,8 @@ export class Player extends Entity
       when Wall return "slide"
       when Chest return "slide"
       when Stairs return "cross"
-      when Door return "cross"
+      when Door
+        if other.closed then "slide" else "cross"
 
   update: (dt) => 
     ix, iy = input\get "move"

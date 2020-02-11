@@ -41,7 +41,7 @@ else
   windowWidth, windowHeight = gameWidth * windowScale, screenHeight * windowScale
 end
 colorSchemes = { }
-local colorScheme = 6
+colorScheme = 6
 states = {
   gameplay = require("moon/gameplay"),
   title = require("moon/title")

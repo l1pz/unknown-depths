@@ -45,7 +45,19 @@ do
           pos = self:getPosition(0, gameHeight / 2 - tileSize)
         end
         local door = Door(pos.x, pos.y, dir, self)
+        self.doors[door] = door
         self:addEntity(door)
+      end
+    end,
+    openDoors = function(self)
+      dungeon.prevRoom = dungeon.currentRoom
+      for door in pairs(self.doors) do
+        door:open()
+      end
+    end,
+    closeDoors = function(self)
+      for door in pairs(self.doors) do
+        door:close()
       end
     end,
     addEntity = function(self, entity)
@@ -56,18 +68,18 @@ do
       self.entities[entity] = nil
     end,
     isInside = function(self, pos)
-      if pos.x >= self.pos.x and pos.x <= self.pos.x + self.dim.x and pos.y >= self.pos.y and pos.y <= self.pos.y + self.dim.y then
-        return true
-      end
-      return false
+      return pos.x >= self.pos.x and pos.x <= self.pos.x + self.dim.x and pos.y >= self.pos.y and pos.y <= self.pos.y + self.dim.y
+    end,
+    isInsideCloseArea = function(self, pos)
+      return pos.x >= self.pos.x + tileSize and pos.x <= self.pos.x + self.dim.x - tileSize and pos.y >= self.pos.y + tileSize and pos.y <= self.pos.y + self.dim.y - tileSize
     end,
     draw = function(self)
-      for _, e in pairs(self.entities) do
+      for e in pairs(self.entities) do
         e:draw()
       end
     end,
     update = function(self, dt)
-      for _, e in pairs(self.entities) do
+      for e in pairs(self.entities) do
         e:update()
       end
     end
@@ -79,6 +91,8 @@ do
       self.dim = Vector(gameWidth, gameHeight)
       self.center = self:getPosition(gameWidth / 2, gameHeight / 2)
       self.entities = { }
+      self.doors = { }
+      self.cleared = false
       self.adjacentsCount = 0
       for _ in pairs(adjacents) do
         self.adjacentsCount = self.adjacentsCount + 1
