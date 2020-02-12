@@ -66,6 +66,8 @@ gameplay.keypressed = function(self, key)
   local _exp_0 = key
   if "k" == _exp_0 then
     dungeon.currentRoom.cleared = true
+  elseif "h" == _exp_0 then
+    return manager:push(states.help)
   elseif "f1" == _exp_0 then
     debugDrawSprites = not debugDrawSprites
   elseif "f2" == _exp_0 then

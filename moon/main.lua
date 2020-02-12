@@ -45,7 +45,8 @@ colorSchemes = { }
 colorScheme = 6
 states = {
   gameplay = require("moon/gameplay"),
-  title = require("moon/title")
+  title = require("moon/title"),
+  help = require("moon/help")
 }
 love.load = function()
   love.joystick.loadGamepadMappings("assets/misc/gamecontrollerdb.txt")
@@ -56,17 +57,11 @@ love.load = function()
     resizeable = false,
     pixelperfect = true
   })
-  local handle
-  local _exp_0 = love.system.getOS()
-  if "Windows" == _exp_0 then
-    handle = io.popen("dir assets/colors /b /a-d")
-  elseif "Linux" == _exp_0 then
-    handle = io.popen("ls -A1 assets/colors/")
-  end
-  local fileNames = handle:read("*a")
-  handle:close()
-  for fileName in fileNames:gmatch("[^\r\n]+") do
-    local scheme = require("assets/colors/" .. fileName:sub(1, #fileName - 4))
+  local dir = "assets/colors/"
+  local files = love.filesystem.getDirectoryItems(dir)
+  for _index_0 = 1, #files do
+    local file = files[_index_0]
+    local scheme = require(dir .. file:sub(1, #file - 4))
     insert(colorSchemes, scheme)
   end
   colors = colorSchemes[colorScheme]

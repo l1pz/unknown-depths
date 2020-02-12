@@ -59,6 +59,7 @@ export colorScheme = 6
 export states = {
   gameplay: require "moon/gameplay"
   title: require "moon/title"
+  help: require "moon/help"
 }
 
 love.load = ->
@@ -74,8 +75,8 @@ love.load = ->
 
   dir = "assets/colors/"
   files = love.filesystem.getDirectoryItems(dir)
-  for _, file in *files do
-    scheme = require dir .. file:sub(1, #file - 4)
+  for file in *files do
+    scheme = require dir .. file\sub(1, #file - 4)
     insert colorSchemes, scheme
   colors = colorSchemes[colorScheme]
 
