@@ -25,6 +25,13 @@ do
       if not (self.disableMovement) then
         self:move(velocity)
       end
+      local items, len = world:queryRect(self.pos.x, self.pos.y, self.dim.x, self.dim.y)
+      self.disableAttacking = false
+      for _, item in pairs(items) do
+        if item.__class == Door then
+          self.disableAttacking = true
+        end
+      end
       return self.weapon:update()
     end,
     onCollision = function(self, cols)
@@ -53,12 +60,13 @@ do
       _class_0.__parent.__init(self, x, y, sprites.player)
       self.speed = 96
       self.health = 6
-      self.gold = 99
-      self.keys = 99
-      self.bombs = 99
+      self.gold = 0
+      self.keys = 0
+      self.bombs = 0
       self.weapon = Bow()
       self.spell = nil
       self.disableMovement = false
+      self.disableAttacking = false
     end,
     __base = _base_0,
     __name = "Player",

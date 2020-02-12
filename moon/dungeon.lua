@@ -65,7 +65,6 @@ do
     update = function(self, dt)
       self.currentRoom:update(dt)
       if self.currentRoom.cleared then
-        print(self.currentRoom, self.prevRoom)
         self.currentRoom:openDoors()
         return self.prevRoom:openDoors()
       else

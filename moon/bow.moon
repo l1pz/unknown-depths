@@ -3,7 +3,7 @@ export class Bow extends Item
     super sprites.bow
 
   update: =>
-    if input\pressed "attack"
+    if input\pressed("attack") and not player.disableAttacking
       pos = player.pos + player.offset
       ax, ay = input\get "attack"
       attackDir = Vector(ax, ay)

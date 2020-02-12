@@ -54,7 +54,6 @@ export class Dungeon
   update: (dt) =>
     @currentRoom\update dt
     if @currentRoom.cleared
-      print @currentRoom, @prevRoom
       @currentRoom\openDoors!
       @prevRoom\openDoors!
     else 

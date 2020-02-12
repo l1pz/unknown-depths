@@ -2,7 +2,6 @@ local gameplay = { }
 local ui
 local roomsCount = 5
 gameplay.enter = function(self, previous)
-  love.graphics.setFont(fontGameplay)
   world = bump.newWorld()
   ui = UI(uiWidth, uiHeight)
   player = Player(0, 0)

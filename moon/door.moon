@@ -11,7 +11,6 @@ export class Door extends Entity
         if @room != dungeon.currentRoom and @room\isInside player.pos + player.offset
             dungeon.prevRoom = dungeon.currentRoom
             dungeon.currentRoom = @room
-            print dungeon.currentRoom, dungeon.prevRoom
 
     open: =>
         @closed = false

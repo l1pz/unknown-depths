@@ -1,26 +1,13 @@
 do
   local _class_0
-  local _parent_0 = Item
-  local _base_0 = {
-    update = function(self)
-      if input:pressed("attack") and not player.disableAttacking then
-        local pos = player.pos + player.offset
-        local ax, ay = input:get("attack")
-        local attackDir = Vector(ax, ay)
-        local arrowPos = pos + attackDir * 10
-        local arrow = Arrow(arrowPos, attackDir)
-        dungeon.currentRoom.entities[arrow] = arrow
-      end
-    end
-  }
+  local _parent_0 = Entity
+  local _base_0 = { }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self)
-      return _class_0.__parent.__init(self, sprites.bow)
-    end,
+    __init = function(self) end,
     __base = _base_0,
-    __name = "Bow",
+    __name = "Undead",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -44,5 +31,5 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Bow = _class_0
+  Undead = _class_0
 end

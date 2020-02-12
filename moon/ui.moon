@@ -19,6 +19,7 @@ export class UI
     @drawCounter 16, sprites.key, player.keys
     
   text: (s, x, y, color = colors["normal"]["white"], center = false) =>
+    love.graphics.setFont fontGameplay
     s = s\upper!
     offset = if center then fontGameplay\getWidth(s) / 2 else 0
     love.graphics.setColor color

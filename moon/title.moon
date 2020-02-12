@@ -18,7 +18,7 @@ text = (s, font, y) ->
   love.graphics.print(s, x, y)
 
 title.enter = (previous) =>
-  sounds.titleMusic\play!
+  --sounds.titleMusic\play!
   move!
   
   

@@ -19,6 +19,7 @@ do
       if center == nil then
         center = false
       end
+      love.graphics.setFont(fontGameplay)
       s = s:upper()
       local offset
       if center then
