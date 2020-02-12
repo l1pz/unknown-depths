@@ -72,14 +72,11 @@ love.load = ->
     pixelperfect: true
   }
 
-  handle = switch love.system.getOS!
-    when "Windows" io.popen "dir assets/colors /b /a-d"
-    when "Linux" io.popen "ls -A1 assets/colors/"
-  fileNames = handle\read "*a"
-  handle\close!
-  for fileName in fileNames\gmatch "[^\r\n]+"
-    scheme = require "assets/colors/" .. fileName\sub(1, #fileName - 4)
-    insert(colorSchemes, scheme)
+  dir = "assets/colors/"
+  files = love.filesystem.getDirectoryItems(dir)
+  for _, file in *files do
+    scheme = require dir .. file:sub(1, #file - 4)
+    insert colorSchemes, scheme
   colors = colorSchemes[colorScheme]
 
   export fontGameplay = love.graphics.newImageFont 'assets/sprites/font.png', ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', -1
