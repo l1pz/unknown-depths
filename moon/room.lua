@@ -112,8 +112,11 @@ do
         end
       end
     end,
-    getPosInGrid = function(self, entity)
-      local pos = (entity.pos + entity.offset - self.pos) / tileSize
+    getPosInGrid = function(self, pos, offset)
+      if offset == nil then
+        offset = Vector()
+      end
+      pos = (pos + offset - self.pos) / tileSize
       return floor(pos.x) + 1, floor(pos.y) + 1
     end
   }

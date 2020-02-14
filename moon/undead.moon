@@ -4,6 +4,7 @@ export class Undead extends Entity
   new: (x, y) =>
     super x, y, sprites.undead
     @health = 5
+    @speed = 25
     @enableDraw = true
     @dir = Vector!
     @nodes = {}
@@ -18,42 +19,52 @@ export class Undead extends Entity
 
   update: (dt) =>
     @findPath!
-    --print @dir
-    --@move @dir * 10 * dt
+    @move @dir * @speed * dt
+
+  clearSelfGrid: (map) =>
+    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid @pos
+    map[selfPosY][selfPosX] = 0
+    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid Vector(@pos.x + @dim.x, @pos.y)
+    map[selfPosY][selfPosX] = 0
+    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid Vector(@pos.x, @pos.y + @dim.y)
+    map[selfPosY][selfPosX] = 0
+    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid Vector(@pos.x + @dim.x, @pos.y + @dim.y)
+    map[selfPosY][selfPosX] = 0
 
   findPath: =>
     -- Creates a grid object
     map = copyGrid dungeon.currentRoom.grid
-    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid @
-    map[selfPosY][selfPosX] = 0
+    selfPosX, selfPosY = dungeon.currentRoom\getPosInGrid @pos
+    @clearSelfGrid map
+
     grid = Grid map 
     -- Creates a pathfinder object using Jump Point Search
-    pathfinder = Pathfinder grid, "JPS", 0
+    pathfinder = Pathfinder grid, "ASTAR", 0
 
     -- Define start and goal locations coordinates
-    playerPosX, playerPosY = dungeon.currentRoom\getPosInGrid player
+    playerPosX, playerPosY = dungeon.currentRoom\getPosInGrid player.pos
 
     -- Calculates the path, and its length
     path = pathfinder\getPath(selfPosX, selfPosY, playerPosX, playerPosY)
     if path
       @nodes = {}
       for node, count in path\nodes!
-        insert @nodes, node
-      --print node.x, node.y
-      --goalPos = Vector dungeon.currentRoom.pos.x + node.x * tileSize, dungeon.currentRoom.pos.y + node.y * tileSize
-      --print goalPos
-      --print @pos
-      --@dir = goalPos - @pos
+        px = dungeon.currentRoom.pos.x + (node.x - 1) * tileSize + tileSize / 2
+        py = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
+        pos = Vector(px, py)
+        insert @nodes, pos
+    @dir = (@nodes[2] - @pos).normalized
         
 
   draw: =>
     if @enableDraw then super!
     if debugDrawEnemyPath
       points = {}
-      for i = 1, #@nodes
-        node = @nodes[i]
-        x = dungeon.currentRoom.pos.x + (node.x - 1) * tileSize + tileSize / 2
-        y = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
-        insert points, x
-        insert points, y
-      love.graphics.line points
+      if #@nodes > 2
+        for node in *@nodes
+          insert points, node.x
+          insert points, node.y
+        love.graphics.line points
+      --for node in *@nodes
+        --love.graphics.setColor(1, 0, 0, 1)
+        --love.graphics.points(node.x, node.y)

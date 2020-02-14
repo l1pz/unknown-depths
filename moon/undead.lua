@@ -17,22 +17,37 @@ do
       end
     end,
     update = function(self, dt)
-      return self:findPath()
+      self:findPath()
+      return self:move(self.dir * self.speed * dt)
+    end,
+    clearSelfGrid = function(self, map)
+      local selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(self.pos)
+      map[selfPosY][selfPosX] = 0
+      selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(Vector(self.pos.x + self.dim.x, self.pos.y))
+      map[selfPosY][selfPosX] = 0
+      selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(Vector(self.pos.x, self.pos.y + self.dim.y))
+      map[selfPosY][selfPosX] = 0
+      selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(Vector(self.pos.x + self.dim.x, self.pos.y + self.dim.y))
+      map[selfPosY][selfPosX] = 0
     end,
     findPath = function(self)
       local map = copyGrid(dungeon.currentRoom.grid)
-      local selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(self)
-      map[selfPosY][selfPosX] = 0
+      local selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(self.pos)
+      self:clearSelfGrid(map)
       local grid = Grid(map)
-      local pathfinder = Pathfinder(grid, "JPS", 0)
-      local playerPosX, playerPosY = dungeon.currentRoom:getPosInGrid(player)
+      local pathfinder = Pathfinder(grid, "ASTAR", 0)
+      local playerPosX, playerPosY = dungeon.currentRoom:getPosInGrid(player.pos)
       local path = pathfinder:getPath(selfPosX, selfPosY, playerPosX, playerPosY)
       if path then
         self.nodes = { }
         for node, count in path:nodes() do
-          insert(self.nodes, node)
+          local px = dungeon.currentRoom.pos.x + (node.x - 1) * tileSize + tileSize / 2
+          local py = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
+          local pos = Vector(px, py)
+          insert(self.nodes, pos)
         end
       end
+      self.dir = (self.nodes[2] - self.pos).normalized
     end,
     draw = function(self)
       if self.enableDraw then
@@ -40,14 +55,15 @@ do
       end
       if debugDrawEnemyPath then
         local points = { }
-        for i = 1, #self.nodes do
-          local node = self.nodes[i]
-          local x = dungeon.currentRoom.pos.x + (node.x - 1) * tileSize + tileSize / 2
-          local y = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
-          insert(points, x)
-          insert(points, y)
+        if #self.nodes > 2 then
+          local _list_0 = self.nodes
+          for _index_0 = 1, #_list_0 do
+            local node = _list_0[_index_0]
+            insert(points, node.x)
+            insert(points, node.y)
+          end
+          return love.graphics.line(points)
         end
-        return love.graphics.line(points)
       end
     end
   }
@@ -57,6 +73,7 @@ do
     __init = function(self, x, y)
       _class_0.__parent.__init(self, x, y, sprites.undead)
       self.health = 5
+      self.speed = 25
       self.enableDraw = true
       self.dir = Vector()
       self.nodes = { }

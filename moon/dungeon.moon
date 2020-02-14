@@ -29,16 +29,17 @@ export class Dungeon
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
     @currentRoom.cleared = true
-    @currentRoom\addEntity Undead(@currentRoom.center.x - 32, @currentRoom.center.y + 64)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 64)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 48)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 32)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 16)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y - 16)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 16, @currentRoom.center.y - 16)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + 0, @currentRoom.center.y - 16)
-    @currentRoom\addEntity Wall(@currentRoom.center.x + -16, @currentRoom.center.y - 16)
+    @currentRoom\addEntity Undead(@currentRoom.center.x - 30, @currentRoom.center.y + 72)
+    --@currentRoom\addEntity Undead(@currentRoom.center.x - 72, @currentRoom.center.y + 5)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 64)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 48)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 32)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 16)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y - 16)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 16, @currentRoom.center.y - 16)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + 0, @currentRoom.center.y - 48)
+    --@currentRoom\addEntity Wall(@currentRoom.center.x + -16, @currentRoom.center.y - 32)
     player\setPosition @currentRoom.center
     @prevRoom = @currentRoom
 

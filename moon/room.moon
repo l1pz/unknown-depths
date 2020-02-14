@@ -116,7 +116,7 @@ export class Room
         items, len = world\queryRect x, y, tileSize, tileSize, @gridFilter 
         if len > 0 then @grid[ty][tx] = 1
 
-  getPosInGrid: (entity) =>
-    pos = (entity.pos + entity.offset - @pos) / tileSize
+  getPosInGrid: (pos, offset = Vector!) =>
+    pos = (pos + offset - @pos) / tileSize
     return floor(pos.x) + 1, floor(pos.y) + 1
       
