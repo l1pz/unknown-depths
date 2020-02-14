@@ -58,6 +58,7 @@ fadeOut = function(fn)
   }):oncomplete(fn)
 end
 nextDungeon = function()
+  depth = depth + 1
   player.disableMovement = true
   camera:setFollowLerp(1)
   return fadeOut(function()

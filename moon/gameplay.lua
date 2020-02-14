@@ -1,6 +1,7 @@
 local gameplay = { }
 local ui
 local roomsCount = 5
+depth = 0
 gameplay.enter = function(self, previous)
   world = bump.newWorld()
   ui = UI(uiWidth, uiHeight)

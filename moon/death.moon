@@ -30,7 +30,8 @@ death.draw = () =>
   push\start!
   textCentered @textTop, fontFantasy, floor(@y)
   textCentered @textBottom, fontFantasy, floor(@y)
-  textCentered "PRESS ANY KEY TO CONTINUE", fontRetro, screenHeight - 64
+  textCentered "YOUR DEPTH BEFORE DYING WAS #{depth}", fontRetro, screenHeight - 64
+  textCentered "PRESS ANY KEY TO CONTINUE", fontRetro, screenHeight - 48
   push\finish!
 
 death.keypressed = (key) =>

@@ -30,6 +30,7 @@ fadeOut = (fn = ->) ->
   flux.to(fadeColor, 0.5, {[4]: 1})\oncomplete(fn)
   
 nextDungeon = -> 
+  export depth = depth + 1
   player.disableMovement = true
   camera\setFollowLerp 1
   fadeOut(->

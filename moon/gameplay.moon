@@ -4,6 +4,8 @@ local ui
 
 roomsCount = 5
 
+export depth = 0
+
 gameplay.enter = (previous) =>
   -- set up the level
   export world = bump.newWorld!
