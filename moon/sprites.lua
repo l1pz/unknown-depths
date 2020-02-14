@@ -40,6 +40,7 @@ sprites.load = function(self)
   self.chestOpen = newSprite("chestOpen", "normal", "magenta")
   self.stairs = newSprite("stairs", "normal", "yellow")
   self.undead = newSprite("undead", "normal", "green")
+  self.pixel = newSprite("pixel", "normal", "white")
 end
 sprites.refreshColors = function(self)
   for _, sprite in pairs(spritesAll) do

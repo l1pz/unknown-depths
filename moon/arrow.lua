@@ -6,14 +6,13 @@ do
       for _index_0 = 1, #cols do
         local col = cols[_index_0]
         local other = col.other
+        local color = other.sprite.color
         local _exp_0 = other.__class
         if Undead == _exp_0 then
           other:damage(self.damage)
-          self:destroy()
-        elseif Wall == _exp_0 then
-          self.stuck = true
-        elseif Chest == _exp_0 then
-          self.stuck = true
+        end
+        if not (other.__class == Arrow) then
+          self:destroy(color)
         end
       end
     end,
@@ -22,7 +21,14 @@ do
         return self:move(self.dir * self.speed * dt)
       end
     end,
-    destroy = function(self)
+    destroy = function(self, color)
+      do
+        local _with_0 = player.weapon.psystem
+        _with_0:setDirection((self.dir * -1).angle)
+        _with_0:setPosition(self.pos.x, self.pos.y)
+        _with_0:setColors(color[1], color[2], color[3], 1)
+        _with_0:emit(3)
+      end
       return dungeon.currentRoom:removeEntity(self)
     end
   }

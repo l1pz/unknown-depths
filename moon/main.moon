@@ -7,6 +7,7 @@ export push = require "libs/push"
 roomy = require "libs/roomy"
 export ripple = require "libs/ripple"
 export flux = require "libs/flux"
+export tick =  require "libs/tick"
 
 export manager = roomy.new!
 

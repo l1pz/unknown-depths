@@ -31,7 +31,11 @@ export class Player extends Entity
     for _, item in pairs items
         if item.__class == Door then
           @disableAttacking = true
-    @weapon\update!
+    @weapon\update dt, dir
+
+  draw: =>
+    super!
+    @weapon\draw!
 
   onCollision: (cols) =>
     for col in *cols

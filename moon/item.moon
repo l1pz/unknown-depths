@@ -7,6 +7,6 @@ export class Item
     @dim = Vector @sprite.width, @sprite.height
     @offset = @dim / 2
 
-  draw: (x, y)=>
+  drawIcon: (x, y)=>
     love.graphics.setColor @sprite.color
     love.graphics.draw @sprite.img, x, y 

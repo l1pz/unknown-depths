@@ -34,7 +34,11 @@ do
           self.disableAttacking = true
         end
       end
-      return self.weapon:update()
+      return self.weapon:update(dt, dir)
+    end,
+    draw = function(self)
+      _class_0.__parent.__base.draw(self)
+      return self.weapon:draw()
     end,
     onCollision = function(self, cols)
       for _index_0 = 1, #cols do

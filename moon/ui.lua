@@ -47,7 +47,7 @@ do
       love.graphics.draw(sprites.frame.img, x, y)
       local dx, dy = frameWidth / 2, frameHeight / 2
       if item then
-        return item:draw(x + dx - item.offset.x, y + dy - item.offset.y)
+        return item:drawIcon(x + dx - item.offset.x, y + dy - item.offset.y)
       end
     end,
     drawHealth = function(self)

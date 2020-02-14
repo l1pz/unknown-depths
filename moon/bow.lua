@@ -1,23 +1,43 @@
+local pi
+pi = math.pi
 do
   local _class_0
   local _parent_0 = Item
   local _base_0 = {
-    update = function(self)
-      if input:pressed("attack") and not player.disableAttacking then
+    update = function(self, dt, playerDir)
+      self.psystem:update(dt)
+      if input:down("attack") and not player.disableAttacking then
         local pos = player.pos + player.offset
         local ax, ay = input:get("attack")
         local attackDir = Vector(ax, ay)
+        if attackDir * playerDir == 0 then
+          attackDir = attackDir + (playerDir * 0.4)
+        end
+        attackDir = attackDir.normalized
         local arrowPos = pos + attackDir * 10
         local arrow = Arrow(arrowPos, attackDir)
         dungeon.currentRoom.entities[arrow] = arrow
       end
+    end,
+    draw = function(self)
+      love.graphics.setColor(1, 1, 1)
+      return love.graphics.draw(self.psystem, 0, 0)
     end
   }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self)
-      return _class_0.__parent.__init(self, sprites.bow)
+      _class_0.__parent.__init(self, sprites.bow)
+      self.psystem = love.graphics.newParticleSystem(sprites.pixel.img, 32)
+      do
+        local _with_0 = self.psystem
+        _with_0:setParticleLifetime(0.1, 0.1)
+        _with_0:setSpeed(100)
+        _with_0:setSpread(pi * 0.5)
+        _with_0:setColors(1, 1, 1, 1)
+        return _with_0
+      end
     end,
     __base = _base_0,
     __name = "Bow",

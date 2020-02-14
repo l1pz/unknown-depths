@@ -2,16 +2,13 @@ export class Arrow extends Entity
 
   onCollision: (cols) =>
     for col in *cols
-      
       other = col.other
+      color = other.sprite.color
       switch other.__class
         when Undead 
           other\damage @damage
-          @destroy!
-        when Wall
-          @stuck = true
-        when Chest
-          @stuck = true
+      unless other.__class == Arrow
+        @destroy color
 
   new: (pos, @dir) =>
     super pos.x - 2, pos.y - 2, sprites.arrow
@@ -32,7 +29,12 @@ export class Arrow extends Entity
     unless @stuck
       @move @dir * @speed * dt
 
-  destroy: () =>
+  destroy: (color) =>
+    with player.weapon.psystem
+      \setDirection (@dir * -1).angle
+      \setPosition @pos.x, @pos.y
+      \setColors color[1], color[2], color[3], 1
+      \emit 3
     dungeon.currentRoom\removeEntity @
     
   

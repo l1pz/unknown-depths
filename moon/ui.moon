@@ -37,7 +37,7 @@ export class UI
     love.graphics.draw sprites.frame.img, x, y
     dx, dy = frameWidth / 2, frameHeight / 2
     if item
-      item\draw x + dx - item.offset.x, y + dy - item.offset.y
+      item\drawIcon x + dx - item.offset.x, y + dy - item.offset.y
 
   drawHealth: =>
     x = @healthX

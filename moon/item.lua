@@ -8,7 +8,7 @@ do
       self.dim = Vector(self.sprite.width, self.sprite.height)
       self.offset = self.dim / 2
     end,
-    draw = function(self, x, y)
+    drawIcon = function(self, x, y)
       love.graphics.setColor(self.sprite.color)
       return love.graphics.draw(self.sprite.img, x, y)
     end
