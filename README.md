@@ -24,7 +24,7 @@
 
 ### Előre fordított verziók
 #### Windows 
-- Letölthető [innen]("https://github.com/l1pz/unknown-depths/releases/download/v0.1/Unkown.Depths.zip")
+- Letölthető [innen](https://github.com/l1pz/unknown-depths/releases/download/v0.1/Unkown.Depths.zip)
 - Letöltés után kicsomagoljuk, majd a Unkown Depths.exe fájlt elindítjuk
 
 ## Készítette
