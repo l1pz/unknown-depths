@@ -27,6 +27,7 @@ gameplay.enter = function(self, previous)
   end
   debugDrawSprites = true
   debugDrawCollisionBoxes = false
+  debugEnableShaders = true
 end
 gameplay.update = function(self, dt)
   do

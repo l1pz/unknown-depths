@@ -11,6 +11,7 @@ export tick =  require "libs/tick"
 
 export manager = roomy.new!
 
+require "moon/shaders"
 require "moon/helpers"
 require "moon/input"
 require "moon/ui"
@@ -76,6 +77,8 @@ love.load = ->
     resizeable: false
     pixelperfect: true
   }
+
+  shaders\load!
 
   dir = "assets/colors/"
   files = love.filesystem.getDirectoryItems(dir)

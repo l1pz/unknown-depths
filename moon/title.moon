@@ -20,9 +20,8 @@ text = (s, font, y) ->
   love.graphics.print(s, x, y)
 
 title.enter = (previous) =>
-  --sounds.titleMusic\play!
+  sounds.titleMusic\play!
   color = {0,0,0,0}
-  print "enter"
   
 title.update = (dt) =>
   flux.update dt

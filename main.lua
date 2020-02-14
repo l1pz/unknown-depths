@@ -10,6 +10,7 @@ ripple = require("libs/ripple")
 flux = require("libs/flux")
 tick = require("libs/tick")
 manager = roomy.new()
+require("moon/shaders")
 require("moon/helpers")
 require("moon/input")
 require("moon/ui")
@@ -59,6 +60,7 @@ love.load = function()
     resizeable = false,
     pixelperfect = true
   })
+  shaders:load()
   local dir = "assets/colors/"
   local files = love.filesystem.getDirectoryItems(dir)
   for _index_0 = 1, #files do

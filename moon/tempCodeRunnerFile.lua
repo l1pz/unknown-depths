@@ -1,1 +1,1 @@
-return getRect
+return 3

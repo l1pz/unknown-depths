@@ -25,13 +25,13 @@ text = function(s, font, y)
   return love.graphics.print(s, x, y)
 end
 title.enter = function(self, previous)
+  sounds.titleMusic:play()
   color = {
     0,
     0,
     0,
     0
   }
-  return print("enter")
 end
 title.update = function(self, dt)
   return flux.update(dt)

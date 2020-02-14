@@ -24,6 +24,7 @@ gameplay.enter = (previous) =>
 
   export debugDrawSprites = true
   export debugDrawCollisionBoxes = false
+  export debugEnableShaders = true
 
 
 gameplay.update = (dt) =>
