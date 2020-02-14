@@ -44,11 +44,27 @@ do
         fn = function()
           self.invulnurable = false
         end
-        return tick.delay(fn, self, 2)
+        self:flash()
+        return tick.delay(fn, self, 1)
+      end
+    end,
+    flash = function(self)
+      if self.invulnurable then
+        if self.enableDraw then
+          self.enableDraw = false
+          return tick.delay(self.flash, self, 0.05)
+        else
+          self.enableDraw = true
+          return tick.delay(self.flash, self, 0.05)
+        end
+      else
+        self.enableDraw = true
       end
     end,
     draw = function(self)
-      _class_0.__parent.__base.draw(self)
+      if self.enableDraw then
+        _class_0.__parent.__base.draw(self)
+      end
       return self.weapon:draw()
     end,
     onCollision = function(self, cols)
@@ -87,6 +103,7 @@ do
       self.disableMovement = false
       self.disableAttacking = false
       self.invulnurable = false
+      self.enableDraw = true
     end,
     __base = _base_0,
     __name = "Player",

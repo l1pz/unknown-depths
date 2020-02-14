@@ -1,7 +1,8 @@
 import insert from table
 import floor from math
+import random from love.math
 export class Room
-  new: (x, y, adjacents) =>
+  new: (x, y, adjacents, starting = false) =>
     @pos = Vector x * gameWidth, y * gameHeight
     @dim = Vector gameWidth, gameHeight
     @center = @getPosition gameWidth / 2, gameHeight / 2
@@ -32,6 +33,9 @@ export class Room
 
     @placeWalls!
     @placeDoors adjacents
+    @enemyCount = random 1, 4
+    unless starting
+      @placeEnemies @enemyCount
   
   destruct: =>
     for _, e in pairs @entities
@@ -39,6 +43,16 @@ export class Room
 
   getPosition: (x, y) =>
     return Vector(x, y) + @pos
+
+  placeEnemies: (n) =>
+    count = 0
+    while count < n
+      x = random(tileSize, gameWidth - 2 * tileSize) + @pos.x
+      y = random(tileSize, gameHeight - 2 * tileSize) + @pos.y
+      items, len  = world\queryRect x, y, sprites.undead.width, sprites.undead.height
+      if len == 0
+        @addEntity Undead x, y
+        count += 1
 
   placeWalls: =>
     hWallCount = gameWidth / tileSize - 1
@@ -103,7 +117,15 @@ export class Room
             love.graphics.setColor 0, 0, 1, 0.4
           love.graphics.rectangle "fill", x, y, tileSize, tileSize
 
+  removeEnemies: =>
+    for e in pairs(@entities)
+      if e.__class == Undead
+       @removeEntity e
+    
+
   update: (dt) =>
+    if @enemyCount == 0
+      @cleared = true
     @updateGrid!
     for e in pairs(@entities)
       e\update dt

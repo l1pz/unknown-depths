@@ -29,11 +29,14 @@ do
       end
       tick.delay(fn, self, 0.02)
       if self.health == 0 then
+        dungeon.currentRoom.enemyCount = dungeon.currentRoom.enemyCount - 1
         return dungeon.currentRoom:removeEntity(self)
       end
     end,
     update = function(self, dt)
-      self:findPath()
+      if dungeon.currentRoom:isInsideCloseArea(player.pos) then
+        self:findPath()
+      end
       return self:move(self.dir * self.speed * dt)
     end,
     clearSelfGrid = function(self, map)
@@ -91,7 +94,7 @@ do
     __init = function(self, x, y)
       _class_0.__parent.__init(self, x, y, sprites.undead)
       self.health = 5
-      self.speed = 25
+      self.speed = 40
       self.enableDraw = true
       self.dir = Vector()
       self.nodes = { }

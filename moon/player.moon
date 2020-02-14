@@ -12,6 +12,7 @@ export class Player extends Entity
     @disableMovement = false
     @disableAttacking = false
     @invulnurable = false
+    @enableDraw = true
 
   filter: (item, other) ->
     switch other.__class
@@ -40,10 +41,23 @@ export class Player extends Entity
       @health -= 1
       @invulnurable = true
       fn = -> @invulnurable = false
-      tick.delay(fn, @, 2)
+      @flash!
+      tick.delay(fn, @, 1)
+
+  flash: =>
+    if @invulnurable
+      if @enableDraw 
+        @enableDraw = false
+        tick.delay(@flash, @, 0.05)
+      else 
+        @enableDraw = true
+        tick.delay(@flash, @, 0.05)
+    else 
+      @enableDraw = true
 
   draw: =>
-    super!
+    if @enableDraw
+      super!
     @weapon\draw!
 
   onCollision: (cols) =>

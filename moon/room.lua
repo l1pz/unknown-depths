@@ -2,6 +2,8 @@ local insert
 insert = table.insert
 local floor
 floor = math.floor
+local random
+random = love.math.random
 do
   local _class_0
   local _base_0 = {
@@ -12,6 +14,18 @@ do
     end,
     getPosition = function(self, x, y)
       return Vector(x, y) + self.pos
+    end,
+    placeEnemies = function(self, n)
+      local count = 0
+      while count < n do
+        local x = random(tileSize, gameWidth - 2 * tileSize) + self.pos.x
+        local y = random(tileSize, gameHeight - 2 * tileSize) + self.pos.y
+        local items, len = world:queryRect(x, y, sprites.undead.width, sprites.undead.height)
+        if len == 0 then
+          self:addEntity(Undead(x, y))
+          count = count + 1
+        end
+      end
     end,
     placeWalls = function(self)
       local hWallCount = gameWidth / tileSize - 1
@@ -94,7 +108,17 @@ do
         end
       end
     end,
+    removeEnemies = function(self)
+      for e in pairs(self.entities) do
+        if e.__class == Undead then
+          self:removeEntity(e)
+        end
+      end
+    end,
     update = function(self, dt)
+      if self.enemyCount == 0 then
+        self.cleared = true
+      end
       self:updateGrid()
       for e in pairs(self.entities) do
         e:update(dt)
@@ -122,7 +146,10 @@ do
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
-    __init = function(self, x, y, adjacents)
+    __init = function(self, x, y, adjacents, starting)
+      if starting == nil then
+        starting = false
+      end
       self.pos = Vector(x * gameWidth, y * gameHeight)
       self.dim = Vector(gameWidth, gameHeight)
       self.center = self:getPosition(gameWidth / 2, gameHeight / 2)
@@ -153,7 +180,11 @@ do
         self.adjacentsCount = self.adjacentsCount + 1
       end
       self:placeWalls()
-      return self:placeDoors(adjacents)
+      self:placeDoors(adjacents)
+      self.enemyCount = random(1, 4)
+      if not (starting) then
+        return self:placeEnemies(self.enemyCount)
+      end
     end,
     __base = _base_0,
     __name = "Room"

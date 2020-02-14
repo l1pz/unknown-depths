@@ -4,7 +4,7 @@ export class Undead extends Entity
   new: (x, y) =>
     super x, y, sprites.undead
     @health = 5
-    @speed = 25
+    @speed = 40
     @enableDraw = true
     @dir = Vector!
     @nodes = {}
@@ -24,10 +24,12 @@ export class Undead extends Entity
     fn = -> @enableDraw = true
     tick.delay(fn, @, 0.02)
     if @health == 0
+      dungeon.currentRoom.enemyCount -= 1
       dungeon.currentRoom\removeEntity @
 
   update: (dt) =>
-    @findPath!
+    if dungeon.currentRoom\isInsideCloseArea player.pos
+      @findPath!
     @move @dir * @speed * dt
 
   clearSelfGrid: (map) =>
