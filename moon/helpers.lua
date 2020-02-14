@@ -28,30 +28,46 @@ copyGrid = function(t)
   end
   return n
 end
+fadeIn = function(fn)
+  if fn == nil then
+    fn = function() end
+  end
+  print("fadeIn")
+  fadeColor = {
+    0,
+    0,
+    0,
+    1
+  }
+  return flux.to(fadeColor, 0.5, {
+    [4] = 0
+  }):oncomplete(fn)
+end
+fadeOut = function(fn)
+  if fn == nil then
+    fn = function() end
+  end
+  fadeColor = {
+    0,
+    0,
+    0,
+    0
+  }
+  return flux.to(fadeColor, 0.5, {
+    [4] = 1
+  }):oncomplete(fn)
+end
 nextDungeon = function()
   player.disableMovement = true
-  do
-    camera:fade(0.5, {
-      0,
-      0,
-      0,
-      1
-    }, function()
-      camera:setFollowLerp(1)
-      colors = randomChoice(colorSchemes)
-      sprites:refreshColors()
-      dungeon:destruct()
-      dungeon = Dungeon(#dungeon.rooms + random(2, 4))
-      return camera:fade(0.5, {
-        0,
-        0,
-        0,
-        0
-      }, function()
-        camera:setFollowLerp(0.2)
-        player.disableMovement = false
-      end)
+  camera:setFollowLerp(1)
+  return fadeOut(function()
+    colors = randomChoice(colorSchemes)
+    sprites:refreshColors()
+    dungeon:destruct()
+    dungeon = Dungeon(#dungeon.rooms + random(2, 4))
+    return fadeIn(function()
+      camera:setFollowLerp(0.2)
+      player.disableMovement = false
     end)
-    return camera
-  end
+  end)
 end

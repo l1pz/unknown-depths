@@ -8,22 +8,17 @@ gameplay.enter = function(self, previous)
   dungeon = Dungeon(roomsCount)
   local center = dungeon.currentRoom.center
   camera = Camera(center.x, center.y, gameWidth, gameHeight)
+  fadeColor = {
+    0,
+    0,
+    0,
+    1
+  }
+  fadeIn()
   do
     camera:setFollowStyle("SCREEN_BY_SCREEN")
     camera:setFollowLerp(0.2)
     camera.scale = 1
-    camera.fade_color = {
-      0,
-      0,
-      0,
-      1
-    }
-    camera:fade(0.5, {
-      0,
-      0,
-      0,
-      0
-    })
   end
   debugDrawSprites = true
   debugDrawCollisionBoxes = false
@@ -39,20 +34,11 @@ gameplay.update = function(self, dt)
   end
   input:update()
   tick.update(dt)
+  flux.update(dt)
   dungeon:update(dt)
   return player:update(dt)
 end
-gameplay.leave = function(self, next)
-  dungeon:destruct()
-  local _list_0 = world:getItems()
-  for _index_0 = 1, #_list_0 do
-    local item = _list_0[_index_0]
-    world:remove(item)
-  end
-  local player = nil
-  local camera = nil
-  ui = nil
-end
+gameplay.leave = function(self, next) end
 gameplay.draw = function(self)
   push:start()
   love.graphics.translate(0, uiHeight)
@@ -63,6 +49,8 @@ gameplay.draw = function(self)
   camera:draw()
   love.graphics.translate(0, -uiHeight)
   ui:draw()
+  love.graphics.setColor(fadeColor)
+  love.graphics.rectangle("fill", 0, 0, gameWidth, screenHeight)
   return push:finish()
 end
 gameplay.keypressed = function(self, key)
@@ -73,6 +61,8 @@ gameplay.keypressed = function(self, key)
     return manager:push(states.help)
   elseif "f" == _exp_0 then
     return push:switchFullscreen(windowedWidth, windowedHeight)
+  elseif "g" == _exp_0 then
+    return manager:enter(states.death)
   elseif "f1" == _exp_0 then
     debugDrawSprites = not debugDrawSprites
   elseif "f2" == _exp_0 then
@@ -84,6 +74,8 @@ gameplay.keypressed = function(self, key)
     debugDrawPathGrid = not debugDrawPathGrid
   elseif "f5" == _exp_0 then
     debugDrawEnemyPath = not debugDrawEnemyPath
+  elseif "f6" == _exp_0 then
+    return nextDungeon()
   elseif "kp4" == _exp_0 then
     colorScheme = colorScheme + 1
     if colorScheme > #colorSchemes then
@@ -98,8 +90,6 @@ gameplay.keypressed = function(self, key)
     end
     colors = colorSchemes[colorScheme]
     return sprites:refreshColors()
-  elseif "f3" == _exp_0 then
-    return nextDungeon()
   elseif "escape" == _exp_0 then
     return manager:pop()
   elseif "kp+" == _exp_0 then

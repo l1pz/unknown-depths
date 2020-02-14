@@ -14,13 +14,13 @@ gameplay.enter = (previous) =>
   
   center = dungeon.currentRoom.center
   export camera = Camera center.x, center.y, gameWidth, gameHeight
+  export fadeColor = {0,0,0,1}
+  fadeIn!
 
   with camera
     \setFollowStyle "SCREEN_BY_SCREEN"
     \setFollowLerp 0.2
     .scale = 1
-    .fade_color = {0,0,0,1}
-    \fade 0.5, {0,0,0,0}
 
   export debugDrawSprites = true
   export debugDrawCollisionBoxes = false
@@ -36,17 +36,18 @@ gameplay.update = (dt) =>
     \follow player.pos.x + player.offset.x, player.pos.y + player.offset.y
   input\update!
   tick.update dt
+  flux.update dt
   dungeon\update dt
   player\update dt
 
 gameplay.leave = (next) =>
   -- destroy entities and cleanup resources
-  dungeon\destruct!
-  for item in *world\getItems!
-    world\remove item
-  player = nil
-  camera = nil
-  ui = nil
+  --dungeon\destruct!
+  --for item in *world\getItems!
+  -- world\remove item
+  --player = nil
+  --camera = nil
+  --ui = nil
 
 gameplay.draw = () =>
   -- draw the level
@@ -59,6 +60,8 @@ gameplay.draw = () =>
   camera\draw!
   love.graphics.translate 0, -uiHeight
   ui\draw!
+  love.graphics.setColor fadeColor
+  love.graphics.rectangle "fill", 0, 0, gameWidth, screenHeight
   push\finish!
   
 
@@ -68,6 +71,7 @@ gameplay.keypressed = (key) =>
     when "h" then manager\push states.help
     when "f"
       push\switchFullscreen(windowedWidth, windowedHeight)
+    when "g" then manager\enter states.death
     when "f1" then export debugDrawSprites = not debugDrawSprites
     when "f2" then export debugDrawCollisionBoxes = not debugDrawCollisionBoxes
     when "f3" 
@@ -75,6 +79,7 @@ gameplay.keypressed = (key) =>
       shaders\set debugEnableShaders
     when "f4" then export debugDrawPathGrid = not debugDrawPathGrid
     when "f5" then export debugDrawEnemyPath = not debugDrawEnemyPath
+    when "f6" nextDungeon!
     when "kp4"
       export colorScheme = colorScheme + 1
       if colorScheme > #colorSchemes then colorScheme = 1
@@ -85,8 +90,6 @@ gameplay.keypressed = (key) =>
       if colorScheme < 1 then colorScheme = #colorSchemes
       export colors = colorSchemes[colorScheme]
       sprites\refreshColors!
-    when "f3"
-      nextDungeon!
     when "escape" 
       manager\pop! 
     when "kp+" camera.scale += 0.1

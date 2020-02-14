@@ -66,6 +66,7 @@ export states = {
   gameplay: require "moon/gameplay"
   title: require "moon/title"
   help: require "moon/help"
+  death: require "moon/death"
 }
 
 love.load = ->
@@ -95,6 +96,6 @@ love.load = ->
   sounds\load!
 
   manager\hook!
-  manager\enter states.gameplay
+  manager\enter states.title
 
   

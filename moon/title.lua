@@ -24,8 +24,13 @@ text = function(s, font, y)
   love.graphics.setFont(font)
   return love.graphics.print(s, x, y)
 end
-title.enter = function(self, previous)
-  sounds.titleMusic:play()
+title.enter = function(self, previous, playMusic)
+  if playMusic == nil then
+    playMusic = true
+  end
+  if playMusic then
+    sounds.titleMusic:play()
+  end
   color = {
     0,
     0,

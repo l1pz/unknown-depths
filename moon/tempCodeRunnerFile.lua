@@ -1,1 +1,1 @@
-return 3
+return manager:enter(states.death)

@@ -19,8 +19,9 @@ text = (s, font, y) ->
   love.graphics.setFont font
   love.graphics.print(s, x, y)
 
-title.enter = (previous) =>
-  sounds.titleMusic\play!
+title.enter = (previous, playMusic = true) =>
+  if playMusic
+    sounds.titleMusic\play!
   color = {0,0,0,0}
   
 title.update = (dt) =>

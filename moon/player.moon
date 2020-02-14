@@ -38,7 +38,10 @@ export class Player extends Entity
 
   damage: =>
     unless @invulnurable
+      camera\shake 2, 1
       @health -= 1
+      if @health == 0
+        fadeOut(-> manager\enter states.death)
       @invulnurable = true
       fn = -> @invulnurable = false
       @flash!

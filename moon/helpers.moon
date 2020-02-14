@@ -20,20 +20,28 @@ copyGrid = (t) ->
       n[y][x] = t[y][x]
   return n
 
+fadeIn = (fn = ->) ->
+  print "fadeIn"
+  export fadeColor = {0,0,0,1}
+  flux.to(fadeColor, 0.5, {[4]: 0})\oncomplete(fn)
+
+fadeOut = (fn = ->) ->
+  export fadeColor = {0,0,0,0}
+  flux.to(fadeColor, 0.5, {[4]: 1})\oncomplete(fn)
+  
 nextDungeon = -> 
   player.disableMovement = true
-  with camera
-    \fade(0.5, {0, 0, 0, 1}, ->
-      \setFollowLerp 1
-      export colors = randomChoice colorSchemes
-      sprites\refreshColors!
-      dungeon\destruct!
-      export dungeon = Dungeon #dungeon.rooms + random(2, 4)
-      \fade(0.5, {0, 0, 0, 0}, ->
-        \setFollowLerp 0.2
-        player.disableMovement = false
-      )
+  camera\setFollowLerp 1
+  fadeOut(->
+    export colors = randomChoice colorSchemes
+    sprites\refreshColors!
+    dungeon\destruct!
+    export dungeon = Dungeon #dungeon.rooms + random(2, 4)  
+    fadeIn(->
+      camera\setFollowLerp 0.2
+      player.disableMovement = false
     )
+  )
   
   
   

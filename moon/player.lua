@@ -38,7 +38,13 @@ do
     end,
     damage = function(self)
       if not (self.invulnurable) then
+        camera:shake(2, 1)
         self.health = self.health - 1
+        if self.health == 0 then
+          fadeOut(function()
+            return manager:enter(states.death)
+          end)
+        end
         self.invulnurable = true
         local fn
         fn = function()

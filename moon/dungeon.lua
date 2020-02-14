@@ -37,10 +37,12 @@ do
     getChestRooms = function(self)
       local chestRooms = { }
       for _, room in pairs(self.rooms) do
+        print(room, self.currentRoom)
         if not room.occupied and room ~= self.currentRoom then
           insert(chestRooms, room)
         end
       end
+      print(#chestRooms)
       return chestRooms
     end,
     getStairRooms = function(self)
@@ -53,12 +55,17 @@ do
       return stairRooms
     end,
     destruct = function(self)
-      for _, room in pairs(self.rooms) do
+      local _list_0 = self.rooms
+      for _index_0 = 1, #_list_0 do
+        local room = _list_0[_index_0]
         room:destruct()
       end
+      self.currentRoom = nil
     end,
     draw = function(self)
-      for _, room in pairs(self.rooms) do
+      local _list_0 = self.rooms
+      for _index_0 = 1, #_list_0 do
+        local room = _list_0[_index_0]
         room:draw()
       end
     end,
@@ -79,8 +86,10 @@ do
       self.roomsCount = roomsCount
       self.rooms = { }
       local roomsRaw = generateRaw(self)
-      for k, roomRaw in pairs(roomsRaw) do
-        self.rooms[k] = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
+      for _index_0 = 1, #roomsRaw do
+        local roomRaw = roomsRaw[_index_0]
+        local room = Room(roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents)
+        insert(self.rooms, room)
       end
       self.currentRoom = randomChoice(self.rooms)
       self.currentRoom.cleared = true

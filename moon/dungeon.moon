@@ -11,8 +11,10 @@ export class Dungeon
   getChestRooms: =>
     chestRooms = {}
     for _, room in pairs @rooms
+      print room, @currentRoom
       if not room.occupied and room != @currentRoom
         insert chestRooms, room
+    print #chestRooms
     return chestRooms
 
   getStairRooms: =>
@@ -25,8 +27,9 @@ export class Dungeon
   new: (@roomsCount) =>
     @rooms = {}
     roomsRaw = generateRaw @
-    for k, roomRaw in pairs roomsRaw
-      @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
+    for roomRaw in *roomsRaw
+      room = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
+      insert @rooms, room
     @currentRoom = randomChoice @rooms
     @currentRoom.cleared = true
     @currentRoom\removeEnemies!
@@ -48,11 +51,12 @@ export class Dungeon
       chestRoom\addEntity Chest(chestRoom.center.x, chestRoom.center.y)
       
   destruct: =>
-    for _, room in pairs @rooms
+    for room in *@rooms
       room\destruct!
+    @currentRoom = nil
   
   draw: =>
-    for _, room in pairs @rooms
+    for room in *@rooms
       room\draw!
 
   update: (dt) =>

@@ -53,7 +53,8 @@ colorScheme = 6
 states = {
   gameplay = require("moon/gameplay"),
   title = require("moon/title"),
-  help = require("moon/help")
+  help = require("moon/help"),
+  death = require("moon/death")
 }
 love.load = function()
   love.joystick.loadGamepadMappings("assets/misc/gamecontrollerdb.txt")
@@ -78,5 +79,5 @@ love.load = function()
   sprites:load()
   sounds:load()
   manager:hook()
-  return manager:enter(states.gameplay)
+  return manager:enter(states.title)
 end
