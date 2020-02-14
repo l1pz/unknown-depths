@@ -1,11 +1,21 @@
 do
   local _class_0
   local _parent_0 = Entity
-  local _base_0 = { }
+  local _base_0 = {
+    damage = function(self, d)
+      self.health = self.health - d
+      if self.health == 0 then
+        return dungeon.currentRoom:removeEntity(self)
+      end
+    end
+  }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
-    __init = function(self) end,
+    __init = function(self, x, y)
+      _class_0.__parent.__init(self, x, y, sprites.undead)
+      self.health = 10
+    end,
     __base = _base_0,
     __name = "Undead",
     __parent = _parent_0

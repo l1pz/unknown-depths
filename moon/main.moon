@@ -26,6 +26,9 @@ require "moon/bow"
 -- Spells
 require "moon/ignite"
 
+-- Enemies
+require "moon/undead"
+
 require "moon/dungeon"
 require "moon/player"
 require "moon/wall"

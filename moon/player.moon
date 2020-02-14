@@ -13,11 +13,12 @@ export class Player extends Entity
 
   filter: (item, other) ->
     switch other.__class
-      when Wall return "slide"
-      when Chest return "slide"
-      when Stairs return "cross"
+      when Wall then "slide"
+      when Chest then "slide"
+      when Stairs then "cross"
       when Door
         if other.closed then "slide" else "cross"
+      when Undead then "slide"
 
   update: (dt) => 
     ix, iy = input\get "move"
@@ -35,12 +36,13 @@ export class Player extends Entity
   onCollision: (cols) =>
     for col in *cols
       other = col.other
-      if other.__class == Door
-        other\checkCurrentRoom!
-      if other.__class == Chest
-        other\open!
-      if other.__class == Stairs
-        nextDungeon!
+      switch other.__class
+        when Door
+          other\checkCurrentRoom!
+        when Chest
+          other\open!
+        when Stairs
+          nextDungeon!
 
   setPosition: (pos) =>
     super pos - @offset

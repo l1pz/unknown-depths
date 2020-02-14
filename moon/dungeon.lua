@@ -84,6 +84,7 @@ do
       end
       self.currentRoom = randomChoice(self.rooms)
       self.currentRoom.cleared = true
+      self.currentRoom:addEntity(Undead(self.currentRoom.center.x, self.currentRoom.center.y + 32))
       player:setPosition(self.currentRoom.center)
       self.prevRoom = self.currentRoom
       local chestChance = random()

@@ -1,12 +1,29 @@
 do
   local _class_0
-  local onCollision
   local _parent_0 = Entity
   local _base_0 = {
-    update = function(self, dt)
-      if not (stuck) then
-        return self:move(self.dir * self.speed * dt, onCollision)
+    onCollision = function(self, cols)
+      for _index_0 = 1, #cols do
+        local col = cols[_index_0]
+        local other = col.other
+        local _exp_0 = other.__class
+        if Undead == _exp_0 then
+          other:damage(self.damage)
+          self:destroy()
+        elseif Wall == _exp_0 then
+          self.stuck = true
+        elseif Chest == _exp_0 then
+          self.stuck = true
+        end
       end
+    end,
+    update = function(self, dt)
+      if not (self.stuck) then
+        return self:move(self.dir * self.speed * dt)
+      end
+    end,
+    destroy = function(self)
+      return dungeon.currentRoom:removeEntity(self)
     end
   }
   _base_0.__index = _base_0
@@ -17,6 +34,7 @@ do
       _class_0.__parent.__init(self, pos.x - 2, pos.y - 2, sprites.arrow)
       self.stuck = false
       self.speed = 200
+      self.damage = 1
       self.filter = function(item, other)
         local _exp_0 = other.__class
         if Player == _exp_0 then
@@ -51,16 +69,6 @@ do
     end
   })
   _base_0.__class = _class_0
-  local self = _class_0
-  onCollision = function(cols)
-    for _index_0 = 1, #cols do
-      local col = cols[_index_0]
-      local other = col.other
-      if other.__class == Wall then
-        self.stuck = true
-      end
-    end
-  end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end

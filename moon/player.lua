@@ -16,6 +16,8 @@ do
         else
           return "cross"
         end
+      elseif Undead == _exp_0 then
+        return "slide"
       end
     end,
     update = function(self, dt)
@@ -38,13 +40,12 @@ do
       for _index_0 = 1, #cols do
         local col = cols[_index_0]
         local other = col.other
-        if other.__class == Door then
+        local _exp_0 = other.__class
+        if Door == _exp_0 then
           other:checkCurrentRoom()
-        end
-        if other.__class == Chest then
+        elseif Chest == _exp_0 then
           other:open()
-        end
-        if other.__class == Stairs then
+        elseif Stairs == _exp_0 then
           nextDungeon()
         end
       end

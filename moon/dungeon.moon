@@ -29,6 +29,7 @@ export class Dungeon
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
     @currentRoom.cleared = true
+    @currentRoom\addEntity Undead(@currentRoom.center.x, @currentRoom.center.y + 32)
     player\setPosition @currentRoom.center
     @prevRoom = @currentRoom
 

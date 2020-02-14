@@ -40,6 +40,7 @@ sprites.load = =>
   @chestClosed = newSprite "chestClosed", "normal", "magenta"
   @chestOpen = newSprite "chestOpen", "normal", "magenta"
   @stairs = newSprite "stairs", "normal", "yellow"
+  @undead = newSprite "undead", "normal", "green"
 
 sprites.refreshColors = =>
   for _, sprite in pairs spritesAll
