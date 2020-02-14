@@ -1,4 +1,5 @@
 import insert from table
+import floor from math
 export class Room
   new: (x, y, adjacents) =>
     @pos = Vector x * gameWidth, y * gameHeight
@@ -14,6 +15,8 @@ export class Room
       switch item.__class
         when Arrow
           return false
+        when Player
+          return false
         else
           return true
       
@@ -21,7 +24,7 @@ export class Room
     for y = 1, @dim.y/tileSize
       @grid[y] = { }
       for x = 1, @dim.x/tileSize 
-        @grid[y][x] = false
+        @grid[y][x] = 0
 
     @adjacentsCount = 0 
     for _ in pairs adjacents
@@ -94,20 +97,26 @@ export class Room
       for y = @pos.y, @pos.y + @dim.y - tileSize, tileSize
         for x = @pos.x, @pos.x + @dim.x - tileSize, tileSize
           tx, ty = (x - @pos.x) / tileSize + 1, (y - @pos.y) / tileSize + 1
-          if @grid[ty][tx]
+          if @grid[ty][tx] == 1
             love.graphics.setColor 1, 0, 0, 0.4
-            love.graphics.rectangle "fill", x, y, tileSize, tileSize
+          else 
+            love.graphics.setColor 0, 0, 1, 0.4
+          love.graphics.rectangle "fill", x, y, tileSize, tileSize
 
   update: (dt) =>
+    @updateGrid!
     for e in pairs(@entities)
       e\update dt
-    @updateGrid!
-
+  
   updateGrid: =>
     for y = @pos.y, @pos.y + @dim.y - tileSize, tileSize
       for x = @pos.x, @pos.x + @dim.x - tileSize, tileSize
         tx, ty = (x - @pos.x) / tileSize + 1, (y - @pos.y) / tileSize + 1
-        @grid[ty][tx] = false
+        @grid[ty][tx] = 0
         items, len = world\queryRect x, y, tileSize, tileSize, @gridFilter 
-        if len > 0 then @grid[ty][tx] = true
+        if len > 0 then @grid[ty][tx] = 1
+
+  getPosInGrid: (entity) =>
+    pos = (entity.pos + entity.offset - @pos) / tileSize
+    return floor(pos.x) + 1, floor(pos.y) + 1
       

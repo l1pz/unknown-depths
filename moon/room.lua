@@ -1,5 +1,7 @@
 local insert
 insert = table.insert
+local floor
+floor = math.floor
 do
   local _class_0
   local _base_0 = {
@@ -82,31 +84,37 @@ do
         for y = self.pos.y, self.pos.y + self.dim.y - tileSize, tileSize do
           for x = self.pos.x, self.pos.x + self.dim.x - tileSize, tileSize do
             local tx, ty = (x - self.pos.x) / tileSize + 1, (y - self.pos.y) / tileSize + 1
-            if self.grid[ty][tx] then
+            if self.grid[ty][tx] == 1 then
               love.graphics.setColor(1, 0, 0, 0.4)
-              love.graphics.rectangle("fill", x, y, tileSize, tileSize)
+            else
+              love.graphics.setColor(0, 0, 1, 0.4)
             end
+            love.graphics.rectangle("fill", x, y, tileSize, tileSize)
           end
         end
       end
     end,
     update = function(self, dt)
+      self:updateGrid()
       for e in pairs(self.entities) do
         e:update(dt)
       end
-      return self:updateGrid()
     end,
     updateGrid = function(self)
       for y = self.pos.y, self.pos.y + self.dim.y - tileSize, tileSize do
         for x = self.pos.x, self.pos.x + self.dim.x - tileSize, tileSize do
           local tx, ty = (x - self.pos.x) / tileSize + 1, (y - self.pos.y) / tileSize + 1
-          self.grid[ty][tx] = false
+          self.grid[ty][tx] = 0
           local items, len = world:queryRect(x, y, tileSize, tileSize, self.gridFilter)
           if len > 0 then
-            self.grid[ty][tx] = true
+            self.grid[ty][tx] = 1
           end
         end
       end
+    end,
+    getPosInGrid = function(self, entity)
+      local pos = (entity.pos + entity.offset - self.pos) / tileSize
+      return floor(pos.x) + 1, floor(pos.y) + 1
     end
   }
   _base_0.__index = _base_0
@@ -124,6 +132,8 @@ do
         local _exp_0 = item.__class
         if Arrow == _exp_0 then
           return false
+        elseif Player == _exp_0 then
+          return false
         else
           return true
         end
@@ -132,7 +142,7 @@ do
       for y = 1, self.dim.y / tileSize do
         self.grid[y] = { }
         for x = 1, self.dim.x / tileSize do
-          self.grid[y][x] = false
+          self.grid[y][x] = 0
         end
       end
       self.adjacentsCount = 0

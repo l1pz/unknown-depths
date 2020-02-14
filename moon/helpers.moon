@@ -12,6 +12,13 @@ randomChoice = (t) ->
   index = keys[random(1, #keys)]
   return t[index]
 
+copyGrid = (t) ->
+  n = {}
+  for y = 1, #t
+    n[y] = {}
+    for x = 1, #t[y]
+      n[y][x] = t[y][x]
+  return n
 
 nextDungeon = -> 
   player.disableMovement = true

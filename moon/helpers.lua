@@ -18,6 +18,16 @@ randomChoice = function(t)
   local index = keys[random(1, #keys)]
   return t[index]
 end
+copyGrid = function(t)
+  local n = { }
+  for y = 1, #t do
+    n[y] = { }
+    for x = 1, #t[y] do
+      n[y][x] = t[y][x]
+    end
+  end
+  return n
+end
 nextDungeon = function()
   player.disableMovement = true
   do

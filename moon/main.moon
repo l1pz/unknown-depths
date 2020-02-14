@@ -9,6 +9,8 @@ roomy = require "libs/roomy"
 export ripple = require "libs/ripple"
 export flux = require "libs/flux"
 export tick =  require "libs/tick"
+export Grid = require "libs.jumper.grid"
+export Pathfinder = require "libs.jumper.pathfinder"
 
 export manager = roomy.new!
 
@@ -93,6 +95,6 @@ love.load = ->
   sounds\load!
 
   manager\hook!
-  manager\enter states.title
+  manager\enter states.gameplay
 
   

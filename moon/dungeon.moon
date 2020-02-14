@@ -29,7 +29,16 @@ export class Dungeon
       @rooms[k] = Room roomRaw.pos.x, roomRaw.pos.y, roomRaw.adjacents
     @currentRoom = randomChoice @rooms
     @currentRoom.cleared = true
-    @currentRoom\addEntity Undead(@currentRoom.center.x, @currentRoom.center.y + 32)
+    @currentRoom\addEntity Undead(@currentRoom.center.x - 32, @currentRoom.center.y + 64)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 64)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 48)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 32)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y + 16)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 32, @currentRoom.center.y - 16)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 16, @currentRoom.center.y - 16)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + 0, @currentRoom.center.y - 16)
+    @currentRoom\addEntity Wall(@currentRoom.center.x + -16, @currentRoom.center.y - 16)
     player\setPosition @currentRoom.center
     @prevRoom = @currentRoom
 

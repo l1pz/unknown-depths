@@ -23,4 +23,9 @@
 - A LÖVE telepítése után az [innen](https://github.com/l1pz/neumann2020/archive/master.zip) letöltött archívumban található mappát mappát rá kell húzni a LÖVE framework által feltelepített love.exe fájlra
 
 ### Előre fordított verziók
+#### Windows 
+- Letölthető [innen]("")
+- Letöltés után kicsomagoljuk, majd a Unkown Depths.exe fájlt elindítjuk
 
+## Készítette
+- Molnár Máté

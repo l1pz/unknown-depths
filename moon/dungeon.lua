@@ -84,7 +84,16 @@ do
       end
       self.currentRoom = randomChoice(self.rooms)
       self.currentRoom.cleared = true
-      self.currentRoom:addEntity(Undead(self.currentRoom.center.x, self.currentRoom.center.y + 32))
+      self.currentRoom:addEntity(Undead(self.currentRoom.center.x - 32, self.currentRoom.center.y + 64))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y + 64))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y + 48))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y + 32))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y + 16))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 32, self.currentRoom.center.y - 16))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 16, self.currentRoom.center.y - 16))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + 0, self.currentRoom.center.y - 16))
+      self.currentRoom:addEntity(Wall(self.currentRoom.center.x + -16, self.currentRoom.center.y - 16))
       player:setPosition(self.currentRoom.center)
       self.prevRoom = self.currentRoom
       local stairRoom = randomChoice(self:getStairRooms())

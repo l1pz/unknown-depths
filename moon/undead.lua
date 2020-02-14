@@ -1,3 +1,5 @@
+local insert
+insert = table.insert
 do
   local _class_0
   local _parent_0 = Entity
@@ -14,9 +16,38 @@ do
         return dungeon.currentRoom:removeEntity(self)
       end
     end,
+    update = function(self, dt)
+      return self:findPath()
+    end,
+    findPath = function(self)
+      local map = copyGrid(dungeon.currentRoom.grid)
+      local selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(self)
+      map[selfPosY][selfPosX] = 0
+      local grid = Grid(map)
+      local pathfinder = Pathfinder(grid, "JPS", 0)
+      local playerPosX, playerPosY = dungeon.currentRoom:getPosInGrid(player)
+      local path = pathfinder:getPath(selfPosX, selfPosY, playerPosX, playerPosY)
+      if path then
+        self.nodes = { }
+        for node, count in path:nodes() do
+          insert(self.nodes, node)
+        end
+      end
+    end,
     draw = function(self)
       if self.enableDraw then
-        return _class_0.__parent.__base.draw(self)
+        _class_0.__parent.__base.draw(self)
+      end
+      if debugDrawEnemyPath then
+        local points = { }
+        for i = 1, #self.nodes do
+          local node = self.nodes[i]
+          local x = dungeon.currentRoom.pos.x + (node.x - 1) * tileSize + tileSize / 2
+          local y = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
+          insert(points, x)
+          insert(points, y)
+        end
+        return love.graphics.line(points)
       end
     end
   }
@@ -27,6 +58,8 @@ do
       _class_0.__parent.__init(self, x, y, sprites.undead)
       self.health = 5
       self.enableDraw = true
+      self.dir = Vector()
+      self.nodes = { }
     end,
     __base = _base_0,
     __name = "Undead",

@@ -29,6 +29,7 @@ gameplay.enter = function(self, previous)
   debugDrawCollisionBoxes = false
   debugEnableShaders = true
   debugDrawPathGrid = false
+  debugDrawEnemyPath = false
 end
 gameplay.update = function(self, dt)
   do
@@ -81,6 +82,8 @@ gameplay.keypressed = function(self, key)
     return shaders:set(debugEnableShaders)
   elseif "f4" == _exp_0 then
     debugDrawPathGrid = not debugDrawPathGrid
+  elseif "f5" == _exp_0 then
+    debugDrawEnemyPath = not debugDrawEnemyPath
   elseif "kp4" == _exp_0 then
     colorScheme = colorScheme + 1
     if colorScheme > #colorSchemes then

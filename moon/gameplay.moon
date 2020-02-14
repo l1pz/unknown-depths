@@ -26,6 +26,7 @@ gameplay.enter = (previous) =>
   export debugDrawCollisionBoxes = false
   export debugEnableShaders = true
   export debugDrawPathGrid = false
+  export debugDrawEnemyPath = false
 
 
 gameplay.update = (dt) =>
@@ -73,6 +74,7 @@ gameplay.keypressed = (key) =>
       export debugEnableShaders = not debugEnableShaders
       shaders\set debugEnableShaders
     when "f4" then export debugDrawPathGrid = not debugDrawPathGrid
+    when "f5" then export debugDrawEnemyPath = not debugDrawEnemyPath
     when "kp4"
       export colorScheme = colorScheme + 1
       if colorScheme > #colorSchemes then colorScheme = 1
