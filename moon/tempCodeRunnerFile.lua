@@ -1,1 +1,1 @@
-return color
+return getRect

@@ -2,6 +2,7 @@ export class Player extends Entity
   new: (x, y) =>
     super x, y, sprites.player
     @speed = 96
+    @movementDir = Vector!
     @health = 6
     @gold = 0
     @keys = 0
@@ -22,8 +23,8 @@ export class Player extends Entity
 
   update: (dt) => 
     ix, iy = input\get "move"
-    dir = Vector ix, iy
-    velocity = dir * @speed * dt
+    @movementDir = Vector ix, iy
+    velocity = @movementDir * @speed * dt
     unless @disableMovement
       @move velocity
     items, len = world\queryRect @pos.x, @pos.y, @dim.x, @dim.y
@@ -31,7 +32,7 @@ export class Player extends Entity
     for _, item in pairs items
         if item.__class == Door then
           @disableAttacking = true
-    @weapon\update dt, dir
+    @weapon\update dt
 
   draw: =>
     super!

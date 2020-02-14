@@ -6,12 +6,7 @@ end
 local title = { }
 title.y = 16
 title.text = "Unknown\n      Depths"
-local color = {
-  0,
-  0,
-  0,
-  0
-}
+local color
 local move
 move = function()
   return flux.to(title, 0.48, {
@@ -22,6 +17,7 @@ move = function()
     }):ease("cubicout"):oncomplete(move)
   end)
 end
+move()
 local text
 text = function(s, font, y)
   local x = gameWidth / 2 - font:getWidth(s) / 2
@@ -29,7 +25,13 @@ text = function(s, font, y)
   return love.graphics.print(s, x, y)
 end
 title.enter = function(self, previous)
-  return move()
+  color = {
+    0,
+    0,
+    0,
+    0
+  }
+  return print("enter")
 end
 title.update = function(self, dt)
   return flux.update(dt)
@@ -54,7 +56,13 @@ title.keypressed = function(self, key)
       0,
       1
     }):oncomplete(function()
-      return manager:enter(states.gameplay)
+      color = {
+        0,
+        0,
+        0,
+        0
+      }
+      return manager:push(states.gameplay)
     end)
   elseif "escape" == _exp_0 then
     return love.event.quit()

@@ -22,8 +22,8 @@ do
     end,
     update = function(self, dt)
       local ix, iy = input:get("move")
-      local dir = Vector(ix, iy)
-      local velocity = dir * self.speed * dt
+      self.movementDir = Vector(ix, iy)
+      local velocity = self.movementDir * self.speed * dt
       if not (self.disableMovement) then
         self:move(velocity)
       end
@@ -34,7 +34,7 @@ do
           self.disableAttacking = true
         end
       end
-      return self.weapon:update(dt, dir)
+      return self.weapon:update(dt)
     end,
     draw = function(self)
       _class_0.__parent.__base.draw(self)
@@ -64,6 +64,7 @@ do
     __init = function(self, x, y)
       _class_0.__parent.__init(self, x, y, sprites.player)
       self.speed = 96
+      self.movementDir = Vector()
       self.health = 6
       self.gold = 0
       self.keys = 0

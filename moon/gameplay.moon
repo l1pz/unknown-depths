@@ -32,12 +32,13 @@ gameplay.update = (dt) =>
     \update dt
     \follow player.pos.x + player.offset.x, player.pos.y + player.offset.y
   input\update!
+  tick.update dt
   dungeon\update dt
   player\update dt
 
 gameplay.leave = (next) =>
   -- destroy entities and cleanup resources
-  dungeon.destruct!
+  dungeon\destruct!
   for item in *world\getItems!
     world\remove item
   player = nil
@@ -76,7 +77,8 @@ gameplay.keypressed = (key) =>
       sprites\refreshColors!
     when "f3"
       nextDungeon!
-    when "escape" love.event.quit!
+    when "escape" 
+      manager\pop! 
     when "kp+" camera.scale += 0.1
     when "kp-" camera.scale -= 0.1
 

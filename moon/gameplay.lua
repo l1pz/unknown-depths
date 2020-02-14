@@ -35,11 +35,12 @@ gameplay.update = function(self, dt)
     _with_0:follow(player.pos.x + player.offset.x, player.pos.y + player.offset.y)
   end
   input:update()
+  tick.update(dt)
   dungeon:update(dt)
   return player:update(dt)
 end
 gameplay.leave = function(self, next)
-  dungeon.destruct()
+  dungeon:destruct()
   local _list_0 = world:getItems()
   for _index_0 = 1, #_list_0 do
     local item = _list_0[_index_0]
@@ -88,7 +89,7 @@ gameplay.keypressed = function(self, key)
   elseif "f3" == _exp_0 then
     return nextDungeon()
   elseif "escape" == _exp_0 then
-    return love.event.quit()
+    return manager:pop()
   elseif "kp+" == _exp_0 then
     camera.scale = camera.scale + 0.1
   elseif "kp-" == _exp_0 then

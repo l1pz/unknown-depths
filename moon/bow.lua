@@ -4,19 +4,27 @@ do
   local _class_0
   local _parent_0 = Item
   local _base_0 = {
-    update = function(self, dt, playerDir)
+    update = function(self, dt)
       self.psystem:update(dt)
+      if input:pressed("attack") and not player.disableAttacking and self.canShoot then
+        return self:shoot()
+      end
+    end,
+    shoot = function(self)
+      self.canShoot = true
       if input:down("attack") and not player.disableAttacking then
+        self.canShoot = false
         local pos = player.pos + player.offset
         local ax, ay = input:get("attack")
         local attackDir = Vector(ax, ay)
-        if attackDir * playerDir == 0 then
-          attackDir = attackDir + (playerDir * 0.4)
+        if attackDir * player.movementDir == 0 then
+          attackDir = attackDir + (player.movementDir * 0.4)
         end
         attackDir = attackDir.normalized
         local arrowPos = pos + attackDir * 10
         local arrow = Arrow(arrowPos, attackDir)
         dungeon.currentRoom.entities[arrow] = arrow
+        return tick.delay(self.shoot, self, self.attackDelay)
       end
     end,
     draw = function(self)
@@ -30,6 +38,9 @@ do
     __init = function(self)
       _class_0.__parent.__init(self, sprites.bow)
       self.psystem = love.graphics.newParticleSystem(sprites.pixel.img, 32)
+      self.fireRate = 10
+      self.attackDelay = 5 / self.fireRate
+      self.canShoot = true
       do
         local _with_0 = self.psystem
         _with_0:setParticleLifetime(0.1, 0.1)

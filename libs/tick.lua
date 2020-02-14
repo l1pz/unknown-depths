@@ -24,7 +24,7 @@ end
 local event = {}
 event.__index = event
 
-function event.new(parent, fn, delay, recur, err)
+function event.new(parent, fn, fnself, delay, recur, err)
   err = err or 0
   -- Create and return event
   return setmetatable({
@@ -32,21 +32,26 @@ function event.new(parent, fn, delay, recur, err)
     delay   = delay,
     timer   = delay + err,
     fn      = fn,
+    fnself  = fnself,
     recur   = recur,
   }, event)
 end
 
 
-function event:after(fn, delay)
+function event:after(fn, fnself, delay)
   -- Error check
   if self.recur then
     error("cannot chain a recurring event")
   end
   -- Chain event
   local oldfn = self.fn
-  local e = event.new(self.parent, fn, delay, false)
+  local e = event.new(self.parent, fn, fnself, delay, false)
   self.fn = function()
-    oldfn()
+    if(self.fnself) then
+      oldfn(self.fnself)
+    else 
+      oldfn()
+    end
     e.timer = e.timer + self.parent.err
     self.parent:add(e)
   end
@@ -102,7 +107,11 @@ function tick:update(dt)
         self:remove(i) 
       end
       self.err = e.timer
-      e.fn()
+      if (e.fnself) then
+        e.fn(e.fnself)
+      else 
+        e.fn()
+      end
       if not e.recur then
         break
       end
@@ -112,7 +121,7 @@ function tick:update(dt)
 end
 
 
-function tick:event(fn, delay, recur)
+function tick:event(fn, fnself, delay, recur)
   delay = tonumber(delay)
   -- Error check
   if not iscallable(fn) then
@@ -134,22 +143,26 @@ function tick:event(fn, delay, recur)
   if d < 0 then
     local err = self.err
     self.err = d
-    fn()
+    if (fnself) then
+      fn(fnself)
+    else 
+      fn()
+    end
     self.err = err
-    return self:add(event.new(self, noop, delay, recur, self.err))
+    return self:add(event.new(self, noop, fnself, delay, recur, self.err))
   end
   -- Create, add and return a normal event
-  return self:add(event.new(self, fn, delay, recur, self.err))
+  return self:add(event.new(self, fn, fnself, delay, recur, self.err))
 end
 
 
-function tick:delay(fn, delay)
-  return self:event(fn, delay, false)
+function tick:delay(fn, fnself, delay)
+  return self:event(fn, fnself, delay, false)
 end
 
 
-function tick:recur(fn, delay)
-  return self:event(fn, delay, true)
+function tick:recur(fn, fnself, delay)
+  return self:event(fn, fnself, delay, true)
 end
 
 
