@@ -47,8 +47,8 @@ export class Room
   placeEnemies: (n) =>
     count = 0
     while count < n
-      x = random(tileSize, gameWidth - 2 * tileSize) + @pos.x
-      y = random(tileSize, gameHeight - 2 * tileSize) + @pos.y
+      x = random(tileSize * 3, gameWidth - 4 * tileSize) + @pos.x
+      y = random(tileSize * 3, gameHeight - 4 * tileSize) + @pos.y
       items, len  = world\queryRect x, y, sprites.undead.width, sprites.undead.height
       if len == 0
         @addEntity Undead x, y

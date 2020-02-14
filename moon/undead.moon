@@ -50,7 +50,7 @@ export class Undead extends Entity
 
     grid = Grid map 
     -- Creates a pathfinder object using Jump Point Search
-    pathfinder = Pathfinder grid, "ASTAR", 0
+    pathfinder = Pathfinder grid, "JPS", 0
 
     -- Define start and goal locations coordinates
     playerPosX, playerPosY = dungeon.currentRoom\getPosInGrid player.pos

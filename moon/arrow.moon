@@ -7,7 +7,7 @@ export class Arrow extends Entity
       switch other.__class
         when Undead 
           other\damage @damage
-      unless other.__class == Arrow or other.__class == Player
+      unless other.__class == Arrow or other.__class == Player or other.__class == Stairs
         @destroy color
 
   new: (pos, @dir) =>
@@ -15,15 +15,16 @@ export class Arrow extends Entity
     @stuck = false
     @speed = 200
     @damage = 1
-    @filter = (item, other) ->
-      switch other.__class
-        when Player
-          return "cross"
-        when Arrow
-          return "cross"
-        when Stairs
-          return "cross"
-      return "touch"
+  
+  filter: (item, other) ->
+    switch other.__class
+      when Player
+        return "cross"
+      when Arrow
+        return "cross"
+      when Stairs
+        return "cross"
+    return "touch"
 
   update: (dt) =>
     unless @stuck

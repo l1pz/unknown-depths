@@ -11,10 +11,21 @@ do
         if Undead == _exp_0 then
           other:damage(self.damage)
         end
-        if not (other.__class == Arrow or other.__class == Player) then
+        if not (other.__class == Arrow or other.__class == Player or other.__class == Stairs) then
           self:destroy(color)
         end
       end
+    end,
+    filter = function(item, other)
+      local _exp_0 = other.__class
+      if Player == _exp_0 then
+        return "cross"
+      elseif Arrow == _exp_0 then
+        return "cross"
+      elseif Stairs == _exp_0 then
+        return "cross"
+      end
+      return "touch"
     end,
     update = function(self, dt)
       if not (self.stuck) then
@@ -41,17 +52,6 @@ do
       self.stuck = false
       self.speed = 200
       self.damage = 1
-      self.filter = function(item, other)
-        local _exp_0 = other.__class
-        if Player == _exp_0 then
-          return "cross"
-        elseif Arrow == _exp_0 then
-          return "cross"
-        elseif Stairs == _exp_0 then
-          return "cross"
-        end
-        return "touch"
-      end
     end,
     __base = _base_0,
     __name = "Arrow",

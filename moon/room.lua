@@ -18,8 +18,8 @@ do
     placeEnemies = function(self, n)
       local count = 0
       while count < n do
-        local x = random(tileSize, gameWidth - 2 * tileSize) + self.pos.x
-        local y = random(tileSize, gameHeight - 2 * tileSize) + self.pos.y
+        local x = random(tileSize * 3, gameWidth - 4 * tileSize) + self.pos.x
+        local y = random(tileSize * 3, gameHeight - 4 * tileSize) + self.pos.y
         local items, len = world:queryRect(x, y, sprites.undead.width, sprites.undead.height)
         if len == 0 then
           self:addEntity(Undead(x, y))

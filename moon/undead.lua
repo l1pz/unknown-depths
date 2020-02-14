@@ -54,7 +54,7 @@ do
       local selfPosX, selfPosY = dungeon.currentRoom:getPosInGrid(self.pos)
       self:clearSelfGrid(map)
       local grid = Grid(map)
-      local pathfinder = Pathfinder(grid, "ASTAR", 0)
+      local pathfinder = Pathfinder(grid, "JPS", 0)
       local playerPosX, playerPosY = dungeon.currentRoom:getPosInGrid(player.pos)
       local path = pathfinder:getPath(selfPosX, selfPosY, playerPosX, playerPosY)
       if path then
