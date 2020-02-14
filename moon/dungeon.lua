@@ -37,7 +37,7 @@ do
     getChestRooms = function(self)
       local chestRooms = { }
       for _, room in pairs(self.rooms) do
-        if room.adjacentsCount > 1 and room ~= self.currentRoom then
+        if not room.occupied and room ~= self.currentRoom then
           insert(chestRooms, room)
         end
       end
@@ -87,6 +87,10 @@ do
       self.currentRoom:addEntity(Undead(self.currentRoom.center.x, self.currentRoom.center.y + 32))
       player:setPosition(self.currentRoom.center)
       self.prevRoom = self.currentRoom
+      local stairRoom = randomChoice(self:getStairRooms())
+      stairRoom.cleared = true
+      stairRoom.occupied = true
+      stairRoom:addEntity(Stairs(stairRoom.center.x, stairRoom.center.y))
       local chestChance = random()
       local chestCount
       if chestChance < 0.1 then
@@ -96,11 +100,9 @@ do
       end
       for i = 1, chestCount do
         local chestRoom = randomChoice(self:getChestRooms())
+        chestRoom.occupied = true
         chestRoom:addEntity(Chest(chestRoom.center.x, chestRoom.center.y))
       end
-      local stairRoom = randomChoice(self:getStairRooms())
-      stairRoom.cleared = true
-      return stairRoom:addEntity(Stairs(stairRoom.center.x, stairRoom.center.y))
     end,
     __base = _base_0,
     __name = "Dungeon"

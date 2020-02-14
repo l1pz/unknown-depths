@@ -7,7 +7,7 @@ export class Arrow extends Entity
       switch other.__class
         when Undead 
           other\damage @damage
-      unless other.__class == Arrow
+      unless other.__class == Arrow or other.__class == Player
         @destroy color
 
   new: (pos, @dir) =>

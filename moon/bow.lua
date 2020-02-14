@@ -18,7 +18,7 @@ do
         local ax, ay = input:get("attack")
         local attackDir = Vector(ax, ay)
         if attackDir * player.movementDir == 0 then
-          attackDir = attackDir + (player.movementDir * 0.4)
+          attackDir = attackDir + (player.movementDir * 0.2)
         end
         attackDir = attackDir.normalized
         local arrowPos = pos + attackDir * 10

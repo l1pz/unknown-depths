@@ -4,8 +4,19 @@ do
   local _base_0 = {
     damage = function(self, d)
       self.health = self.health - d
+      self.enableDraw = false
+      local fn
+      fn = function()
+        self.enableDraw = true
+      end
+      tick.delay(fn, self, 0.02)
       if self.health == 0 then
         return dungeon.currentRoom:removeEntity(self)
+      end
+    end,
+    draw = function(self)
+      if self.enableDraw then
+        return _class_0.__parent.__base.draw(self)
       end
     end
   }
@@ -14,7 +25,8 @@ do
   _class_0 = setmetatable({
     __init = function(self, x, y)
       _class_0.__parent.__init(self, x, y, sprites.undead)
-      self.health = 10
+      self.health = 5
+      self.enableDraw = true
     end,
     __base = _base_0,
     __name = "Undead",

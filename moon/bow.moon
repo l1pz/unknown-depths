@@ -26,7 +26,7 @@ export class Bow extends Item
       ax, ay = input\get "attack"
       attackDir = Vector(ax, ay)
       if attackDir * player.movementDir == 0
-        attackDir += player.movementDir * 0.4
+        attackDir += player.movementDir * 0.2
       attackDir = attackDir.normalized
       arrowPos = pos + attackDir * 10
       arrow = Arrow arrowPos, attackDir

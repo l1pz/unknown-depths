@@ -11,7 +11,7 @@ export class Dungeon
   getChestRooms: =>
     chestRooms = {}
     for _, room in pairs @rooms
-      if room.adjacentsCount > 1 and room != @currentRoom
+      if not room.occupied and room != @currentRoom
         insert chestRooms, room
     return chestRooms
 
@@ -33,16 +33,18 @@ export class Dungeon
     player\setPosition @currentRoom.center
     @prevRoom = @currentRoom
 
+    stairRoom = randomChoice @getStairRooms!
+    stairRoom.cleared = true
+    stairRoom.occupied = true
+    stairRoom\addEntity Stairs(stairRoom.center.x, stairRoom.center.y)
+    --@currentRoom\addEntity Stairs(@currentRoom.center.x, @currentRoom.center.y)  
+
     chestChance = random!
     chestCount = if chestChance < 0.1 then 2 else 1
     for i = 1, chestCount
       chestRoom = randomChoice @getChestRooms!
+      chestRoom.occupied = true
       chestRoom\addEntity Chest(chestRoom.center.x, chestRoom.center.y)
-    
-    stairRoom = randomChoice @getStairRooms!
-    stairRoom.cleared = true
-    stairRoom\addEntity Stairs(stairRoom.center.x, stairRoom.center.y)
-    --@currentRoom\addEntity Stairs(@currentRoom.center.x, @currentRoom.center.y)  
       
   destruct: =>
     for _, room in pairs @rooms

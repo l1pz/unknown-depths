@@ -7,6 +7,7 @@ export class Room
     @entities = {}
     @doors = {}
     @cleared = false
+    @occupied = false
 
     @adjacentsCount = 0 
     for _ in pairs adjacents

@@ -92,6 +92,7 @@ do
       self.entities = { }
       self.doors = { }
       self.cleared = false
+      self.occupied = false
       self.adjacentsCount = 0
       for _ in pairs(adjacents) do
         self.adjacentsCount = self.adjacentsCount + 1

@@ -11,7 +11,7 @@ do
         if Undead == _exp_0 then
           other:damage(self.damage)
         end
-        if not (other.__class == Arrow) then
+        if not (other.__class == Arrow or other.__class == Player) then
           self:destroy(color)
         end
       end
