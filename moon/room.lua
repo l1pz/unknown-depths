@@ -50,11 +50,13 @@ do
       end
     end,
     openDoors = function(self)
+      self.doorsOpen = true
       for door in pairs(self.doors) do
         door:open()
       end
     end,
     closeDoors = function(self)
+      self.doorsOpen = false
       for door in pairs(self.doors) do
         door:close()
       end
@@ -76,10 +78,34 @@ do
       for e in pairs(self.entities) do
         e:draw()
       end
+      if debugDrawPathGrid then
+        for y = self.pos.y, self.pos.y + self.dim.y - tileSize, tileSize do
+          for x = self.pos.x, self.pos.x + self.dim.x - tileSize, tileSize do
+            local tx, ty = (x - self.pos.x) / tileSize + 1, (y - self.pos.y) / tileSize + 1
+            if self.grid[ty][tx] then
+              love.graphics.setColor(1, 0, 0, 0.4)
+              love.graphics.rectangle("fill", x, y, tileSize, tileSize)
+            end
+          end
+        end
+      end
     end,
     update = function(self, dt)
       for e in pairs(self.entities) do
         e:update(dt)
+      end
+      return self:updateGrid()
+    end,
+    updateGrid = function(self)
+      for y = self.pos.y, self.pos.y + self.dim.y - tileSize, tileSize do
+        for x = self.pos.x, self.pos.x + self.dim.x - tileSize, tileSize do
+          local tx, ty = (x - self.pos.x) / tileSize + 1, (y - self.pos.y) / tileSize + 1
+          self.grid[ty][tx] = false
+          local items, len = world:queryRect(x, y, tileSize, tileSize, self.gridFilter)
+          if len > 0 then
+            self.grid[ty][tx] = true
+          end
+        end
       end
     end
   }
@@ -93,6 +119,22 @@ do
       self.doors = { }
       self.cleared = false
       self.occupied = false
+      self.doorsOpen = false
+      self.gridFilter = function(item)
+        local _exp_0 = item.__class
+        if Arrow == _exp_0 then
+          return false
+        else
+          return true
+        end
+      end
+      self.grid = { }
+      for y = 1, self.dim.y / tileSize do
+        self.grid[y] = { }
+        for x = 1, self.dim.x / tileSize do
+          self.grid[y][x] = false
+        end
+      end
       self.adjacentsCount = 0
       for _ in pairs(adjacents) do
         self.adjacentsCount = self.adjacentsCount + 1

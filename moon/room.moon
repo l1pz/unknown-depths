@@ -8,8 +8,20 @@ export class Room
     @doors = {}
     @cleared = false
     @occupied = false
+    @doorsOpen = false
+    @gridFilter = (item) -> 
+      --print item
+      switch item.__class
+        when Arrow
+          return false
+        else
+          return true
+      
     @grid = {}
-    
+    for y = 1, @dim.y/tileSize
+      @grid[y] = { }
+      for x = 1, @dim.x/tileSize 
+        @grid[y][x] = false
 
     @adjacentsCount = 0 
     for _ in pairs adjacents
@@ -53,10 +65,12 @@ export class Room
       @addEntity door
 
   openDoors: =>
+    @doorsOpen = true
     for door in pairs(@doors)
       door\open!
 
   closeDoors: =>
+    @doorsOpen = false
     for door in pairs(@doors)
       door\close!
 
@@ -76,11 +90,24 @@ export class Room
   draw: =>
     for e in pairs(@entities)
       e\draw!
+    if debugDrawPathGrid
+      for y = @pos.y, @pos.y + @dim.y - tileSize, tileSize
+        for x = @pos.x, @pos.x + @dim.x - tileSize, tileSize
+          tx, ty = (x - @pos.x) / tileSize + 1, (y - @pos.y) / tileSize + 1
+          if @grid[ty][tx]
+            love.graphics.setColor 1, 0, 0, 0.4
+            love.graphics.rectangle "fill", x, y, tileSize, tileSize
 
   update: (dt) =>
     for e in pairs(@entities)
       e\update dt
+    @updateGrid!
 
-    
-
+  updateGrid: =>
+    for y = @pos.y, @pos.y + @dim.y - tileSize, tileSize
+      for x = @pos.x, @pos.x + @dim.x - tileSize, tileSize
+        tx, ty = (x - @pos.x) / tileSize + 1, (y - @pos.y) / tileSize + 1
+        @grid[ty][tx] = false
+        items, len = world\queryRect x, y, tileSize, tileSize, @gridFilter 
+        if len > 0 then @grid[ty][tx] = true
       

@@ -41,7 +41,8 @@ title.draw = function(self)
   text(self.text, fontFantasy, floor(self.y))
   local y = 74
   text("PRESS ENTER TO START", fontRetro, screenHeight - y)
-  text("PRESS ESC TO EXIT", fontRetro, screenHeight - y + 10)
+  text("PRESS H FOR HELP", fontRetro, screenHeight - y + 10)
+  text("PRESS ESC TO EXIT", fontRetro, screenHeight - y + 20)
   text("© 2020", fontRetro, screenHeight - 16)
   love.graphics.setColor(color)
   love.graphics.rectangle("fill", 0, 0, gameWidth, screenHeight)
@@ -64,6 +65,8 @@ title.keypressed = function(self, key)
       }
       return manager:push(states.gameplay)
     end)
+  elseif "h" == _exp_0 then
+    return manager:push(states.help)
   elseif "escape" == _exp_0 then
     return love.event.quit()
   end

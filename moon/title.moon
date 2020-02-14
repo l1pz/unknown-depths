@@ -33,7 +33,8 @@ title.draw = () =>
   text @text, fontFantasy, floor(@y)
   y = 74
   text "PRESS ENTER TO START", fontRetro, screenHeight - y
-  text "PRESS ESC TO EXIT", fontRetro, screenHeight - y + 10
+  text "PRESS H FOR HELP", fontRetro, screenHeight - y + 10
+  text "PRESS ESC TO EXIT", fontRetro, screenHeight - y + 20
   text "© 2020", fontRetro, screenHeight - 16
   love.graphics.setColor color
   love.graphics.rectangle "fill", 0, 0, gameWidth, screenHeight
@@ -46,6 +47,8 @@ title.keypressed = (key) =>
         color = {0,0,0,0}
         manager\push states.gameplay  
       )
+    when "h"
+      manager\push states.help
     when "escape" love.event.quit!
 
 return title

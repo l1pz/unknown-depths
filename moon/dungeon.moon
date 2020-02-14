@@ -59,7 +59,7 @@ export class Dungeon
     if @currentRoom.cleared
       @currentRoom\openDoors!
       @prevRoom\openDoors!
-    else 
+    else
       @currentRoom\closeDoors!
       @prevRoom\closeDoors!
       
