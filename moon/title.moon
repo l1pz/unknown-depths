@@ -32,9 +32,10 @@ title.draw = () =>
   push\start!
   text @text, fontFantasy, floor(@y)
   y = 74
-  text "PRESS ENTER TO START", fontRetro, screenHeight - y
-  text "PRESS H FOR HELP", fontRetro, screenHeight - y + 10
-  text "PRESS ESC TO EXIT", fontRetro, screenHeight - y + 20
+  text "ENTER TO START", fontRetro, screenHeight - y
+  text "H FOR HELP", fontRetro, screenHeight - y + 12
+  text "F FOR FULLSCREEN", fontRetro, screenHeight - y + 24
+  text "ESC TO EXIT", fontRetro, screenHeight - y + 36
   text "© 2020", fontRetro, screenHeight - 16
   love.graphics.setColor color
   love.graphics.rectangle "fill", 0, 0, gameWidth, screenHeight
@@ -49,6 +50,8 @@ title.keypressed = (key) =>
       )
     when "h"
       manager\push states.help
+    when "f"
+      push\switchFullscreen(windowedWidth, windowedHeight)
     when "escape" love.event.quit!
 
 return title

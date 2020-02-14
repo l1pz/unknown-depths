@@ -40,9 +40,10 @@ title.draw = function(self)
   push:start()
   text(self.text, fontFantasy, floor(self.y))
   local y = 74
-  text("PRESS ENTER TO START", fontRetro, screenHeight - y)
-  text("PRESS H FOR HELP", fontRetro, screenHeight - y + 10)
-  text("PRESS ESC TO EXIT", fontRetro, screenHeight - y + 20)
+  text("ENTER TO START", fontRetro, screenHeight - y)
+  text("H FOR HELP", fontRetro, screenHeight - y + 12)
+  text("F FOR FULLSCREEN", fontRetro, screenHeight - y + 24)
+  text("ESC TO EXIT", fontRetro, screenHeight - y + 36)
   text("© 2020", fontRetro, screenHeight - 16)
   love.graphics.setColor(color)
   love.graphics.rectangle("fill", 0, 0, gameWidth, screenHeight)
@@ -67,6 +68,8 @@ title.keypressed = function(self, key)
     end)
   elseif "h" == _exp_0 then
     return manager:push(states.help)
+  elseif "f" == _exp_0 then
+    return push:switchFullscreen(windowedWidth, windowedHeight)
   elseif "escape" == _exp_0 then
     return love.event.quit()
   end

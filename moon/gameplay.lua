@@ -70,6 +70,8 @@ gameplay.keypressed = function(self, key)
     dungeon.currentRoom.cleared = true
   elseif "h" == _exp_0 then
     return manager:push(states.help)
+  elseif "f" == _exp_0 then
+    return push:switchFullscreen(windowedWidth, windowedHeight)
   elseif "f1" == _exp_0 then
     debugDrawSprites = not debugDrawSprites
   elseif "f2" == _exp_0 then

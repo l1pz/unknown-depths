@@ -40,7 +40,10 @@ help.draw = function(self)
 end
 help.keypressed = function(self, key)
   if key == "return" or key == "escape" or key == "h" then
-    return manager:pop()
+    manager:pop()
+  end
+  if key == "f" then
+    return push:switchFullscreen(windowedWidth, windowedHeight)
   end
 end
 return help

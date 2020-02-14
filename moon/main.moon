@@ -1,4 +1,5 @@
 import insert from table
+import floor, min from math
 export inspect = require "libs/inspect"
 export Vector = require "libs/vector"
 export bump = require "libs/bump"
@@ -47,15 +48,13 @@ export tileSize = 16
 export screenHeight = gameHeight + uiHeight
 
 export font
-
-fullScreen = true
-local windowWidth, windowHeight
 windowScale = 3
 
-windowWidth, windowHeight = if fullScreen
-  love.window.getDesktopDimensions()
-else
-  gameWidth * windowScale, screenHeight * windowScale
+export windowedWidth, windowedHeight = love.window.getDesktopDimensions()
+windowedScale = min floor(windowedWidth / gameWidth), floor(windowedHeight / screenHeight) - 1
+
+windowedWidth = gameWidth * windowedScale
+windowedHeight = screenHeight * windowedScale
 
 export colors
 export colorSchemes = {}
@@ -72,8 +71,7 @@ love.load = ->
   love.graphics.setDefaultFilter "nearest", "nearest"
   love.graphics.setLineStyle "rough"
   
-  push\setupScreen gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
-    fullscreen: fullScreen
+  push\setupScreen gameWidth, gameHeight + uiHeight, windowedWidth, windowedHeight, {
     resizeable: false
     pixelperfect: true
   }

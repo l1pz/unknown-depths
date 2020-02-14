@@ -40,5 +40,7 @@ THEY WILL TRY TO STOP YOU.", fontRetro, 96
 help.keypressed = (key) =>
   if key == "return" or key == "escape" or key == "h"
     manager\pop!
+  if key == "f"
+    push\switchFullscreen(windowedWidth, windowedHeight)
 
 return help

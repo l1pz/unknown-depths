@@ -65,6 +65,8 @@ gameplay.keypressed = (key) =>
   switch key
     when "k" then dungeon.currentRoom.cleared = true
     when "h" then manager\push states.help
+    when "f"
+      push\switchFullscreen(windowedWidth, windowedHeight)
     when "f1" then export debugDrawSprites = not debugDrawSprites
     when "f2" then export debugDrawCollisionBoxes = not debugDrawCollisionBoxes
     when "f3" 

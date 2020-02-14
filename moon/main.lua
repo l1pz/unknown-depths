@@ -1,5 +1,10 @@
 local insert
 insert = table.insert
+local floor, min
+do
+  local _obj_0 = math
+  floor, min = _obj_0.floor, _obj_0.min
+end
 inspect = require("libs/inspect")
 Vector = require("libs/vector")
 bump = require("libs/bump")
@@ -36,14 +41,11 @@ uiWidth = gameWidth
 uiHeight = 40
 tileSize = 16
 screenHeight = gameHeight + uiHeight
-local fullScreen = true
-local windowWidth, windowHeight
 local windowScale = 3
-if fullScreen then
-  windowWidth, windowHeight = love.window.getDesktopDimensions()
-else
-  windowWidth, windowHeight = gameWidth * windowScale, screenHeight * windowScale
-end
+windowedWidth, windowedHeight = love.window.getDesktopDimensions()
+local windowedScale = min(floor(windowedWidth / gameWidth), floor(windowedHeight / screenHeight) - 1)
+windowedWidth = gameWidth * windowedScale
+windowedHeight = screenHeight * windowedScale
 colorSchemes = { }
 colorScheme = 6
 states = {
@@ -55,8 +57,7 @@ love.load = function()
   love.joystick.loadGamepadMappings("assets/misc/gamecontrollerdb.txt")
   love.graphics.setDefaultFilter("nearest", "nearest")
   love.graphics.setLineStyle("rough")
-  push:setupScreen(gameWidth, gameHeight + uiHeight, windowWidth, windowHeight, {
-    fullscreen = fullScreen,
+  push:setupScreen(gameWidth, gameHeight + uiHeight, windowedWidth, windowedHeight, {
     resizeable = false,
     pixelperfect = true
   })
