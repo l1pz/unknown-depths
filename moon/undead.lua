@@ -4,6 +4,22 @@ do
   local _class_0
   local _parent_0 = Entity
   local _base_0 = {
+    filter = function(item, other)
+      local _exp_0 = other.__class
+      if Wall == _exp_0 then
+        return "slide"
+      elseif Chest == _exp_0 then
+        return "slide"
+      elseif Stairs == _exp_0 then
+        return "cross"
+      elseif Door == _exp_0 then
+        return "slide"
+      elseif Undead == _exp_0 then
+        return "slide"
+      elseif Player == _exp_0 then
+        return "slide"
+      end
+    end,
     damage = function(self, d)
       self.health = self.health - d
       self.enableDraw = false
@@ -46,8 +62,10 @@ do
           local pos = Vector(px, py)
           insert(self.nodes, pos)
         end
+        if #self.nodes > 1 then
+          self.dir = (self.nodes[2] - self.pos).normalized
+        end
       end
-      self.dir = (self.nodes[2] - self.pos).normalized
     end,
     draw = function(self)
       if self.enableDraw then

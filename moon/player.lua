@@ -36,6 +36,17 @@ do
       end
       return self.weapon:update(dt)
     end,
+    damage = function(self)
+      if not (self.invulnurable) then
+        self.health = self.health - 1
+        self.invulnurable = true
+        local fn
+        fn = function()
+          self.invulnurable = false
+        end
+        return tick.delay(fn, self, 2)
+      end
+    end,
     draw = function(self)
       _class_0.__parent.__base.draw(self)
       return self.weapon:draw()
@@ -51,6 +62,8 @@ do
           other:open()
         elseif Stairs == _exp_0 then
           nextDungeon()
+        elseif Undead == _exp_0 then
+          self:damage()
         end
       end
     end,
@@ -73,6 +86,7 @@ do
       self.spell = nil
       self.disableMovement = false
       self.disableAttacking = false
+      self.invulnurable = false
     end,
     __base = _base_0,
     __name = "Player",

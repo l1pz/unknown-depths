@@ -11,6 +11,7 @@ export class Player extends Entity
     @spell = nil
     @disableMovement = false
     @disableAttacking = false
+    @invulnurable = false
 
   filter: (item, other) ->
     switch other.__class
@@ -34,6 +35,13 @@ export class Player extends Entity
           @disableAttacking = true
     @weapon\update dt
 
+  damage: =>
+    unless @invulnurable
+      @health -= 1
+      @invulnurable = true
+      fn = -> @invulnurable = false
+      tick.delay(fn, @, 2)
+
   draw: =>
     super!
     @weapon\draw!
@@ -48,6 +56,8 @@ export class Player extends Entity
           other\open!
         when Stairs
           nextDungeon!
+        when Undead
+          @damage!
 
   setPosition: (pos) =>
     super pos - @offset

@@ -9,6 +9,15 @@ export class Undead extends Entity
     @dir = Vector!
     @nodes = {}
 
+  filter: (item, other) ->
+    switch other.__class
+      when Wall then "slide"
+      when Chest then "slide"
+      when Stairs then "cross"
+      when Door then "slide" 
+      when Undead then "slide"
+      when Player return "slide"
+
   damage: (d) =>
     @health -= d
     @enableDraw = false
@@ -53,7 +62,8 @@ export class Undead extends Entity
         py = dungeon.currentRoom.pos.y + (node.y - 1) * tileSize + tileSize / 2
         pos = Vector(px, py)
         insert @nodes, pos
-    @dir = (@nodes[2] - @pos).normalized
+      if #@nodes > 1
+        @dir = (@nodes[2] - @pos).normalized
         
 
   draw: =>

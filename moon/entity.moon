@@ -34,3 +34,10 @@ export class Entity
     actual.x, actual.y, cols, len = world\move @, goal.x, goal.y, @filter
     @pos = actual
     if @onCollision then @onCollision cols
+
+  onCollision: (cols) =>
+    for col in *cols
+      other = col.other
+      switch other.__class
+        when Player
+          other\damage!

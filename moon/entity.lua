@@ -44,6 +44,16 @@ do
       if self.onCollision then
         return self:onCollision(cols)
       end
+    end,
+    onCollision = function(self, cols)
+      for _index_0 = 1, #cols do
+        local col = cols[_index_0]
+        local other = col.other
+        local _exp_0 = other.__class
+        if Player == _exp_0 then
+          other:damage()
+        end
+      end
     end
   }
   _base_0.__index = _base_0
