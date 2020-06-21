@@ -1,31 +1,13 @@
 # Unkown Depths
-## Cél
-- Ebben a rouge-lite játékban cél minél lentebb jutni a mélybe, hogy felfedezzük a mélység titkait
+A very simple rouge-like made in Moonscript (a dynamic scripting language that compiles into Lua), using LÖVE, a Lua 2D game engine.
 
-- Minden szinten található egy lépcső, amivel lentebb mehetünk egy szintet, közelebb kerülve a célunkhoz
-  
-- Az utunkat szörnyek állják, amelyekkel muszáj megküzdeni, mielőtt továbbléphetnénk az adott szinten a következő szobába
-  
-- Utunk során új fegyvereket, varázsigéket, boltokat és titkos szobákat találunk, melyekkel erősíthetjük hősünket
-  
-## Játékelemek
-- Véletlenszerűen generált pályák, amik egyre nagyobbak lesznek, minél mélyebbre jutunk
+## Features
+- random level generation
+- ability to shoot
+- particles
+- random enemies
+- main menu
+- music
 
-- Minden pályának saját színtémája van, akár a játékos is készíthet saját színtémát
-
-- A programozási nyelv jellegéből adódóan egyszerűen készíthető saját mod a játékhoz, mindössze a mod mappába kell a mod .lua fájljait elhelyezni
-
-## Telepítés
-
-### Forrásból
-- A játék futtatásához jelenleg szükséges a LÖVE framerwork telepítése a számítógépre ([innen](https://love2d.org/) letölthető)
-
-- A LÖVE telepítése után az [innen](https://github.com/l1pz/neumann2020/archive/master.zip) letöltött archívumban található mappát mappát rá kell húzni a LÖVE framework által feltelepített love.exe fájlra
-
-### Előre fordított verziók
-#### Windows 
-- Letölthető [innen](https://github.com/l1pz/unknown-depths/releases/download/v0.1/Unkown.Depths.zip)
-- Letöltés után kicsomagoljuk, majd a Unknown Depths.exe fájlt elindítjuk
-
-## Készítette
-- Molnár Máté
+### Customizable color scheme
+Every sprite is black and white, so you can color the anyway you want using base16 color themes. There are plenty of them already included in assets/colors.
